@@ -40,7 +40,6 @@
     <packaging>jar</packaging>
     <!--<packaging>war</packaging>-->
 
-
     <!--properties-->
     <properties>
         <encoding>UTF-8</encoding>
@@ -65,41 +64,38 @@
     <dependencies>
 
         <!-- #### REDIS #################################################  -->
-        <!-- Spring Boot Redis Starter -->
+        <!--
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
-        <!-- Spring Boot Starter Cache -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
 
-        <!-- Redis için, Jackson (JSON için) -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
 
-        <!-- Redis için, Lettuce -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.lettuce.core</groupId>
-                    <artifactId>lettuce-core</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+       <dependency>
+           <groupId>org.springframework.boot</groupId>
+           <artifactId>spring-boot-starter-data-redis</artifactId>
+           <exclusions>
+               <exclusion>
+                   <groupId>io.lettuce.core</groupId>
+                   <artifactId>lettuce-core</artifactId>
+               </exclusion>
+           </exclusions>
+       </dependency>
 
-        <!-- Redis için, Jedis -->
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
         </dependency>
+        -->
 
         <!-- #### ÖNEMLİ KÜTÜPHANLER #################################################  -->
         <!-- E MAİL-->
