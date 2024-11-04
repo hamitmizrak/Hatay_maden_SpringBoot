@@ -1,6 +1,6 @@
 # Log
-/react_blog
-
+/database_memory_persist
+/log/
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
