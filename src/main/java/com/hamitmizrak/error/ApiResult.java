@@ -1,8 +1,16 @@
 package com.hamitmizrak.error;
 
+import lombok.*;
+
 import java.util.Date;
 import java.util.Map;
 
+// LOMBOK
+@Getter
+@Setter
+@AllArgsConstructor
+@Builder
+@ToString
 public class ApiResult {
 
     // sem pvc
@@ -33,53 +41,19 @@ public class ApiResult {
         this.path = path;
     }
 
-    // GETTER AND SETTER
+    // PSVM
+    /*
+    public static void main(String[] args) {
+        ApiResult apiResult = new ApiResult();
+        apiResult.setStatus(200);
+        System.out.println(apiResult.getStatus());
 
-    public int getStatus() {
-        return status;
+        ApiResult apiResult1 = ApiResult.builder()
+                .status(300)
+                .build();
+        System.out.println(apiResult1);
+        System.out.println(apiResult1.getStatus());
     }
+    */
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public String getError() {
-        return error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public Map<String, String> getValidationErrors() {
-        return validationErrors;
-    }
-
-    public void setValidationErrors(Map<String, String> validationErrors) {
-        this.validationErrors = validationErrors;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
 } //end ApiResult
