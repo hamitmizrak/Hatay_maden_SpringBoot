@@ -28,7 +28,7 @@ public interface IAddressService<D, E> {
     public D addressServiceUpdate(Long id, D d);
 
     // DELETE  (ADDRESS)
-    AddressDto addressServiceDeleteById(Long id);
+    public D addressServiceDeleteById(Long id);
 
     /////////////////////////////////////////////////
     // SORTING / PAGINTION
