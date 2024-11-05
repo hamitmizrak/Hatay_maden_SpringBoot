@@ -2,7 +2,7 @@ package com.hamitmizrak.runner;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 // LOMBOK
@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 
 // DATA SET
 @Component
+
+// Birden fazla CommandLineRunner varsa, hangi sırayla çalışacaklarını belirlemek için @Order anotasyonu kullanılabilir:
+@Order(1)
 public class _1_ProjectDataSet implements CommandLineRunner {
 
     @Override
