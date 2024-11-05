@@ -89,7 +89,8 @@ public class AddressServiceImpl implements IAddressService<AddressDto, AddressEn
     public List<AddressDto> addressServiceList() {
         return iAddressRepository.findAll()
                 .stream()
-                .map(AddressMapper::AddressEntityToDto)
+                //.map(AddressMapper::AddressEntityToDto) // 1.YOL
+                .map(addressEntity -> AddressMapper.AddressEntityToDto(addressEntity))// 2.YOL
                 .collect(Collectors.toList());
     }
 
@@ -116,7 +117,7 @@ public class AddressServiceImpl implements IAddressService<AddressDto, AddressEn
         addressEntityEmbeddable.setStreet(addressDto.getStreet());
         addressEntityEmbeddable.setDoorNumber(addressDto.getDoorNumber());
         addressEntityEmbeddable.setDescription(addressDto.getDescription());
-        addressEntityUpdate=iAddressRepository.saveAndFlush(addressEntityUpdate);
+        addressEntityUpdate = iAddressRepository.saveAndFlush(addressEntityUpdate);
         return entityAddressToDto(addressEntityUpdate);
     }
 
@@ -135,29 +136,33 @@ public class AddressServiceImpl implements IAddressService<AddressDto, AddressEn
     // PAGINATION
     @Override
     // Page, Pageable : org.springframework.data.domain;
-    public Page<AddressEntity> addressServicePagination(int currentPage, int pageSize) {
-        Pageable pageable= PageRequest.of(currentPage, pageSize);
-        Page<AddressEntity> addressEntityPage = iAddressRepository.findAll(pageable);
+    public Page<AddressDto> addressServicePagination(int currentPage, int pageSize) {
+        Pageable pageable = PageRequest.of(currentPage, pageSize);
+        Page<AddressDto> addressEntityPage = iAddressRepository.findAll(pageable).map(AddressMapper::AddressEntityToDto);
         return addressEntityPage;
     }
 
     // SORTING (Herhangi bir Kolono)
     @Override
-    public List<AddressEntity> addressServiceAllSortedBy(String sortedBy) {
-        return iAddressRepository.findAll(Sort.by(Sort.Direction.ASC, sortedBy));
+    public List<AddressDto> addressServiceAllSortedBy(String sortedBy) {
+        return iAddressRepository.findAll(Sort.by(Sort.Direction.ASC, sortedBy)).stream().map(AddressMapper::AddressEntityToDto).collect(Collectors.toList());
     }
 
     // SORTING (CITY ASC)
     @Override
-    public List<AddressEntity> addressServiceAllSortedByCityAsc() {
-        return iAddressRepository.findAll(Sort.by(Sort.Direction.ASC, "addressEntityEmbeddable.city"));
+    public List<AddressDto> addressServiceAllSortedByCityAsc() {
+        return iAddressRepository.findAll(Sort.by(Sort.Direction.ASC, "addressEntityEmbeddable.city"))
+                .stream().map(AddressMapper::AddressEntityToDto)
+                .collect(Collectors.toList());
     }
 
     // SORTING (CITY DESC)
     // Dikkat: Embeddable aldığımdan dolayı  yazdım=> addressEntityEmbeddable.city
     @Override
-    public List<AddressEntity> addressServiceAllSortedByCityDesc() {
-        return iAddressRepository.findAll(Sort.by(Sort.Direction.DESC, "addressEntityEmbeddable.city"));
+    public List<AddressDto> addressServiceAllSortedByCityDesc() {
+        return iAddressRepository.findAll(Sort.by(Sort.Direction.DESC, "addressEntityEmbeddable.city"))
+                .stream().map(AddressMapper::AddressEntityToDto)
+                .collect(Collectors.toList());
     }
 
 }
