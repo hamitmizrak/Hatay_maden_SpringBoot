@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -130,7 +131,7 @@ public class AddressServiceImpl implements IAddressService<AddressDto, AddressEn
     }
 
     /////////////////////////////////////////////////
-    // SORTING / PAGINTION
+    // SORTING / PAGINATION
     // PAGINATION
     @Override
     // Page, Pageable : org.springframework.data.domain;
@@ -140,22 +141,23 @@ public class AddressServiceImpl implements IAddressService<AddressDto, AddressEn
         return addressEntityPage;
     }
 
-    // SORTING
+    // SORTING (Herhangi bir Kolono)
     @Override
     public List<AddressEntity> addressServiceAllSortedBy(String sortedBy) {
-        return List.of();
+        return iAddressRepository.findAll(Sort.by(Sort.Direction.ASC, sortedBy));
     }
 
-    // SORTING
+    // SORTING (CITY ASC)
     @Override
     public List<AddressEntity> addressServiceAllSortedByCityAsc() {
-        return List.of();
+        return iAddressRepository.findAll(Sort.by(Sort.Direction.ASC, "addressEntityEmbeddable.city"));
     }
 
-    // SORTING
+    // SORTING (CITY DESC)
+    // Dikkat: Embeddable aldığımdan dolayı  yazdım=> addressEntityEmbeddable.city
     @Override
     public List<AddressEntity> addressServiceAllSortedByCityDesc() {
-        return List.of();
+        return iAddressRepository.findAll(Sort.by(Sort.Direction.DESC, "addressEntityEmbeddable.city"));
     }
 
 }
