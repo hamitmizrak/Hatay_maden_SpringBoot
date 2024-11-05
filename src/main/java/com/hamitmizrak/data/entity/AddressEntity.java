@@ -1,5 +1,6 @@
 package com.hamitmizrak.data.entity;
 
+import com.hamitmizrak.audit.AuditingAwareBaseEntity;
 import com.hamitmizrak.data.embeddable.AddressEntityEmbeddable;
 import jakarta.persistence.*;
 import lombok.*;
@@ -21,7 +22,7 @@ import java.util.Date;
 @Table(name = "adresses") // Database tablo adı
 
 // Address(1) - Customer(1)
-public class AddressEntity {
+public class AddressEntity extends AuditingAwareBaseEntity {
 
     // FIELD
     @Id

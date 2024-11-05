@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 
-// SUPER CLASS
+// EMBEDDABLE
 @Embeddable // Class Entity yapıları için daha okunaklı olması içindir
 public class AddressEntityEmbeddable {
 
