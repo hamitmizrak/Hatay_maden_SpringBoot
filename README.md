@@ -51,6 +51,1315 @@ public void springData() {
     apiResult = new ApiResult();
 }
 ```
+## Spring Boot
+```sh 
+
+```
+---
+
+Spring Framework, Java platformu üzerinde kurulu, açık kaynaklı ve popüler bir uygulama geliştirme çerçevesidir. Spring, özellikle kurumsal uygulamaların geliştirilmesini basitleştirmeyi hedefler. Bu çerçeve, uygulamalarda bağımlılık yönetimini ve uygulama mantığının modüler bir şekilde geliştirilmesini sağlar. Spring Framework, IoC (Inversion of Control - Denetim Ters Çevirme) ve DI (Dependency Injection - Bağımlılık Enjeksiyonu) gibi çekirdek özellikler üzerine kuruludur. Bu özellikler, geliştiricilerin yazılım bileşenlerini daha rahat bir şekilde yönetmelerine ve bağımlılıkları daha esnek bir şekilde tanımlamalarına olanak tanır.
+
+### Spring Framework'ün Özellikleri
+
+Spring Framework birçok modülden oluşur ve her modül, belirli bir işlevselliği sağlamaya yönelik tasarlanmıştır. Bu modüller, geliştiricilere uygulamanın çeşitli katmanlarını ele almada yardımcı olur. Başlıca özellikleri ve modülleri şunlardır:
+
+1. **IoC (Inversion of Control) ve DI (Dependency Injection)**: Spring’in en temel özelliklerinden biri IoC prensibidir. IoC, nesnelerin bağımlılıklarının kendilerinin oluşturulması yerine dışarıdan yönetilmesi anlamına gelir. DI, bağımlılıkların nesneye dışarıdan verilmesi sürecidir. Bu sayede bağımlılıklar kolayca yönetilir ve test edilebilirlik artar.
+
+2. **Aspect-Oriented Programming (AOP)**: AOP, çapraz kesen endişeleri ele almak için kullanılır. Örneğin, loglama, güvenlik gibi işlevler, AOP ile modüler hale getirilebilir. AOP, belirli görevleri (örneğin güvenlik veya loglama) uygulama mantığından ayırarak, bu görevlerin uygulamaya enjekte edilmesine olanak tanır. Spring’in AOP desteği, kullanıcıların özelleştirilebilir yöntemleri kullanarak uygulamaları daha yönetilebilir hale getirmelerini sağlar.
+
+3. **Transaction Management (İşlem Yönetimi)**: Spring, veri tutarlılığını sağlamak için işlem yönetimi sağlar. Bu, özellikle veri tabanları ve diğer kaynaklarla yapılan işlemlerde oldukça önemlidir. Spring’in işlem yönetimi, programcıların işlem yönetimini kodlara fazla müdahale etmeden ele almalarına imkan tanır.
+
+4. **Spring MVC (Model-View-Controller)**: Web tabanlı uygulamaların geliştirilmesi için kullanılan bir modüldür. MVC mimarisi üzerine kuruludur ve geliştiricilere hem basit hem de karmaşık web uygulamaları geliştirme imkanı tanır. Spring MVC, isteklere yanıt veren denetleyiciler, model-veri yönetimi ve görünüm şablonlarıyla güçlü bir yapı sunar.
+
+5. **Spring Data**: Veritabanı işlemlerini basitleştiren bir modüldür. ORM (Object-Relational Mapping) araçlarıyla entegrasyonu sağlar (örneğin Hibernate ile). Spring Data, veritabanı işlemlerinde temel CRUD (Create, Read, Update, Delete) işlemlerini kolaylaştırır ve veri erişim katmanında tekrarlayan kodları minimize eder.
+
+6. **Spring Boot**: Spring Framework’ün daha hızlı ve kolay kullanımını sağlamak için geliştirilmiş bir modüldür. Spring Boot, sıfırdan bir uygulama başlatmayı ve ayarlamayı çok kolay hale getirir. Otomatik yapılandırma özelliği sayesinde, birçok ayar dosyasını manuel olarak oluşturmanıza gerek kalmaz. Spring Boot aynı zamanda bağımsız çalışabilen bir jar dosyası oluşturma yeteneği sunar ve bu sayede uygulama dağıtımı oldukça kolaylaşır.
+
+7. **Spring Security**: Uygulamalarda güvenliği sağlamak için kullanılan bir modüldür. Kimlik doğrulama ve yetkilendirme işlemlerini kolayca yönetmeyi sağlar. Spring Security, web tabanlı uygulamalarda oturum yönetimi, kimlik doğrulama, kullanıcı rolleri, erişim kontrolü gibi güvenlik özelliklerini sağlar.
+
+8. **Spring Cloud**: Mikroservis mimarisi için özel olarak tasarlanmış bir modüldür. Mikroservisler arasındaki iletişim, yapılandırma yönetimi, yük dengeleme, hata toleransı gibi konularda çözüm sunar. Spring Cloud, mikroservis tabanlı uygulamalar için konfigürasyon yönetimi, servis keşfi, devre kesici (circuit breaker) gibi özellikler sunar.
+
+9. **Spring Batch**: Batch (toplu) işlemleri yönetmek için kullanılan bir modüldür. Özellikle büyük veri işleme görevlerinde ve arka planda çalışan toplu işlerin yönetiminde kullanılır. Spring Batch, toplu işlemleri zamanlayarak ve iş akışlarını düzenleyerek veri işleme süreçlerini daha verimli hale getirir.
+
+10. **Spring Integration**: Kurumsal entegrasyon desenlerini (EIP) destekleyen bir modüldür. Sistemler arası mesajlaşma, veri senkronizasyonu gibi işlemleri kolaylaştırır. Spring Integration, uygulamaların başka sistemlerle entegre çalışmasını sağlamak için güçlü bir yapı sunar.
+
+### Spring Framework’ün Faydaları
+
+- **Test Edilebilirlik**: Spring, DI ve IoC kullanarak nesneler arasındaki bağımlılıkları yönetir. Bu sayede nesneler bağımsız olarak test edilebilir hale gelir.
+- **Modülerlik ve Esneklik**: Spring’in modüler yapısı, sadece ihtiyaç duyulan modüllerin kullanılmasına imkan tanır.
+- **Açık Kaynak ve Topluluk Desteği**: Spring, açık kaynak kodlu bir çerçeve olduğundan sürekli güncellenir ve geniş bir topluluğa sahiptir.
+- **Performans ve Verimlilik**: Spring Framework, işlem yönetimi ve veri erişim katmanı gibi birçok alanı optimize eder, bu da daha yüksek performans sağlar.
+- **Kurumsal Düzeyde Uygulama Desteği**: Spring, büyük ölçekli kurumsal uygulamaların geliştirilmesinde yaygın olarak kullanılır. Özellikle Spring Cloud ve Spring Batch gibi modüller, büyük veri işlemlerinde ve mikroservis mimarilerinde iş yükünü azaltır.
+
+### Örnek Kullanım Senaryosu
+
+Bir e-ticaret uygulaması geliştirdiğinizi düşünelim. Bu uygulamada Spring Framework’ün sunduğu özellikler şu şekillerde kullanılabilir:
+
+1. **Dependency Injection**: Uygulamadaki bileşenler arasındaki bağımlılıklar, DI sayesinde daha kolay yönetilir. Örneğin, bir ürün servisi (ProductService) ve bir veri erişim katmanı (ProductRepository) arasındaki bağımlılık DI ile sağlanabilir.
+
+2. **Spring MVC**: Web tabanlı bir yapı olduğu için, Spring MVC kullanarak kullanıcıların ürünleri listeleyebileceği, sepete ekleyebileceği ve satın alabileceği bir arayüz oluşturulabilir.
+
+3. **Spring Data**: Ürün, müşteri ve sipariş verileri bir veritabanında saklanabilir. Spring Data, bu veriler üzerinde CRUD işlemlerini basitleştirir.
+
+4. **Spring Security**: Kullanıcı kimlik doğrulama ve yetkilendirme işlemleri için kullanılabilir. Örneğin, yalnızca yetkili kullanıcıların sipariş verebilmesini sağlamak için Spring Security ile güvenlik katmanı eklenebilir.
+
+5. **Spring Cloud**: Mikroservis mimarisi tercih ediliyorsa, her hizmeti bağımsız servisler olarak geliştirmek için Spring Cloud modülleri kullanılabilir. Örneğin, ürün ve sipariş servisi ayrı ayrı mikroservisler olarak geliştirilebilir.
+
+6. **Spring Batch**: Belirli zamanlarda çalıştırılması gereken veri işleme görevleri varsa (örneğin, günlük satış raporu oluşturmak gibi), Spring Batch ile bu işlemler otomatik olarak zamanlanabilir.
+
+### Spring Framework’ün Mimari Bileşenleri
+
+Spring Framework’ün çekirdeğinde IoC kapsayıcısı (container) bulunur. Bu kapsayıcı, uygulamadaki nesnelerin yaşam döngüsünü yönetir. IoC kapsayıcısı, XML tabanlı konfigürasyonlar, anotasyonlar veya Java tabanlı konfigürasyonlar ile yapılandırılabilir. Spring’in IoC kapsayıcısı, uygulama içinde kullanılan nesneleri otomatik olarak enjekte eder ve bu nesneler arasındaki bağımlılıkları yönetir.
+
+### Sonuç
+
+Spring Framework, Java tabanlı uygulamalar geliştirmek için güçlü ve esnek bir çerçevedir. Çekirdek modülleri ve kapsamlı modüler yapısıyla, hem küçük ölçekli hem de büyük ölçekli kurumsal uygulamalarda kullanılabilir. IoC ve DI gibi modern yazılım geliştirme ilkelerini benimsemesi, uygulamaların daha kolay yönetilebilir, genişletilebilir ve test edilebilir olmasını sağlar. Spring, geniş topluluk desteği ve güçlü ekosistemi ile, yazılım geliştirme sürecini hızlandırır ve geliştiricilere esnek bir yapı sunar.
+
+Daha fazla bilgiye ihtiyacınız varsa veya herhangi bir modül hakkında ayrıntılı bir açıklama isterseniz, yardımcı olmaktan memnuniyet duyarım.
+
+## Spring Boot
+```sh 
+
+```
+---
+Spring Data, Spring Framework’ün bir parçası olup, veritabanı işlemlerini kolaylaştırmak ve veri erişim katmanında tutarlılığı sağlamak için tasarlanmış bir modüldür. Spring Data, farklı veri depoları ile (örneğin, ilişkisel veritabanları, NoSQL veritabanları, anahtar-değer depoları, grafik veritabanları) kolayca etkileşim kurulmasını sağlar ve bu veritabanları ile veri işlemlerini standartlaştırır.
+
+Spring Data’nın temel amacı, veri erişim katmanında tekrarlayan kodları azaltmak ve veri işlemlerini daha kolay hale getirmektir. Spring Data, özellikle CRUD (Create, Read, Update, Delete) işlemlerini daha az kod yazarak gerçekleştirmeye olanak tanır ve veri erişim katmanının daha modüler ve yönetilebilir hale gelmesini sağlar.
+
+### Spring Data’nın Faydaları ve Amacı
+
+1. **Tekrarlayan Kodları Azaltır**: Veritabanı işlemleri için her defasında aynı CRUD kodlarını yazmak yerine, Spring Data bu işlemleri otomatik olarak oluşturur ve kod tekrarını en aza indirir.
+
+2. **Çeşitli Veri Depolarıyla Uyumlu**: Spring Data, ilişkisel ve NoSQL veritabanları ile çalışabilen bir yapıya sahiptir. Bu, uygulamaların çok farklı veri depolarına kolayca entegre olmasını sağlar.
+
+3. **Veritabanı İşlemlerini Basitleştirir**: Spring Data, depo (repository) arayüzleri aracılığıyla veri işlemlerini sadeleştirir. Veri işlemlerini daha okunabilir ve anlaşılır hale getiren metotlarla veri depolarına erişim sağlar.
+
+4. **Dinamik Sorgular Oluşturur**: Spring Data, arayüz tanımlamaları aracılığıyla belirli kurallara dayalı olarak otomatik sorgular oluşturur. Örneğin, metot adlarına göre sorgular oluşturulabilir (Query Creation by Method Name).
+
+5. **Transparan Veri Erişimi**: Spring Data, veri işlemleri sırasında hangi veritabanı teknolojisinin kullanıldığını kullanıcıdan gizler ve bu sayede, veri erişim işlemleri daha kolay ve standart hale gelir.
+
+### Spring Data Modülleri
+
+Spring Data, farklı veri türlerini ve veri yönetimi senaryolarını ele almak için çeşitli alt modüller içerir. Bu modüller, farklı veri depoları ile çalışmayı kolaylaştırır.
+
+1. **Spring Data JPA**: Spring Data’nın en popüler modüllerinden biridir. Java Persistence API (JPA) üzerinde çalışan bir modüldür ve ilişkisel veritabanlarında ORM (Object-Relational Mapping) işlemlerini kolaylaştırır. Hibernate gibi JPA sağlayıcılarıyla entegre çalışır.
+
+2. **Spring Data MongoDB**: NoSQL veritabanı olan MongoDB ile çalışmayı sağlar. MongoDB’nin özelliklerine özel olarak geliştirilmiş sınıflar ve işlemler içerir.
+
+3. **Spring Data Redis**: Redis anahtar-değer veri deposuyla entegre çalışır. Redis, özellikle hızlı veri erişimi gereken durumlarda popülerdir ve Spring Data Redis, Redis ile hızlı ve kolay etkileşimi sağlar.
+
+4. **Spring Data Cassandra**: Büyük veri uygulamaları için kullanılan Cassandra veritabanıyla entegre çalışır. Cassandra, yüksek ölçeklenebilirlik ve yüksek erişilebilirlik sunan bir NoSQL veritabanıdır.
+
+5. **Spring Data Elasticsearch**: Elasticsearch arama ve analiz motoruyla çalışmak için geliştirilmiştir. Bu modül, hızlı arama ve analiz gereksinimleri olan uygulamalarda kullanılır.
+
+6. **Spring Data JDBC**: JPA kullanmak istemeyen veya daha doğrudan SQL işlemleri yapmak isteyenler için basit bir JDBC tabanlı veri erişim modülüdür.
+
+7. **Spring Data R2DBC**: Reactive Programming (tepkisel programlama) modelini destekleyen bir SQL veritabanı modülüdür. R2DBC, veri işlemlerinin asenkron olarak gerçekleştirilmesini sağlar.
+
+### Spring Data Repository (Depo) Kavramı
+
+Spring Data, veri erişim işlemlerini Repository adı verilen arayüzler üzerinden gerçekleştirir. Bu arayüzler, veri depolarıyla etkileşimi sağlar ve CRUD işlemlerini otomatik hale getirir. Spring Data, depo arayüzleri üzerinden veri erişim işlemlerini yapılandırmanızı sağlar ve karmaşık veri işlemleri için de ek işlevler sunar.
+
+Spring Data Repository’leri üç ana kategoriye ayrılabilir:
+
+1. **CrudRepository**: Temel CRUD işlemlerini destekleyen bir arayüzdür. `save`, `findById`, `findAll`, `deleteById` gibi metotlarla veri işlemlerini sağlar.
+
+2. **JpaRepository**: CrudRepository’den türetilmiş ve ek JPA özellikleri sunan bir arayüzdür. Sayfalandırma (pagination) ve sıralama (sorting) gibi ek özellikler içerir.
+
+3. **PagingAndSortingRepository**: Verilerin sayfalara bölünerek görüntülenmesi ve sıralanması gibi işlemleri destekleyen bir arayüzdür.
+
+### Spring Data Repository Metotları
+
+Spring Data, Repository arayüzlerine özel isimlendirme kuralları sayesinde sorguları dinamik olarak oluşturabilir. Örneğin, `findByFirstName(String firstName)` metodu, `firstName` alanına göre arama yapar. Metot adıyla sorgu oluşturma işlemi oldukça geniştir ve farklı işlemleri destekler:
+
+- `findBy` ile başlayan metotlar: Veriyi koşula göre arama yapar.
+- `countBy` ile başlayan metotlar: Verinin sayısını hesaplar.
+- `deleteBy` ile başlayan metotlar: Belirli bir koşula göre veriyi siler.
+
+Örneğin, bir müşteri deposu (CustomerRepository) için şu metotlar kullanılabilir:
+
+```java
+public interface CustomerRepository extends JpaRepository<Customer, Long> {
+    List<Customer> findByLastName(String lastName);
+    Customer findByEmail(String email);
+    List<Customer> findByFirstNameAndLastName(String firstName, String lastName);
+}
+```
+
+Bu metotlar sayesinde SQL sorgusu yazmaya gerek kalmadan veri işlemleri yapılabilir.
+
+### Custom Queries (Özelleştirilmiş Sorgular)
+
+Spring Data, bazı karmaşık sorgular için özel sorgular tanımlama imkanı da sunar. Bunun için iki ana yöntem vardır:
+
+1. **@Query Anotasyonu**: Özel sorgular tanımlamak için kullanılan anotasyondur. Native SQL veya JPQL (Java Persistence Query Language) ile sorgular yazılabilir.
+
+   ```java
+   @Query("SELECT c FROM Customer c WHERE c.firstName = ?1 AND c.lastName = ?2")
+   List<Customer> findByFirstAndLastName(String firstName, String lastName);
+   ```
+
+2. **Named Queries**: Entity sınıflarında tanımlanan, sabit isimli sorgulardır. Bu sorgular, genellikle Entity sınıfının başında tanımlanır ve isimlerine göre çağrılabilir.
+
+### Sayfalandırma ve Sıralama (Pagination and Sorting)
+
+Spring Data, büyük veri setlerinde çalışırken verilerin sayfalara bölünerek görüntülenmesini ve sıralanmasını sağlar. `Pageable` ve `Sort` nesneleri sayesinde veriler sayfalara bölünerek belirli bir sırada listelenebilir.
+
+Örneğin:
+
+```java
+Pageable pageable = PageRequest.of(0, 10, Sort.by("lastName").descending());
+Page<Customer> customers = customerRepository.findAll(pageable);
+```
+
+Bu örnekte `Customer` verileri, `lastName` alanına göre azalan bir şekilde ilk 10 kayıt için sayfalama yapılarak getirilir.
+
+### Spring Data ile Transaksiyon Yönetimi
+
+Spring Data, işlem yönetimi (transaction management) desteği de sunar. Birden fazla veri tabanı işleminin tek bir işlem olarak ele alınması durumunda verilerin tutarlılığını sağlamak için `@Transactional` anotasyonu kullanılabilir. Bu sayede bir işlem başarısız olduğunda tüm işlemler geri alınır (rollback yapılır).
+
+```java
+@Transactional
+public void saveCustomerData(Customer customer, Address address) {
+    customerRepository.save(customer);
+    addressRepository.save(address);
+}
+```
+
+### Spring Data Auditing (Denetim)
+
+Spring Data Auditing, veri tabanındaki kayıtlarda oluşturulma ve güncellenme tarihleri gibi verileri otomatik olarak tutar. `@CreatedDate` ve `@LastModifiedDate` anotasyonları ile bu işlemler kolayca yapılabilir.
+
+Örneğin:
+
+```java
+@Entity
+@EntityListeners(AuditingEntityListener.class)
+public class Customer {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @CreatedDate
+    private LocalDateTime createdDate;
+
+    @LastModifiedDate
+    private LocalDateTime lastModifiedDate;
+
+    // diğer alanlar ve getter/setter metodları
+}
+```
+
+Bu örnek sayesinde, `Customer` kaydı oluşturulduğunda `createdDate`, güncellendiğinde `lastModifiedDate` otomatik olarak güncellenir.
+
+### Spring Data’nın Avantajları ve Dezavantajları
+
+**Avantajları**:
+
+- **Hızlı ve Kolay CRUD İşlemleri**: Repository yapısı sayesinde CRUD işlemleri hızlıca yapılır.
+-
+
+**Kod Tekrarını Azaltır**: Sorguların çoğu dinamik olarak oluşturulduğu için kod tekrarı azalır.
+- **Veritabanı Bağımsızlığı**: Aynı veri erişim katmanı, farklı veri depolarında kullanılabilir.
+- **Sayfalandırma ve Sıralama Desteği**: Verilerin kolayca sayfalanması ve sıralanması mümkündür.
+
+**Dezavantajları**:
+
+- **Öğrenme Eğrisi**: Özellikle yeni başlayanlar için Repository ve Spring Data yapısının öğrenilmesi biraz zaman alabilir.
+- **Performans Problemleri**: Karmaşık sorgularda performans sorunları yaşanabilir. Bu durumda özelleştirilmiş sorgular yazılması gerekebilir.
+
+### Sonuç
+
+Spring Data, veri tabanıyla çalışan uygulamalar için büyük kolaylıklar sağlayan, geniş özellik yelpazesine sahip bir modüldür. Farklı veri depolarıyla entegre çalışabilmesi ve standart bir veri erişim katmanı sunması, uygulamaların daha hızlı geliştirilmesini ve daha yönetilebilir hale getirilmesini sağlar. Spring Data, veri işlemlerini modüler ve esnek hale getirirken, yazılımın sürdürülebilirliğini de artırır.
+
+Daha fazla detay isterseniz veya herhangi bir özel konu hakkında örnekler görmek isterseniz, size yardımcı olmaktan memnuniyet duyarım.
+
+## Spring Boot
+```sh 
+
+```
+---
+
+Spring API, Spring Framework’ün sunduğu programlama arayüzlerini ve araçlarını kapsayan bir yapıdır. Bu API'ler, özellikle RESTful web servisleri oluşturmak, çeşitli uygulama bileşenlerini birbirine bağlamak ve yazılım geliştirme sürecini kolaylaştırmak için kullanılır. Spring API, web tabanlı uygulamaların geliştirilmesi ve yönetilmesi için geniş bir araç seti sunar. Bu araç seti sayesinde geliştiriciler, yüksek performanslı, güvenli ve ölçeklenebilir web servisleri ve API'ler oluşturabilir.
+
+Spring API, özellikle REST API geliştirmede popülerdir ve birçok kurumsal projede kullanılır. RESTful servisler, istemci-sunucu mimarisi temelinde HTTP protokolü üzerinden veri alışverişi yapar ve Spring API bu servislerin hızlı ve etkili bir şekilde oluşturulmasına olanak tanır.
+
+### Spring API'nin Temel Bileşenleri
+
+Spring API, birçok farklı bileşeni içerir. Bu bileşenler, web uygulamaları geliştirme, veri işleme, güvenlik sağlama gibi farklı görevleri yerine getirmek üzere tasarlanmıştır. Başlıca bileşenleri şunlardır:
+
+1. **Spring MVC**: Model-View-Controller mimarisi üzerine kuruludur ve web tabanlı uygulama geliştirmeyi sağlar. Spring MVC, web isteklerini işleyerek yanıtlar, yönlendirme işlemlerini yönetir ve uygulama mantığını model katmanında kapsar. Spring MVC, REST API geliştirmede de büyük rol oynar ve HTTP protokolünü etkin bir şekilde kullanarak veri alışverişi yapılmasını sağlar.
+
+2. **Spring Web**: Bu bileşen, web uygulamaları ve REST API’ler geliştirmek için kullanılan temel bir modüldür. Web üzerinden veri gönderme, alma ve yönlendirme işlemlerini içerir. Özellikle Spring Boot ile birlikte kullanıldığında, Spring Web’in sağladığı basitleştirilmiş yapı, hızlı API geliştirmeyi sağlar.
+
+3. **Spring REST**: REST (Representational State Transfer) standartları üzerine kurulu servisler geliştirmek için kullanılan bir bileşendir. RESTful servisler, HTTP metotları (GET, POST, PUT, DELETE) ile çalışır ve JSON, XML gibi veri formatlarını kullanarak veri alışverişi yapar. Spring REST, Spring MVC ile entegre çalışarak RESTful API geliştirmeyi kolaylaştırır.
+
+4. **Spring Data REST**: Spring Data REST, veri tabanı işlemlerini REST API üzerinden kullanıma sunmayı sağlar. Bu modül, veri tabanı işlemlerini RESTful servisler aracılığıyla otomatikleştirir ve CRUD işlemleri için gerekli API'leri oluşturur. Bu sayede Spring Data ile oluşturulan veri modelleri, Spring Data REST kullanılarak hızlıca API'ler haline getirilebilir.
+
+5. **Spring HATEOAS (Hypermedia as the Engine of Application State)**: Spring HATEOAS, REST API'lerde daha zengin ve anlamlı yanıtlar oluşturmayı amaçlar. Hypermedia, API'nin istemcinin kendi kendine yol bulmasını sağlayan linkleri yanıtlarla birlikte döndürmesini sağlar. Örneğin, bir kullanıcı bilgisi döndürülürken, o kullanıcıya ait ilişkili diğer kaynakların (siparişler, adresler) bağlantıları da yanıt içinde sunulabilir.
+
+6. **Spring Security**: API'lerin güvenliğini sağlamak için kullanılan modüldür. Kimlik doğrulama, yetkilendirme ve erişim kontrolü gibi güvenlik işlemlerini yönetir. API'lerin güvenliğini sağlamak, özellikle kullanıcı verilerini korumak için son derece önemlidir. Spring Security, REST API'ler için OAuth2, JWT (JSON Web Tokens) gibi modern güvenlik protokollerini de destekler.
+
+7. **Spring Cloud**: Mikroservis mimarisine uygun API'ler geliştirmek için kullanılan Spring modülüdür. Spring Cloud, dağıtık sistemlerde kullanılan servis keşfi, yük dengeleme, yapılandırma yönetimi gibi özellikleri sağlar. Özellikle mikroservis tabanlı uygulamalarda, Spring Cloud ile API'lerin yönetimi kolaylaşır.
+
+### Spring API ile RESTful Servis Geliştirme
+
+RESTful servisler, Spring API'nin en sık kullanıldığı alanlardan biridir. Spring API, REST standartlarına uygun servislerin hızlı ve kolay bir şekilde geliştirilmesini sağlar. Spring API ile RESTful servis geliştirmek için izlenen adımlar şunlardır:
+
+1. **Controller Sınıfları**: Spring API'de RESTful servislerin ana bileşeni olan denetleyiciler (controllers) kullanılır. Bu sınıflar, gelen HTTP isteklerini işleyerek uygun yanıtları döndürür. Her bir HTTP isteği, belirli bir denetleyici metoduna yönlendirilir ve burada işlenir.
+
+   Örneğin, `@RestController` anotasyonu ile bir denetleyici sınıfı tanımlanabilir ve `@RequestMapping` ile belirli bir URL ile eşleştirilebilir:
+
+   ```java
+   @RestController
+   @RequestMapping("/api/customers")
+   public class CustomerController {
+
+       @GetMapping("/{id}")
+       public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
+           Customer customer = customerService.findById(id);
+           return ResponseEntity.ok(customer);
+       }
+
+       @PostMapping
+       public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
+           Customer createdCustomer = customerService.save(customer);
+           return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer);
+       }
+   }
+   ```
+
+   Bu örnekte, `CustomerController` sınıfı, `/api/customers` yoluyla HTTP GET ve POST isteklerini işler. `@GetMapping` ve `@PostMapping` anotasyonları ile bu isteklerin belirli metodlara yönlendirilmesi sağlanır.
+
+2. **DTO (Data Transfer Object) Kullanımı**: API’ler aracılığıyla veri alışverişinde kullanılan nesneler, genellikle DTO adı verilen veri transfer nesneleri ile yönetilir. DTO’lar, veri modelini doğrudan istemciye göndermek yerine daha güvenli ve optimize edilmiş veri yapıları sunar.
+
+3. **Exception Handling**: Spring API, hata durumlarında daha anlamlı ve kullanıcı dostu yanıtlar döndürmek için istisna yönetimi sağlar. `@ExceptionHandler` anotasyonu ile belirli hata türlerine özel yanıtlar oluşturulabilir. Bu, istemcinin hata durumlarında daha ayrıntılı bilgi almasını sağlar.
+
+   Örneğin:
+
+   ```java
+   @ControllerAdvice
+   public class GlobalExceptionHandler {
+
+       @ExceptionHandler(ResourceNotFoundException.class)
+       public ResponseEntity<ErrorResponse> handleResourceNotFound(ResourceNotFoundException ex) {
+           ErrorResponse error = new ErrorResponse("Resource not found", ex.getMessage());
+           return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+       }
+   }
+   ```
+
+4. **ResponseEntity Kullanımı**: Spring API, yanıtları daha esnek bir şekilde döndürmek için `ResponseEntity` sınıfını sağlar. Bu sınıf ile HTTP durum kodları, başlık bilgileri ve yanıt gövdesi özelleştirilebilir. `ResponseEntity`, yanıtın daha anlamlı ve detaylı olmasını sağlar.
+
+5. **Parametre Kullanımı**: Spring API, API isteklerinde parametrelerin kolayca kullanılmasını sağlar. `@RequestParam`, `@PathVariable` gibi anotasyonlar ile URL parametreleri, yol parametreleri ve sorgu parametreleri yönetilebilir.
+
+   ```java
+   @GetMapping
+   public List<Customer> getCustomersByStatus(@RequestParam String status) {
+       return customerService.findByStatus(status);
+   }
+   ```
+
+### Spring Data REST ile Otomatik API Geliştirme
+
+Spring Data REST, Spring Data ile oluşturulmuş veri modellerini otomatik olarak REST API olarak sunmak için kullanılır. Bu sayede veri tabanı işlemleri için manuel olarak denetleyici sınıfları yazmaya gerek kalmaz. Spring Data REST, Spring Data repository arayüzlerini kullanarak otomatik olarak CRUD API’leri oluşturur.
+
+Örneğin, `CustomerRepository` aşağıdaki gibi tanımlanmışsa:
+
+```java
+@RepositoryRestResource
+public interface CustomerRepository extends JpaRepository<Customer, Long> {
+}
+```
+
+Spring Data REST, bu repository’ye otomatik olarak CRUD işlemlerini sağlayan URL’ler ekler:
+
+- `GET /customers`: Tüm müşterileri getirir.
+- `POST /customers`: Yeni bir müşteri ekler.
+- `GET /customers/{id}`: Belirli bir müşteri detayını getirir.
+- `PUT /customers/{id}`: Belirli bir müşteriyi günceller.
+- `DELETE /customers/{id}`: Belirli bir müşteriyi siler.
+
+Bu özellik, veri tabanı işlemlerini hızlı bir şekilde API olarak sunmak isteyen geliştiriciler için büyük bir avantaj sağlar.
+
+### Spring HATEOAS ile Hypermedia Destekli API’ler
+
+Spring HATEOAS, REST API yanıtlarını zenginleştirmek için kullanılan bir modüldür. HATEOAS, istemcinin API yapısını daha iyi anlamasını ve navigasyonu kolaylaştırmasını sağlar. Yanıt içerisine linkler ekleyerek, istemcinin ek bir dokümana ihtiyaç duymadan ilgili kaynaklara erişebilmesi sağlanır.
+
+Örneğin, müşteri detaylarını döndürürken, o müşteriye ait siparişlerin linkini de yanıtabilirsiniz. Bu, istemcinin müşteri verisini aldıktan sonra ilgili sipariş bilgilerine kolayca ulaşmasını sağlar.
+
+```java
+@RestController
+@RequestMapping("/api/customers")
+public class CustomerController {
+
+    @Autowired
+    private CustomerService customerService;
+
+    @GetMapping("/{id}")
+    public EntityModel<Customer> getCustomerById(@PathVariable Long id) {
+        Customer customer = customerService.findById(id);
+
+        EntityModel<Customer> resource = EntityModel.of(customer);
+        resource.add(linkTo(methodOn(CustomerController.class).getCustomerById(id)).withSelfRel());
+        resource.add(linkTo(methodOn(OrderController.class).getOrdersByCustomerId(id)).withRel("orders"));
+
+        return resource;
+    }
+}
+```
+
+Bu örnekte `EntityModel` kullanılarak `Customer` nesnesine "self" linki ve ilişkili "orders" linki eklenmiştir. İstemci, yanıtı aldığında müşteriye ait siparişlere de kolayca erişebilir.
+
+### Spring Security ile API Güvenliği
+
+API’lerin güvenliği, özellikle hassas veri alışverişi yapılan uygulamalarda büyük önem taşır. Spring Security, kimlik doğrulama ve yetkilendirme süreçlerini yöneterek API'leri güvenli hale getirir. Spring API’de güvenlik sağlamak için JWT (JSON Web Token) veya OAuth2 gibi modern güvenlik protokolleri kullanılabilir.
+
+**JWT ile Kimlik Doğrulama**: JWT, kullanıcının kimliğini doğrulamak için kullanılan, imzalı bir token yapısıdır. Kullanıcı giriş yaptığında, JWT token oluşturulur ve kullanıcıya gönderilir. İstemci, API isteklerinde bu token'ı taşıyarak kimliğini doğrular.
+
+```java
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+            .authorizeRequests()
+            .antMatchers("/api/auth/**").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .addFilter(new JWTAuthenticationFilter(authenticationManager()));
+    }
+}
+```
+
+Bu yapılandırmada `/api/auth/**` altındaki URL'lere kimlik doğrulama olmadan erişim izni verilmiştir. Diğer tüm URL'ler için JWT kimlik doğrulaması gereklidir.
+
+### Spring API'de Swagger ile API Dokümantasyonu
+
+Spring API'leri geliştirirken, istemcilerin API'leri nasıl kullanacağını anlamalarını sağlamak için dokümantasyon önemlidir. Swagger, Spring API’leri için kapsamlı ve otomatik bir dokümantasyon çözümü sunar. Spring Boot projelerine kolayca entegre edilebilir ve API uç noktalarını görselleştirir.
+
+Swagger’ın kullanımı için, `springdoc-openapi-ui` gibi bir bağımlılık projeye eklenebilir. Bu, API uç noktalarının interaktif bir dokümantasyon sayfasında gösterilmesini sağlar.
+
+```xml
+<dependency>
+    <groupId>org.springdoc</groupId>
+    <artifactId>springdoc-openapi-ui</artifactId>
+    <version>1.5.9</version>
+</dependency>
+```
+
+Swagger UI ile, geliştiriciler API isteklerini test edebilir ve dönen yanıtları görebilir, bu da hata ayıklama ve test sürecini kolaylaştırır.
+
+### Spring API'nin Avantajları ve Dezavantajları
+
+**Avantajları**:
+
+- **Hızlı Geliştirme**: Spring API modülleri, geliştiricilere standart yapılar ve anotasyonlar sunarak hızlı bir şekilde API geliştirme imkanı tanır.
+- **Esneklik ve Özelleştirilebilirlik**: Spring’in modüler yapısı, projeye uygun bileşenlerin kullanılmasını ve özelleştirilmesini kolaylaştırır.
+- **Geniş Güvenlik Desteği**: Spring Security ile güçlü kimlik doğrulama ve yetkilendirme süreçleri oluşturulabilir.
+- **Kapsamlı Ekosistem**: Spring Data, Spring MVC, Spring Security gibi modüller, API geliştirme sürecinde her türlü ihtiyaca yanıt verir.
+
+**Dezavantajları**:
+
+- **Öğrenme Eğrisi**: Spring API, yeni başlayanlar için karmaşık olabilir, özellikle HATEOAS, güvenlik yapılandırmaları gibi özellikler öğrenme sürecini uzatabilir.
+- **Performans Sorunları**: Büyük ölçekli uygulamalarda performans optimizasyonları gerekebilir.
+- **Özelleştirme Gereksinimi**: Özellikle API güvenliği veya özelleştirilmiş sorgular gibi özel gereksinimler için yapılandırmalar karmaşık hale gelebilir.
+
+### Sonuç
+
+Spring API, güçlü ve kapsamlı bir araç seti sunarak kurumsal düzeyde API’lerin hızlı ve güvenli bir şekilde geliştirilmesini sağlar. RESTful servisler, güvenlik önlemleri, veri yönetimi ve dokümantasyon gibi konularda sağladığı çözümler, geliştiricilere modüler, esnek ve test edilebilir API’ler oluşturma imkanı tanır. Spring API’ler, kurumsal projelerde tercih edilen bir yapı olarak, geniş topluluk desteği ve sürekli güncellenen ekosistemi sayesinde modern yazılım geliştirme süreçlerinin vazgeçilmez bir parçası olmuştur.
+
+Daha detaylı bir konu veya örnek ile ilgili sorularınız varsa, daha ayrıntılı bilgi sağlamaktan memnuniyet duyarım.
+
+
+
+## Spring Boot
+```sh 
+
+```
+---
+
+Spring Security, Java tabanlı uygulamalarda kimlik doğrulama, yetkilendirme ve erişim kontrolü sağlamak için kullanılan güçlü ve esnek bir güvenlik çerçevesidir. Spring Framework’ün bir modülü olan Spring Security, web uygulamaları, RESTful API’ler ve mikroservis mimarilerinde güvenlik önlemleri almak için yaygın olarak kullanılır. Özellikle kurumsal projelerde güvenliğin kritik önemde olduğu durumlarda, Spring Security’nin sunduğu kapsamlı güvenlik özellikleri, uygulamaların yüksek güvenlik standartlarına uygun bir şekilde geliştirilmesine olanak tanır.
+
+### Spring Security'nin Temel Özellikleri ve Faydaları
+
+1. **Kimlik Doğrulama (Authentication)**: Kullanıcıların sisteme erişim sağlamak için doğrulanmasını sağlar. Kimlik doğrulama, kullanıcı adı ve şifre ile yapılabileceği gibi, OAuth2 ve JWT (JSON Web Token) gibi modern güvenlik protokolleri ile de desteklenir.
+
+2. **Yetkilendirme (Authorization)**: Kimlik doğrulaması yapılan kullanıcıların hangi kaynaklara erişim iznine sahip olduğunu belirler. Kullanıcılar belirli roller ve yetkilere göre sınıflandırılır ve bu yetkiler doğrultusunda kaynaklara erişim izni verilir.
+
+3. **HTTP Güvenliği**: Spring Security, HTTP tabanlı saldırılara karşı koruma sağlar. Özellikle CSRF (Cross-Site Request Forgery - Siteler Arası İstek Sahteciliği), XSS (Cross-Site Scripting - Siteler Arası Betik Çalıştırma) ve Clickjacking gibi saldırılara karşı güvenlik önlemleri sunar.
+
+4. **Şifreleme ve Hashing Desteği**: Spring Security, kullanıcı şifrelerinin güvenli bir şekilde saklanması ve işlenmesi için hashing algoritmaları kullanır. Örneğin, BCrypt algoritması ile şifrelerin güvenli bir şekilde saklanmasını sağlar.
+
+5. **Esnek Kimlik Doğrulama Mekanizmaları**: Temel kimlik doğrulamanın yanı sıra, LDAP (Lightweight Directory Access Protocol), OAuth2, OpenID Connect ve SSO (Single Sign-On) gibi çeşitli kimlik doğrulama protokolleri ile entegre çalışır.
+
+6. **Kolay Konfigürasyon ve Esneklik**: Spring Security, hem XML tabanlı hem de Java tabanlı konfigürasyon destekler. Geliştiricilere, güvenlik ayarlarını özelleştirme ve uygulama gereksinimlerine göre yapılandırma imkanı tanır.
+
+### Spring Security’nin Mimarisi
+
+Spring Security’nin temel yapısı üç ana bileşenden oluşur:
+
+1. **SecurityContext**: Uygulamada oturum açan kullanıcıya ait güvenlik bilgisini saklar. SecurityContext, kimlik doğrulama işlemi tamamlandığında kullanıcının kimliğini doğrulayan bilgileri içerir ve uygulama boyunca bu bilgilerden faydalanır.
+
+2. **AuthenticationManager**: Kullanıcının kimliğini doğrulayan ana bileşendir. AuthenticationManager, kimlik doğrulama sağlayıcıları (authentication providers) aracılığıyla kimlik doğrulama işlemlerini gerçekleştirir. Bu sağlayıcılar, kullanıcı bilgilerini doğrulamak için veri tabanları, LDAP veya üçüncü parti kimlik doğrulama servisleri ile entegre çalışabilir.
+
+3. **AccessDecisionManager**: Yetkilendirme kararlarını alır ve kullanıcının belirli bir kaynağa erişim hakkı olup olmadığını belirler. Kullanıcı, istenen kaynağa erişim iznine sahip değilse, erişim reddedilir.
+
+### Spring Security ile Kimlik Doğrulama (Authentication)
+
+Kimlik doğrulama, kullanıcının geçerli bir kullanıcı adı ve şifre ile sisteme giriş yapması işlemidir. Spring Security’de kimlik doğrulama işlemi `AuthenticationManager` aracılığıyla gerçekleştirilir. `UsernamePasswordAuthenticationToken` sınıfı, en yaygın kimlik doğrulama yöntemi olan kullanıcı adı ve şifreyle doğrulama yapar. `AuthenticationProvider` ise bu doğrulama sürecinin gerçek kaynağıdır; yani kullanıcı bilgilerini doğrulamak için veri tabanında arama yapar.
+
+#### Örnek Kimlik Doğrulama Yapılandırması
+
+```java
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+            .withUser("user")
+            .password(passwordEncoder().encode("password"))
+            .roles("USER")
+            .and()
+            .withUser("admin")
+            .password(passwordEncoder().encode("admin"))
+            .roles("ADMIN");
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .csrf().disable()
+            .authorizeRequests()
+            .antMatchers("/admin/**").hasRole("ADMIN")
+            .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+            .and()
+            .formLogin();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+}
+```
+
+Bu yapılandırmada, `inMemoryAuthentication` ile kullanıcı bilgileri bellekte saklanır. `/admin/**` yoluna sadece "ADMIN" rolüne sahip kullanıcılar erişebilirken, `/user/**` yoluna "USER" veya "ADMIN" rolüne sahip kullanıcılar erişebilir.
+
+### Yetkilendirme (Authorization)
+
+Spring Security, kullanıcıların belirli kaynaklara erişimini kısıtlayarak yetkilendirme işlemlerini yönetir. Kullanıcılar roller (roles) ve yetkiler (authorities) aracılığıyla sınıflandırılır. Bu roller ve yetkiler, belirli URL’lere veya metodlara erişim kontrolü sağlamak için kullanılır.
+
+#### Rol Tabanlı Yetkilendirme
+
+Rol tabanlı yetkilendirme, kullanıcının rolüne göre kaynaklara erişim hakkı vermeyi sağlar. `@Secured` ve `@PreAuthorize` anotasyonları, rol tabanlı erişim kontrolünü gerçekleştirmede kullanılır.
+
+```java
+@Secured("ROLE_ADMIN")
+public void adminOnlyMethod() {
+    // Yalnızca ROLE_ADMIN rolüne sahip kullanıcılar bu metodu çağırabilir
+}
+
+@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+public void userOrAdminMethod() {
+    // ROLE_USER veya ROLE_ADMIN rolüne sahip kullanıcılar bu metodu çağırabilir
+}
+```
+
+### Spring Security ile HTTP Güvenliği
+
+Spring Security, HTTP tabanlı güvenlik tehditlerine karşı koruma sağlar. Aşağıda, Spring Security’nin HTTP güvenliği kapsamında sağladığı başlıca koruma mekanizmaları yer almaktadır:
+
+1. **CSRF (Cross-Site Request Forgery)**: CSRF saldırılarına karşı koruma sağlar. CSRF, saldırganın kullanıcının oturumunu ele geçirerek kullanıcı adına istek yapmasını sağlayan bir saldırı türüdür. Spring Security, CSRF korumasını varsayılan olarak aktifleştirir.
+
+2. **Clickjacking Koruması**: Spring Security, uygulamanın başka siteler tarafından çerçevelenmesini önlemek için X-Frame-Options başlığını kullanarak clickjacking saldırılarına karşı koruma sağlar.
+
+3. **XSS Koruması**: XSS (Cross-Site Scripting) saldırılarına karşı korunmak için içerik güvenlik politikaları (Content Security Policies) uygulanabilir.
+
+4. **HTTP Strict Transport Security (HSTS)**: HSTS, yalnızca HTTPS bağlantılarını zorunlu kılarak veri aktarım güvenliğini artırır.
+
+### JWT ile Kimlik Doğrulama ve Yetkilendirme
+
+JWT, kullanıcı kimliğini doğrulamak ve API güvenliğini sağlamak için popüler bir yöntemdir. JWT kullanıldığında, kullanıcı giriş yaptığında bir token üretilir ve bu token, sonraki isteklerde kimlik doğrulaması için kullanılır. Spring Security, JWT token ile kimlik doğrulama işlemlerini kolayca yapılandırma imkanı sunar.
+
+#### JWT Kimlik Doğrulama Örneği
+
+JWT kullanarak kimlik doğrulama yapılacak bir örnek yapılandırma şu şekildedir:
+
+1. **JWT Oluşturma**: Kullanıcı giriş yaptığında, JWT token oluşturulur ve istemciye döndürülür.
+2. **JWT Doğrulama**: İstemciden gelen her istekte, JWT doğrulanarak kullanıcının kimliği belirlenir.
+
+```java
+// JWT oluşturma ve doğrulama işlemleri için kullanılan sınıf
+public class JwtUtil {
+
+    private String secretKey = "mySecretKey";
+
+    public String generateToken(String username) {
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .compact();
+    }
+
+    public boolean validateToken(String token, UserDetails userDetails) {
+        final String username = extractUsername(token);
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+}
+```
+
+### OAuth2 ve Spring Security
+
+Spring Security, OAuth2 protokolünü destekleyerek üçüncü taraf kimlik doğrulama servisleriyle (Google, Facebook gibi) entegre çalışabilir. OAuth
+
+2, özellikle kullanıcıların aynı hesapla farklı uygulamalarda oturum açmasını sağlar ve API güvenliği için de yaygın olarak kullanılır.
+
+### Spring Security ile Test ve Hata Yönetimi
+
+Spring Security, güvenlik testlerini kolaylaştırmak için `@WithMockUser`, `@WithUserDetails` gibi test anotasyonları sağlar. Bu anotasyonlar ile belirli roller ve yetkiler atanarak güvenlik testleri yapılabilir.
+
+```java
+@Test
+@WithMockUser(username = "admin", roles = {"ADMIN"})
+public void testAdminAccess() {
+    // ADMIN rolüyle test işlemleri yapılır
+}
+```
+
+### Spring Security’nin Avantajları ve Dezavantajları
+
+**Avantajları**:
+
+- **Yüksek Güvenlik Desteği**: Kimlik doğrulama, yetkilendirme ve HTTP güvenliği sağlar.
+- **Esneklik**: LDAP, OAuth2, JWT gibi çeşitli kimlik doğrulama protokolleri ile entegre çalışabilir.
+- **Kolay Konfigürasyon**: XML veya Java tabanlı konfigürasyon seçenekleri sunar.
+- **Modüler Yapı**: Farklı güvenlik bileşenlerinin ihtiyaca göre eklenmesini sağlar.
+
+**Dezavantajları**:
+
+- **Öğrenme Eğrisi**: İlk kez kullananlar için oldukça karmaşık olabilir.
+- **Performans Maliyeti**: Güvenlik işlemleri ek yük getirebilir, özellikle büyük ölçekli uygulamalarda optimize edilmesi gerekebilir.
+
+### Sonuç
+
+Spring Security, uygulamalarda güçlü bir güvenlik altyapısı sunarak veri gizliliğini ve güvenliğini sağlar. Kimlik doğrulama, yetkilendirme ve HTTP güvenliği özellikleriyle geniş kapsamlı güvenlik ihtiyaçlarını karşılar. Modern güvenlik standartlarını destekleyen Spring Security, web uygulamaları ve API’lerde güvenlik sağlamak isteyen geliştiriciler için ideal bir çözümdür.
+
+Daha ayrıntılı örnekler veya belirli bir konuyla ilgili daha fazla bilgiye ihtiyacınız varsa, size yardımcı olmaktan memnuniyet duyarım.
+
+## Spring Boot
+```sh 
+
+```
+---
+
+ModelMapper, Java tabanlı uygulamalarda veri nesneleri (model sınıfları) arasındaki dönüşüm işlemlerini kolaylaştıran bir kütüphanedir. Özellikle DTO (Data Transfer Object) ve Entity sınıfları arasındaki veri aktarımını otomatikleştirerek, kod tekrarını azaltır ve uygulamaların daha temiz, sürdürülebilir hale gelmesini sağlar. DTO ve Entity nesneleri, genellikle veri tabanıyla iletişim kuran veya kullanıcı arayüzüne sunulan farklı veri yapılarında temsil edilir. Bu nesneler arasında veri aktarımı gerektiren durumlarda, ModelMapper otomatik olarak gerekli eşleştirmeleri yapar.
+
+### ModelMapper’ın Kullanım Amacı ve Faydaları
+
+1. **Kod Tekrarını Azaltır**: DTO ve Entity sınıfları arasında veri aktarımı yaparken her iki sınıfın alanlarını manuel olarak eşleştirmek gerekir. ModelMapper, bu eşleştirmeyi otomatik hale getirerek kod tekrarını azaltır.
+
+2. **Daha Temiz ve Yönetilebilir Kod**: Otomatik eşleştirme sayesinde veri dönüştürme işlemleri daha temiz bir kod yapısı içinde yürütülür. Bu, özellikle büyük projelerde yönetilebilirliği artırır.
+
+3. **Hızlı Geliştirme**: ModelMapper, eşleştirmeleri otomatik olarak gerçekleştirdiğinden, veri dönüşüm işlemleri daha hızlı yapılır ve geliştirme süreci kısalır.
+
+4. **Esneklik ve Özelleştirilebilirlik**: ModelMapper, belirli alanlarda manuel eşleştirme ve özelleştirme yapmayı da destekler. Özel gereksinimlere göre eşleştirme kuralları tanımlanabilir.
+
+### ModelMapper’ın Temel Özellikleri
+
+ModelMapper, özellikle alan adları aynı olan sınıflar arasında otomatik eşleştirme yapması ile bilinir. Bu eşleştirme sürecinde, kaynak (source) nesne ile hedef (destination) nesne arasındaki alanların isimleri ve türleri eşleştirilir. ModelMapper, aynı zamanda karmaşık nesne yapıları ve özel dönüşümler için de geniş bir yapılandırma desteği sunar.
+
+- **Otomatik Eşleştirme (Implicit Mapping)**: Alan adları aynı olan sınıflar arasındaki eşleştirmeleri otomatik olarak yapar.
+- **Özelleştirilmiş Eşleştirme (Explicit Mapping)**: Belirli alanlar için özel dönüşüm kuralları belirlenebilir.
+- **Derin Kopyalama (Deep Copy)**: Nesneler içindeki alt nesneleri de otomatik olarak eşleştirir ve derin kopyalama yapar.
+- **Koleksiyon Eşleştirme**: Listeler ve diğer koleksiyon türleri arasındaki eşleştirmeleri destekler.
+- **Koşullu Eşleştirme**: Belirli koşullara göre eşleştirme kuralları tanımlanabilir.
+
+### ModelMapper Kullanımı
+
+ModelMapper kullanmak için `ModelMapper` sınıfının bir örneğini oluşturmak ve `map` metodunu çağırarak kaynak nesneyi hedef nesneye dönüştürmek yeterlidir. Aşağıda basit bir örnek gösterilmektedir.
+
+#### Basit Bir ModelMapper Örneği
+
+Örneğin, `User` ve `UserDTO` adlı iki sınıfımız olduğunu düşünelim. `User` sınıfı veri tabanıyla ilişkili bir `Entity` iken, `UserDTO` sınıfı kullanıcı arayüzünde kullanılan bir veri taşıma nesnesidir.
+
+```java
+public class User {
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    // Getter ve Setter metotları
+}
+
+public class UserDTO {
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    // Getter ve Setter metotları
+}
+```
+
+Bu iki sınıf arasında veri dönüşümü yapmak için ModelMapper kullanabiliriz:
+
+```java
+ModelMapper modelMapper = new ModelMapper();
+User user = new User(1L, "John", "Doe", "john.doe@example.com");
+UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+
+System.out.println("DTO First Name: " + userDTO.getFirstName());
+System.out.println("DTO Email: " + userDTO.getEmail());
+```
+
+Bu örnekte `user` nesnesinin tüm alanları otomatik olarak `userDTO` nesnesine aktarılır. ModelMapper, alan adları aynı olduğu sürece, nesneler arasındaki tüm veriyi sorunsuz bir şekilde eşleştirir.
+
+### Özelleştirilmiş Eşleştirme
+
+ModelMapper, özel dönüşüm kuralları tanımlamak için geniş bir yapılandırma desteği sunar. Özellikle alan adları farklı olan sınıflar veya karmaşık nesne yapıları arasında dönüşüm yapılması gerektiğinde, eşleştirme kuralları belirlemek gerekir.
+
+#### Farklı Alan Adları İçin Eşleştirme
+
+Örneğin, `User` sınıfındaki `firstName` alanını `UserDTO` sınıfında `name` olarak adlandırdığımızı düşünelim. Bu durumda, ModelMapper’a `firstName` alanını `name` alanına eşleştirmesini manuel olarak söylememiz gerekir.
+
+```java
+ModelMapper modelMapper = new ModelMapper();
+modelMapper.typeMap(User.class, UserDTO.class).addMappings(mapper -> 
+    mapper.map(User::getFirstName, UserDTO::setName));
+
+User user = new User(1L, "John", "Doe", "john.doe@example.com");
+UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+
+System.out.println("DTO Name: " + userDTO.getName());
+```
+
+Bu yapılandırmada, `User` sınıfındaki `firstName` alanı `UserDTO` sınıfındaki `name` alanına eşleştirilir. `addMappings` metodu ile özel eşleştirme kuralları belirleyebiliriz.
+
+### Koleksiyon Eşleştirme
+
+ModelMapper, koleksiyon türlerini de dönüştürebilir. Özellikle listeler arasındaki dönüşüm işlemleri, büyük veri setlerinde sıklıkla ihtiyaç duyulan bir özelliktir.
+
+```java
+List<User> userList = Arrays.asList(new User(1L, "John", "Doe", "john@example.com"),
+                                    new User(2L, "Jane", "Doe", "jane@example.com"));
+
+Type listType = new TypeToken<List<UserDTO>>() {}.getType();
+List<UserDTO> userDTOList = modelMapper.map(userList, listType);
+
+userDTOList.forEach(userDTO -> System.out.println("DTO Name: " + userDTO.getFirstName()));
+```
+
+Bu örnekte, `User` nesnelerinden oluşan bir liste `UserDTO` nesnelerinden oluşan bir listeye dönüştürülmüştür.
+
+### Derin Kopyalama (Deep Copy)
+
+ModelMapper, nesneler arasındaki alt nesneleri de eşleştirerek derin kopyalama yapabilir. Örneğin, `Address` sınıfına sahip bir `User` nesnesinin `UserDTO` nesnesine dönüştürülmesi durumunda, `Address` nesnesi de otomatik olarak eşleştirilir.
+
+```java
+public class User {
+    private Long id;
+    private String firstName;
+    private Address address;
+    // Getter ve Setter metotları
+}
+
+public class UserDTO {
+    private Long id;
+    private String firstName;
+    private AddressDTO address;
+    // Getter ve Setter metotları
+}
+
+public class Address {
+    private String street;
+    private String city;
+    // Getter ve Setter metotları
+}
+
+public class AddressDTO {
+    private String street;
+    private String city;
+    // Getter ve Setter metotları
+}
+
+ModelMapper modelMapper = new ModelMapper();
+User user = new User(1L, "John", new Address("Main St", "New York"));
+UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+
+System.out.println("DTO City: " + userDTO.getAddress().getCity());
+```
+
+Bu örnekte, `User` nesnesindeki `Address` nesnesi otomatik olarak `UserDTO` nesnesindeki `AddressDTO` nesnesine dönüştürülür.
+
+### Koşullu Eşleştirme
+
+ModelMapper, belirli bir koşula göre eşleştirme yapılmasına da olanak tanır. Örneğin, belirli bir alanın boş olmaması durumunda eşleştirme yapılmasını isteyebiliriz.
+
+```java
+modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+```
+
+Bu ayar ile, sadece `null` olmayan alanlar eşleştirilir. Bu sayede kaynak nesnedeki boş alanların hedef nesneye aktarılması engellenir.
+
+### ModelMapper ile DTO ve Entity Arasındaki Dönüşümün Avantajları ve Dezavantajları
+
+**Avantajları**:
+
+- **Kod Basitleştirir**: Dönüşüm işlemleri için yazılması gereken kod miktarını azaltır.
+- **Esnek ve Güçlü Yapılandırma**: Farklı durumlara göre özelleştirme yapılabilir.
+- **Koleksiyon Eşleştirme**: Listeler ve diğer koleksiyon türleri için dönüşüm işlemlerini kolaylaştırır.
+- **Test Edilebilirlik**: DTO ve Entity arasında dönüşüm işlemleri standart hale geldi
+  ği için daha test edilebilir bir yapı sunar. Örneğin, tüm dönüşümler ModelMapper aracılığıyla yapıldığından, dönüşüm sürecinin doğru çalışıp çalışmadığı tek bir noktada test edilebilir.
+
+**Dezavantajları**:
+
+- **Performans Maliyeti**: Özellikle büyük veri setlerinde otomatik dönüşüm işlemleri performans açısından maliyetli olabilir. Bu durumda, ModelMapper yerine manuel dönüşüm yöntemleri tercih edilebilir.
+- **Öğrenme Eğrisi**: ModelMapper’ın tüm özelliklerini verimli kullanabilmek için bir miktar öğrenme süreci gerekebilir. Özellikle karmaşık nesne yapıları ve özelleştirilmiş dönüşümler için ayrıntılı bilgiye ihtiyaç duyulabilir.
+- **Gereksiz Eşleştirmeler**: ModelMapper, tüm alanları eşleştirmeye çalıştığı için bazı durumlarda gereksiz eşleştirmeler yapılabilir. Bu durumda belirli alanları hariç tutmak gerekebilir.
+
+### ModelMapper’ın Alternatifleri ve Karşılaştırma
+
+ModelMapper, Java dünyasında popüler bir kütüphane olmakla birlikte, aynı işlevi gören bazı alternatifleri de vardır. Bu alternatifler arasında Dozer, MapStruct ve Orika gibi kütüphaneler öne çıkar.
+
+- **MapStruct**: ModelMapper’dan farklı olarak derleme zamanında (compile-time) dönüşüm işlemlerini gerçekleştirir. Bu sayede daha hızlı çalışır, çünkü dönüşüm işlemleri çalışma zamanında yapılmaz. Özellikle büyük projelerde performans avantajı sağlar.
+- **Dozer**: Dozer de otomatik eşleştirme yapabilen bir kütüphanedir ancak ModelMapper kadar esnek yapılandırma sunmaz.
+- **Orika**: Orika, büyük veri setleri için optimize edilmiştir ve hızlı dönüşüm işlemleri yapabilir.
+
+ModelMapper, özellikle kullanım kolaylığı ve esnek yapılandırma seçenekleri sayesinde küçük ve orta ölçekli projelerde daha sık tercih edilirken, MapStruct performans avantajı sayesinde büyük projelerde daha yaygın olarak kullanılır.
+
+### ModelMapper Yapılandırma Özellikleri
+
+ModelMapper’ın sunduğu bazı yapılandırma özellikleri şunlardır:
+
+1. **Eşleştirme Stratejileri**: Eşleştirme stratejileri, ModelMapper’ın nasıl çalışacağını belirler. Örneğin, standart eşleştirme stratejisi `STANDARD` iken, daha esnek bir eşleştirme için `LOOSE` stratejisi kullanılabilir. `LOOSE` stratejisi, küçük farklılıkları göz ardı ederek eşleştirme yapmaya çalışır.
+
+    ```java
+    modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+    ```
+
+2. **Boş Alanları Hariç Tutma**: Boş (null) değerleri eşleştirme işleminden hariç tutmak için `setPropertyCondition` yapılandırması kullanılabilir.
+
+    ```java
+    modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+    ```
+
+3. **Karmaşık Eşleştirme**: Karmaşık nesne yapıları için `TypeMap` kullanılarak daha ayrıntılı dönüşüm kuralları oluşturulabilir.
+
+    ```java
+    TypeMap<User, UserDTO> typeMap = modelMapper.createTypeMap(User.class, UserDTO.class);
+    typeMap.addMappings(mapper -> mapper.map(src -> src.getAddress().getCity(), UserDTO::setCity));
+    ```
+
+Bu örnekte, `User` nesnesindeki `address.city` alanı `UserDTO` nesnesindeki `city` alanına eşleştirilmektedir.
+
+### Spring Boot ile ModelMapper Entegrasyonu
+
+Spring Boot projelerinde ModelMapper kullanımı oldukça yaygındır. ModelMapper, Spring konteynerına bir `@Bean` olarak eklenir ve proje genelinde kullanılabilir hale getirilir.
+
+```java
+@Configuration
+public class ModelMapperConfig {
+    
+    @Bean
+    public ModelMapper modelMapper() {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        return modelMapper;
+    }
+}
+```
+
+Bu yapılandırma ile `ModelMapper` nesnesi `@Autowired` anotasyonu ile diğer sınıflara enjekte edilebilir. Bu sayede, uygulamanın farklı katmanlarında dönüşüm işlemleri için ModelMapper kolayca kullanılabilir.
+
+```java
+@Service
+public class UserService {
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    public UserDTO convertToDto(User user) {
+        return modelMapper.map(user, UserDTO.class);
+    }
+
+    public User convertToEntity(UserDTO userDTO) {
+        return modelMapper.map(userDTO, User.class);
+    }
+}
+```
+
+Bu yapılandırma sayesinde, `UserService` sınıfı içinde `convertToDto` ve `convertToEntity` metotları ile `User` ve `UserDTO` arasında dönüşüm işlemleri kolayca yapılabilir.
+
+### Sonuç
+
+ModelMapper, Java tabanlı uygulamalarda veri transfer nesneleri (DTO) ve veri tabanı nesneleri (Entity) arasındaki dönüşüm işlemlerini kolaylaştırmak için güçlü ve esnek bir araçtır. Otomatik eşleştirme, derin kopyalama, koşullu eşleştirme gibi özellikleriyle veri dönüşümlerini hızlı, kolay ve sürdürülebilir hale getirir. Kod tekrarını azaltarak daha temiz ve yönetilebilir bir kod yapısı sağlar.
+
+ModelMapper, özellikle veri modelleme ve DTO katmanının yoğun olarak kullanıldığı projelerde tercih edilir. Ancak büyük projelerde performans kaygıları olan durumlarda alternatif kütüphaneler de değerlendirilmelidir. Spring Boot ile entegre edilmesi kolaydır ve Spring konteynerında bir `@Bean` olarak tanımlanarak proje genelinde kullanılabilir.
+
+Detaylı veya özel dönüşüm senaryolarında ModelMapper’ın sunduğu yapılandırma özelliklerinden faydalanarak karmaşık veri modelleri arasında hızlı dönüşümler gerçekleştirilebilir. ModelMapper’ın sağladığı esneklik, özelleştirilebilirlik ve basit kullanımı, onu Java ekosistemindeki popüler araçlardan biri yapmaktadır.
+
+
+
+## Spring Boot
+```sh 
+
+```
+---
+
+
+ModelMapper kullanırken dikkat etmeniz gereken bazı kurallar ve en iyi uygulamalar vardır. Bu kurallar, ModelMapper’ın performansını optimize etmek, dönüşüm sürecini hatasız ve daha anlaşılır hale getirmek için önemlidir. İşte dikkat edilmesi gereken bazı temel kurallar:
+
+### 1. **Matching Strategy (Eşleştirme Stratejisi) Seçimine Dikkat Edin**
+- ModelMapper, varsayılan olarak `STANDARD` eşleştirme stratejisini kullanır. Bu strateji, alan adlarının tamamen eşleşmesini bekler ve küçük harf-farklılıklarını veya alt sınıf yapıları göz ardı etmez.
+- Eğer alan adlarında küçük farklılıklar varsa veya daha esnek bir eşleştirme gerekiyorsa `LOOSE` stratejisini kullanabilirsiniz. Ancak `LOOSE` stratejisi daha esnektir ve yanlış eşleştirme yapma ihtimali daha yüksektir.
+- Öneri: Mümkünse `STRICT` veya `STANDARD` stratejisini kullanarak eşleştirme doğruluğunu artırın.
+
+   ```java
+   modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+   ```
+
+### 2. **Boş (null) Alanları Hariç Tutma**
+- Varsayılan olarak, ModelMapper tüm alanları eşleştirmeye çalışır. Ancak bazı durumlarda, `null` olan alanları hedef nesneye taşımak istemeyebilirsiniz. Örneğin, güncelleme işlemlerinde boş alanların eski değerleri değiştirmemesi gerekebilir.
+- `isNotNull` koşulunu kullanarak `null` değerleri hariç tutabilirsiniz.
+
+   ```java
+   modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+   ```
+
+### 3. **Eşleştirilecek Alanların Adlarının Tutarlı Olmasına Özen Gösterin**
+- ModelMapper, alan adlarını temel alarak otomatik eşleştirme yapar. Bu yüzden kaynak (source) ve hedef (destination) nesneler arasındaki alan adlarının tutarlı olması önemlidir.
+- Farklı adlandırılmış alanlar arasında eşleştirme yapmanız gerektiğinde, `TypeMap` veya `addMappings` kullanarak özelleştirme yapabilirsiniz.
+
+   ```java
+   modelMapper.typeMap(User.class, UserDTO.class).addMappings(mapper -> 
+       mapper.map(User::getFirstName, UserDTO::setName));
+   ```
+
+### 4. **Karmaşık ve Büyük Nesneler İçin Eşleştirmeyi Basitleştirin**
+- Büyük nesneler ve çok katmanlı yapılar ModelMapper ile eşleştirildiğinde performans sorunları yaşanabilir. Bu durumda yalnızca ihtiyacınız olan alanları eşleştirmeye özen gösterin.
+- Özellikle karmaşık nesne yapılarında, alt nesneler arasında yapılan derin kopyalama işlemleri (deep copy) performans kaybına yol açabilir. Gereksiz eşleştirmelerden kaçının.
+
+### 5. **Koleksiyonlar İçin Tür Belirlemesi Yapın**
+- ModelMapper, koleksiyon türleri arasında dönüşüm yaparken tür bilgisine ihtiyaç duyar. Koleksiyonlar için dönüşüm yaparken tür bilgilerini `TypeToken` ile belirtin.
+- Örneğin, `List<User>` nesnesini `List<UserDTO>` nesnesine dönüştürmek için `TypeToken` kullanmak önemlidir.
+
+   ```java
+   Type listType = new TypeToken<List<UserDTO>>() {}.getType();
+   List<UserDTO> userDTOList = modelMapper.map(userList, listType);
+   ```
+
+### 6. **DTO ve Entity Sınıflarında Fazla Alan Kullanmayın**
+- DTO (Data Transfer Object) ve Entity sınıflarında yalnızca ihtiyacınız olan alanları kullanın. Fazla ve gereksiz alanlar, dönüşüm işlemlerini karmaşıklaştırabilir ve hatalara yol açabilir.
+- Ayrıca, her iki sınıfta aynı işlevi gören alanların adlarının uyumlu olmasına dikkat edin.
+
+### 7. **Mapping Yapısını Test Edin**
+- Özellikle karmaşık dönüşüm işlemlerinde, ModelMapper’ın doğru çalıştığından emin olmak için birim testler yazın.
+- Testler, eşleştirmenin beklendiği gibi yapıldığını doğrulamanıza yardımcı olur. Örneğin, `assertEquals` kullanarak kaynak ve hedef nesnelerdeki alanların doğru şekilde eşleştirildiğini kontrol edebilirsiniz.
+
+   ```java
+   @Test
+   public void testUserToUserDtoMapping() {
+       ModelMapper modelMapper = new ModelMapper();
+       User user = new User(1L, "John", "Doe", "john@example.com");
+       UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+
+       assertEquals(user.getFirstName(), userDTO.getFirstName());
+       assertEquals(user.getEmail(), userDTO.getEmail());
+   }
+   ```
+
+### 8. **Performansı İzleyin**
+- ModelMapper, çalışma zamanında eşleştirme yaptığı için özellikle büyük veri setleri üzerinde çalışırken performans sorunları yaşanabilir.
+- Performans kritik uygulamalarda alternatif dönüşüm kütüphanelerini (örneğin, MapStruct) değerlendirebilirsiniz.
+
+### 9. **Özelleştirilmiş Eşleştirmeler İçin TypeMap Kullanımı**
+- Karmaşık dönüşümler veya farklı adlandırma durumlarında `TypeMap` kullanarak özel eşleştirmeler tanımlayabilirsiniz.
+- `TypeMap`, belirli dönüşümler için yapılandırmaları saklar ve performans açısından daha avantajlıdır.
+
+   ```java
+   TypeMap<User, UserDTO> typeMap = modelMapper.createTypeMap(User.class, UserDTO.class);
+   typeMap.addMappings(mapper -> mapper.map(User::getAddress, UserDTO::setUserAddress));
+   ```
+
+### 10. **Gerekmedikçe Derin Eşleştirmelerden Kaçının**
+- ModelMapper varsayılan olarak derin eşleştirme yapar, yani alt nesneleri de eşleştirir. Ancak, tüm alt nesnelerin dönüştürülmesi her zaman gerekmeyebilir.
+- Derin eşleştirmenin kapatılması gereken durumlarda `modelMapper.getConfiguration().setDeepCopyEnabled(false);` ayarını kullanabilirsiniz.
+
+### 11. **Eşleştirme Çakışmalarını Önleyin**
+- Aynı kaynak sınıfı farklı hedef sınıflara dönüştürmek istediğinizde, `TypeMap` kullanarak her dönüşüm için ayrı bir yapılandırma tanımlayın. Bu, ModelMapper’ın çakışan dönüşüm yapılandırmalarını önlemesini sağlar.
+- Aynı türde iki farklı hedef nesneye dönüşüm yapılması gerektiğinde, her dönüşüm için özel `TypeMap` tanımları kullanarak dönüşümleri yönetebilirsiniz.
+
+### 12. **@Configuration Sınıfı ile Merkezi Konfigürasyon Sağlayın**
+- Özellikle Spring Boot projelerinde ModelMapper’ı merkezi bir yapılandırma sınıfında `@Bean` olarak tanımlayın ve tüm uygulama genelinde aynı `ModelMapper` nesnesini kullanın.
+- Merkezi bir konfigürasyon, kodun yönetilebilirliğini artırır ve tek bir noktadan tüm ModelMapper yapılandırmalarını değiştirme imkanı sunar.
+
+   ```java
+   @Configuration
+   public class ModelMapperConfig {
+       
+       @Bean
+       public ModelMapper modelMapper() {
+           ModelMapper modelMapper = new ModelMapper();
+           modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+           return modelMapper;
+       }
+   }
+   ```
+
+### Sonuç
+
+ModelMapper, veri dönüşümlerini hızlı ve kolay hale getiren güçlü bir kütüphanedir. Ancak, özellikle büyük projelerde veya karmaşık veri modellerinde bazı performans ve yapılandırma sorunları yaşanabilir. Bu yüzden yukarıdaki kurallara dikkat etmek, ModelMapper’ın daha verimli kullanılmasını sağlar. Özellikle `MatchingStrategy` seçimi, `TypeMap` ile özelleştirme, koleksiyon türlerinin belirlenmesi ve gereksiz derin eşleştirmelerden kaçınma gibi kurallar, ModelMapper’ın işlevselliğini artırır ve dönüşüm işlemlerinin daha güvenli ve hızlı olmasını sağlar.
+
+Dikkat etmeniz gereken bu kurallar sayesinde ModelMapper’ı daha verimli kullanabilir ve veri dönüştürme işlemlerini yönetilebilir bir yapıya kavuşturabilirsiniz.
+
+## Spring Boot
+```sh 
+
+```
+---
+
+
+Lombok, Java geliştiricilerinin daha az kod yazarak daha okunabilir ve bakım yapılabilir kodlar geliştirmesini sağlamak amacıyla kullanılan bir kütüphanedir. Java dilinde, getter ve setter metodları, `toString()`, `equals()`, `hashCode()`, constructor (yapıcı metodlar) gibi birçok tekrarlayan kod yazmak gerekmektedir. Lombok, bu tarz kodları otomatik olarak oluşturarak, geliştiricinin kod tekrarını azaltmasını sağlar ve kodu daha temiz hale getirir.
+
+### Lombok’un Amacı ve Faydaları
+
+1. **Kod Tekrarını Azaltır**: Lombok, Java dilinde sıkça yazılan getter/setter, constructor gibi metotları otomatik oluşturur. Bu, özellikle büyük projelerde kod tekrarını azaltır ve kodun daha okunabilir hale gelmesini sağlar.
+
+2. **Daha Temiz ve Okunabilir Kod**: Lombok, sınıfların sadece iş mantığını içermesini sağlar. Gereksiz metotlar ve alanlar yerine, sadece anotasyonlarla bu işlemler yapılabilir, bu da kodu daha sade hale getirir.
+
+3. **Daha Hızlı Geliştirme**: Tekrarlayan kod yazmak yerine, Lombok anotasyonları kullanılarak hızlı bir şekilde sınıflar tanımlanabilir. Lombok, boilerplate kod olarak bilinen ve defalarca yazılması gereken yapıları ortadan kaldırarak zamandan tasarruf sağlar.
+
+### Lombok Kurulumu
+
+Lombok, Java projelerine Maven veya Gradle bağımlılığı eklenerek kolayca entegre edilebilir.
+
+Maven ile kurulum:
+
+```xml
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>1.18.20</version>
+    <scope>provided</scope>
+</dependency>
+```
+
+Gradle ile kurulum:
+
+```gradle
+implementation 'org.projectlombok:lombok:1.18.20'
+```
+
+Eklendikten sonra, Lombok kullanılabilir hale gelir ve projeye dahil edilen anotasyonlar, kod derlendiğinde otomatik olarak ilgili metotları oluşturur.
+
+### Lombok’un Başlıca Anotasyonları ve Kullanımı
+
+Lombok, farklı işlemleri gerçekleştiren birçok anotasyona sahiptir. Her anotasyonun kendine özgü işlevi vardır ve uygun yerlerde kullanıldığında kodu oldukça sadeleştirir.
+
+#### 1. `@Getter` ve `@Setter`
+
+`@Getter` ve `@Setter` anotasyonları, sınıf içindeki alanlar için getter ve setter metodlarını otomatik olarak oluşturur. Bu anotasyonlar, özellikle POJO (Plain Old Java Object) sınıflarında yaygın olarak kullanılır.
+
+```java
+import lombok.Getter;
+import lombok.Setter;
+
+public class User {
+    @Getter @Setter
+    private Long id;
+    
+    @Getter @Setter
+    private String name;
+}
+```
+
+Bu örnekte, `id` ve `name` alanları için getter ve setter metotları otomatik olarak oluşturulur. Lombok sayesinde, bu metotları manuel olarak yazmak zorunda kalmazsınız.
+
+#### 2. `@ToString`
+
+`@ToString` anotasyonu, `toString()` metodunu otomatik olarak oluşturur. Bu metot, nesnenin tüm alanlarını veya belirtilen alanlarını içeren bir `String` temsilini döndürür.
+
+```java
+import lombok.ToString;
+
+@ToString
+public class User {
+    private Long id;
+    private String name;
+}
+```
+
+Bu anotasyon, `User` nesnesi için `toString()` metodunu oluşturur ve id ve name alanlarının değerlerini döndürür. Ayrıca `exclude` parametresi ile `toString()` metodunda yer almasını istemediğiniz alanları belirleyebilirsiniz:
+
+```java
+@ToString(exclude = "id")
+public class User {
+    private Long id;
+    private String name;
+}
+```
+
+Bu durumda, `toString()` metodu `id` alanını hariç tutarak sadece `name` alanını döndürür.
+
+#### 3. `@EqualsAndHashCode`
+
+`@EqualsAndHashCode` anotasyonu, `equals()` ve `hashCode()` metodlarını otomatik olarak oluşturur. Bu metotlar, nesnelerin eşitliğini kontrol etmek ve nesneleri bir hash tablosunda saklamak için kullanılır.
+
+```java
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode
+public class User {
+    private Long id;
+    private String name;
+}
+```
+
+Bu anotasyon, `User` sınıfı için `equals()` ve `hashCode()` metodlarını oluşturur. `onlyExplicitlyIncluded` parametresi ile belirli alanların eşitlik kontrolüne dahil edilmesi sağlanabilir.
+
+#### 4. `@NoArgsConstructor`, `@AllArgsConstructor`, ve `@RequiredArgsConstructor`
+
+- **@NoArgsConstructor**: Parametresiz bir yapıcı metod (constructor) oluşturur.
+- **@AllArgsConstructor**: Sınıftaki tüm alanlar için bir yapıcı metod oluşturur.
+- **@RequiredArgsConstructor**: Sadece `final` ve `@NonNull` olarak işaretlenmiş alanlar için bir yapıcı metod oluşturur.
+
+```java
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+public class User {
+    private Long id;
+    private final String name;
+}
+```
+
+Bu örnekte, `User` sınıfı için parametresiz, tüm alanları içeren ve sadece `name` alanını zorunlu kılan yapıcı metodlar oluşturulacaktır.
+
+#### 5. `@Data`
+
+`@Data` anotasyonu, `@Getter`, `@Setter`, `@ToString`, `@EqualsAndHashCode` ve `@RequiredArgsConstructor` anotasyonlarını tek bir yerde toplar. Genellikle veri taşıma nesnelerinde (DTO) kullanılır.
+
+```java
+import lombok.Data;
+
+@Data
+public class User {
+    private Long id;
+    private String name;
+}
+```
+
+Bu anotasyon, `User` sınıfı için tüm getter/setter, `toString()`, `equals()`, `hashCode()` ve final alanlar için bir yapıcı metod oluşturur.
+
+#### 6. `@Builder`
+
+`@Builder` anotasyonu, sınıfın bir builder deseni ile oluşturulmasını sağlar. Bu, özellikle çok sayıda parametreye sahip nesnelerin daha okunabilir bir şekilde oluşturulmasına olanak tanır.
+
+```java
+import lombok.Builder;
+
+@Builder
+public class User {
+    private Long id;
+    private String name;
+}
+```
+
+Bu anotasyon, `User` sınıfı için bir builder oluşturur. `User` nesnesi aşağıdaki gibi oluşturulabilir:
+
+```java
+User user = User.builder()
+                .id(1L)
+                .name("John Doe")
+                .build();
+```
+
+#### 7. `@Value`
+
+`@Value` anotasyonu, immutable (değişmez) sınıflar oluşturmak için kullanılır. Tüm alanlar `final` olur ve sınıfın getter metotları ile `toString()`, `equals()`, `hashCode()` metotları otomatik olarak oluşturulur.
+
+```java
+import lombok.Value;
+
+@Value
+public class User {
+    Long id;
+    String name;
+}
+```
+
+Bu sınıfın `id` ve `name` alanları değiştirilemez hale gelir, sadece okuma yapılabilir.
+
+#### 8. `@NonNull`
+
+`@NonNull` anotasyonu, bir alanın null olamayacağını belirtir. Bu anotasyon ile işaretlenen alan null olarak verilirse, `NullPointerException` fırlatılır.
+
+```java
+import lombok.NonNull;
+
+public class User {
+    private Long id;
+    
+    @NonNull
+    private String name;
+}
+```
+
+Bu örnekte, `name` alanına null değer atanırsa, çalışma zamanında bir `NullPointerException` meydana gelir.
+
+### Lombok Kullanırken Dikkat Edilmesi Gerekenler
+
+1. **Kodun Anlaşılabilirliği**: Lombok kodu otomatik oluşturduğu için, kodu inceleyen birinin hangi metotların mevcut olduğunu anlaması zorlaşabilir. Özellikle `@Data`, `@Builder` gibi anotasyonlar kullanılan sınıflarda, IDE yardımıyla kodu incelemek faydalı olur.
+
+2. **Eşitlik ve Hash Kodu**: `@EqualsAndHashCode` anotasyonunu kullanırken dikkatli olun. Eşitlik ve hash kodu, nesnelerin karşılaştırılmasında ve hash tablosunda saklanmasında önemli rol oynar. Eşitlik kontrollerini belirli alanlarla sınırlandırmanız gerekiyorsa `@EqualsAndHashCode` ile bu alanları tanımlayın.
+
+3. **Performans Kaygıları**: Lombok’un tüm alanlar için getter/setter oluşturması her durumda gerekli olmayabilir. Gereksiz metotlar performans kaygılarına neden olabilir. Sadece ihtiyaç duyulan anotasyonları kullanmaya özen gösterin.
+
+4. **IDE Desteği**: Lombok, IDEA veya Eclipse gibi IDE'lerde desteklenir, ancak IDE üzerinde ek bir eklenti yüklemek gerekebilir. Lombok'un tam olarak çalışabilmesi için IDE'ye Lombok eklentisi kurmalısınız.
+
+5. **Immutable Sınıflar İçin @Value Kullanabilirsiniz. `@Value` anotasyonu, immutable (değiştirilemez) sınıflar oluşturmak için Lombok’un sağladığı bir kolaylıktır. `@Value` anotasyonu kullanıldığında sınıfın tüm alanları otomatik olarak `final` ve private olur; ayrıca sınıfa getter metotları, `toString()`, `equals()` ve `hashCode()` metotları eklenir. Bu, sınıfın değişmezliğini sağlar ve veri taşıma nesneleri (DTO) veya sabit veri yapıları için oldukça uygun hale getirir.
+
+```java
+import lombok.Value;
+
+@Value
+public class User {
+    Long id;
+    String name;
+}
+```
+
+Bu örnekte `User` sınıfı, `@Value` anotasyonu ile işaretlendiğinden, oluşturulduktan sonra değiştirilemez hale gelir. `id` ve `name` alanlarına ilk değer atandıktan sonra bu alanların değeri değiştirilemez. Böylece `User` sınıfı immutable bir sınıf haline gelir ve daha güvenli bir yapı sunar.
+
+### Lombok ile İlgili Diğer Önemli Anotasyonlar
+
+#### 1. `@SneakyThrows`
+`@SneakyThrows` anotasyonu, checked exception (kontrollü istisnalar) kullanımını basitleştirir. Java’da genellikle checked exception’lar (IOException, SQLException gibi) `try-catch` blokları içinde yakalanmak zorundadır. Ancak `@SneakyThrows` ile bu zorunluluk ortadan kaldırılabilir.
+
+```java
+import lombok.SneakyThrows;
+
+public class FileReaderExample {
+
+    @SneakyThrows
+    public void readFile(String fileName) {
+        FileReader fileReader = new FileReader(fileName);
+        // Dosya okuma işlemleri
+    }
+}
+```
+
+Bu örnekte, `FileReader` normalde `FileNotFoundException` fırlatır ve `try-catch` bloğu gerektirir. Ancak `@SneakyThrows`, bu istisnayı method imzasında belirtmeden kullanmamıza olanak tanır. **Dikkat edilmesi gereken nokta:** `@SneakyThrows` kullanımı, checked exception’ların gözden kaçmasına yol açabilir; bu yüzden dikkatli kullanılmalıdır.
+
+#### 2. `@Accessors`
+`@Accessors` anotasyonu, getter ve setter metodlarının isimlendirme yapısını değiştirmemize olanak tanır. Normalde getter/setter metotları `getField()` ve `setField()` şeklinde isimlendirilir. Ancak `@Accessors(fluent = true)` kullanarak, alan adını doğrudan getter/setter metodu olarak kullanabilirsiniz.
+
+```java
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
+@Getter
+@Setter
+@Accessors(fluent = true)
+public class User {
+    private Long id;
+    private String name;
+}
+```
+
+Bu durumda `user.getName()` yerine `user.name()` ve `user.setName("John")` yerine `user.name("John")` yazabilirsiniz. `@Accessors(chain = true)` ise, setter metotlarının zincirleme (chaining) kullanımına izin verir. Bu sayede daha akıcı bir yapı sağlanır.
+
+```java
+user.id(1L).name("John");
+```
+
+#### 3. `@NonNull`
+`@NonNull` anotasyonu, null değerlerin kabul edilmediği alanları belirtir. Bu anotasyon `null` bir değer atanmaya çalışıldığında otomatik olarak `NullPointerException` fırlatır. Özellikle güvenli veri işlemlerinde faydalıdır.
+
+```java
+import lombok.NonNull;
+
+public class User {
+
+    private Long id;
+    
+    @NonNull
+    private String name;
+}
+```
+
+Bu örnekte, `name` alanı `null` olarak atanırsa `NullPointerException` oluşur. `@NonNull`, özellikle zorunlu alanların belirlenmesi ve güvenli hale getirilmesinde yardımcı olur.
+
+### Lombok Kullanırken Dikkat Edilmesi Gereken Önemli Noktalar
+
+1. **Kod Bakımı ve Okunabilirlik**: Lombok, kodu oldukça sadeleştirir, ancak aynı zamanda metotları görünmez hale getirdiği için kodun anlaşılmasını zorlaştırabilir. Takım çalışması yapılan projelerde, özellikle projeye yeni katılan geliştiricilerin kodu anlaması daha uzun sürebilir.
+
+2. **Kodun Derleme Aşamasında Üretilmesi**: Lombok anotasyonları, derleme zamanında (compile-time) metotları ekler, bu nedenle IDE tarafından her zaman doğru bir şekilde tanınmayabilir. IDE desteğinin sağlanabilmesi için Lombok eklentisinin yüklenmiş olması gerekir.
+
+3. **Performans ve Gereksizlikten Kaçınma**: Lombok tüm alanlar için getter/setter metodları veya tüm alanları içeren `toString()` metodunu otomatik olarak oluşturur. Bu nedenle, yalnızca gerçekten ihtiyaç duyulan metotları ve anotasyonları kullanmak daha performanslı bir yapı sunar.
+
+4. **Immutable Sınıflar için @Value Kullanımı**: Immutable (değişmez) sınıflar, veri güvenliği açısından tercih edilir. `@Value` anotasyonu ile oluşturulan immutable sınıflar, eşzamanlı (concurrent) işlemlerde veri tutarlılığını sağlar. Ancak mutable (değişebilir) olması gereken sınıflarda `@Value` kullanmaktan kaçınılmalıdır.
+
+5. **Test ve Hata Ayıklama**: Lombok’un oluşturduğu metotlar çalışma zamanında hataya yol açarsa, bu hataları bulmak zor olabilir. Bu yüzden Lombok kullanırken yazdığınız sınıfları iyi test etmek, beklenmedik hataların önüne geçmek açısından önemlidir.
+
+6. **Özel Durumlara Dikkat**: Lombok bazı özel durumlarda (örneğin, karmaşık yapılı sınıflar veya büyük veri yapıları gibi) beklenmedik performans sorunlarına yol açabilir. Özellikle çok sayıda alan içeren veya derin yapıdaki nesneler için performans optimizasyonuna dikkat edilmelidir.
+
+### Lombok’un Sağladığı Genel Avantaj ve Dezavantajlar
+
+#### Avantajlar
+
+- **Kod Tekrarını Azaltır**: Lombok’un anotasyonları sayesinde sınıflarda sıkça yazılması gereken kodlar otomatik olarak oluşturulur. Bu sayede kod tekrarından kaçınılır.
+- **Daha Az Kod, Daha Fazla Okunabilirlik**: Lombok, sınıfları daha anlaşılır hale getirir. Özellikle `@Data` gibi anotasyonlar ile tüm temel metotlar tek bir satırda oluşturulabilir.
+- **Kolay Entegrasyon**: Lombok, Maven veya Gradle projelerine kolayca eklenebilir ve IDE’ler ile uyumludur.
+
+#### Dezavantajlar
+
+- **IDE Bağımlılığı**: Lombok, IDE tarafından otomatik olarak tanınmayabilir, bu yüzden ek bir eklentiye ihtiyaç duyar.
+- **Bakım Zorluğu**: Lombok’un otomatik olarak ürettiği kodlar sınıfın içinde görünmez olduğu için, sınıfın davranışını anlamak zor olabilir.
+- **Performans Maliyetleri**: Lombok, özellikle `toString()`, `equals()`, `hashCode()` gibi metodları karmaşık yapılar için otomatik olarak oluştururken performans kaybına yol açabilir.
+- **Standartlara Bağımlılık**: Lombok, Java'nın standart bir kütüphanesi değildir. Proje bağımlılığının artması bazı kurumsal projelerde kabul edilmeyebilir.
+
+### Sonuç
+
+Lombok, Java projelerinde boilerplate kod olarak bilinen, sıkça tekrar eden yapıları otomatik olarak oluşturarak kodu sadeleştirir, geliştirme hızını artırır ve kodun daha okunabilir olmasını sağlar. `@Data`, `@Builder`, `@Value`, `@Getter` ve `@Setter` gibi anotasyonları sayesinde Java projelerinde büyük kolaylık sağlar.
+
+Ancak Lombok’un kullanımı, bazı durumlarda karmaşıklaşabilir ve takım çalışması yapılan projelerde dikkatli kullanılmalıdır. Kodun anlaşılabilirliği, performans ve bakım açısından Lombok’un sağladığı avantajları ve potansiyel dezavantajları değerlendirerek kullanmak en doğru yaklaşım olacaktır.
+
+Lombok’un özelliklerinden en iyi şekilde faydalanmak için ihtiyaca göre doğru anotasyonları kullanmaya özen gösterin ve her anotasyonun kullanım amacını iyi anlayın. Kodunuzun sürdürülebilirliğini sağlamak için Lombok ile yazılan sınıfları iyi test etmeyi unutmayın.
+
+
+
+## Spring Boot
+```sh 
+
+```
+---
+
+## Spring Boot
+```sh 
+
+```
+---
+
+
+
+
+## Spring Boot
+```sh 
+
+```
+---
 
 #### 1. **`@PostConstruct` Anotasyonu:**
 - **Ne yapar?** Bu metodun, sınıfın tüm bağımlılıkları atandıktan sonra çalıştırılmasını sağlar.
@@ -819,11 +2128,7 @@ Spring Data JPA ile kullanılan bu terimler, bir veritabanı üzerinde otomatik 
 ```
 ---
 
-## Spring Boot
-```sh 
 
-```
----
 
 ## Spring Boot
 ```sh 

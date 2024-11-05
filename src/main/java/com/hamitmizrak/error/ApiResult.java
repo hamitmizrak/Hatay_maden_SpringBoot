@@ -1,7 +1,6 @@
 package com.hamitmizrak.error;
 
 import lombok.*;
-
 import java.util.Date;
 import java.util.Map;
 
@@ -18,7 +17,6 @@ public class ApiResult {
     private int status;
     private String error;
     private String message;
-
     private String path;
     private Map<String,String> validationErrors;
     private Date createDate;
