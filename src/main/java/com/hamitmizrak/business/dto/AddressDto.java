@@ -1,9 +1,11 @@
 package com.hamitmizrak.business.dto;
+import com.hamitmizrak.audit.AuditingAwareBaseDto;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
 import java.io.Serializable;
+import java.util.Date;
 
 // LOMBOK
 @Getter
@@ -14,7 +16,7 @@ import java.io.Serializable;
 @Log4j2
 
 // Address(1) - Customer(1)
-public class AddressDto implements Serializable {
+public class AddressDto extends AuditingAwareBaseDto implements Serializable {
 
     // SERILEŞTIRME
     public static final Long serialVersionUID = 1L;
