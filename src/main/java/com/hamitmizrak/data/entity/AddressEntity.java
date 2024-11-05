@@ -1,8 +1,12 @@
 package com.hamitmizrak.data.entity;
 
+import com.hamitmizrak.data.embeddable.AddressEntityEmbeddable;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.util.Date;
 
 // LOMBOK
 @Getter
@@ -13,8 +17,8 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 
 // ENTITY
-@Entity
-@Table(name = "adress")
+@Entity(name = "Adresses") // JPQL için kullanılacak varlıklar için özelleştirme için
+@Table(name = "adresses") // Database tablo adı
 
 // Address(1) - Customer(1)
 public class AddressEntity {
@@ -24,30 +28,14 @@ public class AddressEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // DOOR NUMBER
-    @Column(name = "door_number")
-    private String doorNumber;
+    // Embedded
+    @Embedded
+    private AddressEntityEmbeddable addressEntityEmbeddable;
 
-    // STREET
-    private String street;
+    // DATE
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date systemCreatedDate;
 
-    // CITY
-    @Column(name = "city")
-    private String city;
-
-    // STATE
-    @Column(name = "state")
-    private String state;
-
-    // ZIP CODE
-    @Column(name = "zip_code")
-    private String zipCode;
-
-    // ADDRESS QR CODE
-    @Column(name = "address_qr_code")
-    private String addressQrCode;
-
-    // DESCRIPTION
-    @Column(name = "description")
-    private String description;
+    // RELATION
 } //end  AddressEntity
