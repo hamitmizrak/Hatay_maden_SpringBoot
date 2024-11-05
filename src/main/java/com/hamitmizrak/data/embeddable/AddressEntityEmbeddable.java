@@ -21,11 +21,17 @@ public class AddressEntityEmbeddable {
     // STREET
     private String street;
 
+    // CITY
+    @Column(name = "city")
+    private String city;
 
 
     // ZIP CODE
     @Column(name = "zip_code")
     private String zipCode;
+
+    // STATE
+    private String state;
 
     // ADDRESS QR CODE
     @Column(name = "address_qr_code")
@@ -35,3 +41,5 @@ public class AddressEntityEmbeddable {
     @Column(name = "description")
     private String description;
 } //end AddressEntityEmbeddable
+
+

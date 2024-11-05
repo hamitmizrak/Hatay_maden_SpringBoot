@@ -46,6 +46,8 @@ public class AddressDto extends AuditingAwareBaseDto implements Serializable {
     @Size(min = 5,message = "{address.description.least.validation.constraints.NotNull.message}")
     private String description;
 
+    private Date systemCreatedDate;
+
     // RELATION
 
 } //end class AddressDto
