@@ -33,16 +33,16 @@ public interface IAddressService<D, E> {
     /////////////////////////////////////////////////
     // SORTING / PAGINTION
     //  PAGINTION
-    public Page<D> addressServicePagination(int currentPage, int pageSize);
+    public Page<E> addressServicePagination(int currentPage, int pageSize);
 
     // SORTING
     // Address Entity içindeki herhangibi bir olan kolana göre sıralama
-    public List<D> addressServiceAllSortedBy(String sortedBy);
+    public List<E> addressServiceAllSortedBy(String sortedBy);
 
     // SORTING ASC
     // Address Entity içindeki city olan özel bir alana göre sıralama
-    public List<D> addressServiceAllSortedByCityAsc();
+    public List<E> addressServiceAllSortedByCityAsc();
 
     // SORTING DESC
-    public List<D> addressServiceAllSortedByCityDesc();
+    public List<E> addressServiceAllSortedByCityDesc();
 }
