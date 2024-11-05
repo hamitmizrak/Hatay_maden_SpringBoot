@@ -35,6 +35,7 @@ public class AddressEntity {
     // DATE
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "system_created_date")
     private Date systemCreatedDate;
 
     // RELATION

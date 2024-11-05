@@ -11,7 +11,6 @@ import lombok.Setter;
 @Setter
 
 // SUPER CLASS
-@MappedSuperclass
 @Embeddable // Class Entity yapıları için daha okunaklı olması içindir
 public class AddressEntityEmbeddable {
 
@@ -22,13 +21,7 @@ public class AddressEntityEmbeddable {
     // STREET
     private String street;
 
-    // CITY
-    @Column(name = "city")
-    private String city;
 
-    // STATE
-    @Column(name = "state")
-    private String state;
 
     // ZIP CODE
     @Column(name = "zip_code")
