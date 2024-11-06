@@ -34,6 +34,7 @@ public class _1_ProjectDataSet implements CommandLineRunner {
             addressDto.setCity("Hatay "+i);
             addressDto.setDescription("tanımlama "+i);
             addressDto.setStreet("cadde "+i);
+            addressDto.setState("state "+i);
             addressDto.setZipCode("zip code "+i);
             addressDto.setDoorNumber("door number "+i);
             addressDto.setAddressQrCode(UUID.randomUUID().toString());
