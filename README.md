@@ -201,6 +201,310 @@ Spring Data, bazı karmaşık sorgular için özel sorgular tanımlama imkanı d
 
 2. **Named Queries**: Entity sınıflarında tanımlanan, sabit isimli sorgulardır. Bu sorgular, genellikle Entity sınıfının başında tanımlanır ve isimlerine göre çağrılabilir.
 
+
+Spring Boot ve JPA ile çalışırken veritabanına veri sorgulamak veya veri üzerinde işlemler gerçekleştirmek için iki ana sorgu türü kullanılır: **Native SQL** ve **JPQL (Java Persistence Query Language)**. Bu iki sorgu türü, JPA ile veri çekme veya güncelleme işlemlerinde esneklik sağlar, ancak kullanım alanları ve amaçları farklıdır. Aşağıda her iki yöntemin ayrıntılı bir açıklaması bulunmaktadır.
+
+### 1. JPQL (Java Persistence Query Language)
+
+JPQL, JPA ile birlikte kullanılan, nesne odaklı bir sorgulama dilidir. JPQL, doğrudan SQL sorgularına dayanmaz, bunun yerine **entity nesneleri üzerinden çalışır**. Bu, veri tabanındaki tablolarla değil, JPA entity sınıflarıyla etkileşim kurar. JPQL, entity nesneleri ve onların ilişkileri ile nesne yönelimli veri çekme işlemleri için tasarlanmıştır.
+
+#### JPQL’in Özellikleri
+
+- **Nesne Odaklıdır**: JPQL sorguları, veritabanı tabloları yerine Java sınıflarına göre yazılır. Bu nedenle SQL’den farklıdır; veri tabanındaki fiziksel tablo adları yerine Java sınıf adları ve alan adları kullanılır.
+- **Veritabanı Bağımsızdır**: JPQL sorguları, JPA tarafından desteklenen herhangi bir veritabanında çalışacak şekilde soyutlanmıştır. JPQL, veritabanı bağımsız bir yapı sunduğundan, farklı veritabanları arasında geçiş yaparken kodda değişiklik yapma gereksinimi azaltır.
+- **Kolay ve Güçlü**: JPQL, SQL’e benzer bir söz dizimine sahiptir, ancak nesneye yönelik olarak optimize edilmiştir. SQL sorgularına göre daha sade ve anlaşılırdır, özellikle karmaşık veri çekme işlemlerinde ilişki yönetimini daha kolay hale getirir.
+
+#### JPQL Kullanımı
+
+JPQL sorguları **@Query** anotasyonu ile yazılır veya bir `EntityManager` üzerinden çalıştırılabilir. JPQL'de temel olarak `SELECT`, `UPDATE`, `DELETE` ve `INSERT` komutları bulunur.
+
+##### Örnek 1: JPQL ile Veri Çekme
+
+Varsayalım bir **User** entity sınıfımız var ve bu entity üzerinden kullanıcıları yaşlarına göre çekmek istiyoruz.
+
+```java
+@Entity
+public class User {
+    @Id
+    private Long id;
+    private String name;
+    private int age;
+    // Getter ve Setter'lar
+}
+```
+
+JPQL sorgusu ile kullanıcıları yaşlarına göre çekmek:
+
+```java
+@Query("SELECT u FROM User u WHERE u.age > :age")
+List<User> findUsersOlderThan(@Param("age") int age);
+```
+
+Burada **User** entity’si ve **age** alanı doğrudan kullanılmıştır. JPQL sorgusunda tablo adı veya sütun adları yerine entity sınıfının adı ve özellikleri kullanılır.
+
+##### Örnek 2: JPQL ile Güncelleme
+
+JPQL aynı zamanda güncelleme işlemleri için de kullanılabilir.
+
+```java
+@Modifying
+@Query("UPDATE User u SET u.age = :newAge WHERE u.id = :id")
+int updateUserAge(@Param("id") Long id, @Param("newAge") int newAge);
+```
+
+Bu örnekte, belirli bir kullanıcı ID’sine sahip olan kaydın yaşını güncellemekteyiz.
+
+#### JPQL’in Avantajları
+
+- **Veritabanı bağımsızlığı**: JPQL sorguları, herhangi bir SQL varyantına bağlı kalmadan çalışabilir.
+- **Nesne odaklılık**: Veritabanı tablolarına değil, entity nesnelerine dayanır.
+- **Sade yapı**: JPQL, entity ilişkilerini daha sade ve anlaşılır bir şekilde yönetir, bu da daha temiz kod sağlar.
+
+#### JPQL’in Dezavantajları
+
+- **Karmaşık sorgularda sınırlamalar**: JPQL, bazı durumlarda çok karmaşık ve özel veritabanı işlemleri için yeterli olmayabilir.
+- **Performans sınırlamaları**: Bazı özel performans gereksinimleri için JPQL yeterli olmayabilir, çünkü veritabanına özgü optimizasyonlardan yoksundur.
+
+---
+
+### 2. Native SQL
+
+**Native SQL** sorguları, doğrudan SQL söz dizimini kullanarak yazılır. Bu sorgular, JPA'nın soyutlama katmanından geçmez, doğrudan veritabanına gönderilir. Native SQL, veritabanına özgü komutları veya optimizasyonları kullanmanıza olanak tanır, bu da karmaşık işlemlerde performans avantajı sağlar.
+
+#### Native SQL’in Özellikleri
+
+- **Veritabanı Odaklıdır**: SQL sorguları doğrudan veritabanı tabloları üzerinde çalışır, bu da karmaşık işlemler veya veritabanına özel komutlar gerektiğinde daha etkilidir.
+- **Performans Avantajı Sağlar**: Özellikle büyük veri setleri üzerinde, veritabanına özgü optimizasyonlardan yararlanarak daha hızlı sonuçlar elde edilebilir.
+- **SQL Söz Dizimi Kullanılır**: JPQL’in aksine, Native SQL sorguları doğrudan SQL komutları ile yazılır, bu da SQL bilen geliştiriciler için daha tanıdık olabilir.
+
+#### Native SQL Kullanımı
+
+**@Query** anotasyonunun içine **nativeQuery = true** parametresi eklenerek Native SQL sorgusu tanımlanabilir.
+
+##### Örnek 1: Native SQL ile Veri Çekme
+
+Yine **User** entity’sini ele alalım ve kullanıcıları yaşlarına göre çekmek için Native SQL sorgusu yazalım:
+
+```java
+@Query(value = "SELECT * FROM users WHERE age > :age", nativeQuery = true)
+List<User> findUsersOlderThan(@Param("age") int age);
+```
+
+Burada doğrudan **users** tablosu üzerinden SQL komutu ile işlem yapılmaktadır. Veritabanı tablosu adı ve sütun adları doğrudan SQL söz dizimi ile belirtilmiştir.
+
+##### Örnek 2: Native SQL ile Güncelleme
+
+Native SQL ile bir güncelleme işlemi yapalım:
+
+```java
+@Modifying
+@Query(value = "UPDATE users SET age = :newAge WHERE id = :id", nativeQuery = true)
+int updateUserAge(@Param("id") Long id, @Param("newAge") int newAge);
+```
+
+Bu sorguda, doğrudan veritabanı tablosu ve sütun adları kullanılarak SQL sorgusu çalıştırılmaktadır.
+
+#### Native SQL’in Avantajları
+
+- **Veritabanına Özgü İşlemler**: Native SQL ile, JPQL’in sınırlarının ötesinde karmaşık sorgular veya veritabanına özel işlemler gerçekleştirebilirsiniz.
+- **Performans Optimizasyonu**: Veritabanına özgü optimizasyonları kullanarak daha hızlı sorgular oluşturabilirsiniz.
+- **Daha Fazla Esneklik**: Native SQL, JPQL'in sınırlamaları olan karmaşık sorguların üstesinden gelir ve daha esnek bir yapı sunar.
+
+#### Native SQL’in Dezavantajları
+
+- **Veritabanı Bağımlılığı**: Native SQL sorguları, belirli bir veritabanına özgü olduğunda, farklı bir veritabanına geçildiğinde çalışmayabilir.
+- **Kod Karmaşıklığı**: SQL sorgularını doğrudan kullanmak, JPQL’e göre kodu daha karmaşık hale getirebilir.
+- **Nesne Odaklı Değil**: Native SQL doğrudan tablo adları ve sütunlarla çalıştığı için nesne odaklı mimari ile tamamen uyumlu olmayabilir.
+
+---
+
+### JPQL ve Native SQL Arasındaki Farklar
+
+| Özellik                  | JPQL                                  | Native SQL                             |
+|--------------------------|---------------------------------------|----------------------------------------|
+| Söz Dizimi               | Nesne odaklı, entity sınıflarına göre | Veritabanı odaklı, tablo ve sütun isimlerine göre |
+| Veritabanı Bağımsızlığı  | Evet                                  | Hayır                                  |
+| Performans               | Orta                                  | Yüksek (veritabanına özel optimizasyon)|
+| Karmaşık Sorgu Desteği   | Sınırlı                               | Geniş                                  |
+| Kullanım Kolaylığı       | Daha kolay ve anlaşılır               | SQL bilgisi gerektirir                 |
+
+### Hangi Durumda Hangisini Kullanmalıyız?
+
+- **Nesne Odaklı ve Basit Sorgular**: JPQL tercih edilmelidir. JPQL, nesne odaklı bir yapıya sahip olduğundan daha temiz ve anlaşılır kod sağlar.
+- **Karmaşık veya Performans Gerektiren Sorgular**: Native SQL tercih edilebilir. Native SQL, doğrudan SQL sorgularını kullanmanıza izin verir, bu nedenle karmaşık işlemler için daha esnektir.
+
+JPQL ve Native SQL, Spring Boot ve JPA ile çalışırken veritabanı işlemlerini optimize etmek için kullanabileceğiniz güçlü araçlardır. Tercih ettiğiniz yöntem, projenizin ihtiyaçlarına ve veritabanı yapınıza bağlı olarak değişiklik gösterebilir.
+
+## Spring Boot
+```sh 
+
+```
+---
+
+Spring Boot ve JPA ile veri işlemleri gerçekleştirirken, sorguları yönetmek için **Named Queries**, **Native SQL**, ve **JPQL (Java Persistence Query Language)** gibi çeşitli seçenekler mevcuttur. Her biri farklı ihtiyaçlara göre kullanılır ve avantajlar ile dezavantajlar sunar. Bu üç yöntemin arasındaki farkları ve kullanım alanlarını ayrıntılı olarak açıklayacağım.
+
+### Named Queries (Adlandırılmış Sorgular)
+
+Named Queries, JPA ile birlikte tanımlanan ve belirli bir adı olan, tekrar kullanılabilir sorgulardır. Sorgular, genellikle entity sınıfları üzerinde **@NamedQuery** veya **@NamedNativeQuery** anotasyonları ile tanımlanır. Bu sayede, aynı sorgu birden fazla yerde kullanılması gerektiğinde kod tekrarı yapılmadan bu sorguya başvurulabilir.
+
+#### Named Queries’in Özellikleri
+
+- **Tekrar Kullanılabilirlik**: Named Queries, bir kere tanımlandıktan sonra uygulamanın her yerinde kullanılabilir.
+- **Kodun Temizlenmesi**: Sorgu tanımları entity sınıfı içinde tanımlandığından, sorgu mantığı doğrudan kod içinde yazılmaz ve böylece daha temiz bir kod yapısı elde edilir.
+- **Statik Tanımlama**: Named Queries uygulama başlatıldığında derlenir, bu nedenle çalışma sırasında herhangi bir hata oluşmaz. Sorgu hataları uygulama başlatıldığında fark edilir.
+- **Performans**: JPA, Named Queries’i uygulama başlatıldığında derlediği için, çalışma sırasında daha hızlı çalışır.
+
+#### Named Queries Kullanımı
+
+##### JPQL ile Named Query Tanımlama:
+
+```java
+@Entity
+@NamedQuery(name = "User.findByName", query = "SELECT u FROM User u WHERE u.name = :name")
+public class User {
+    @Id
+    private Long id;
+    private String name;
+    // Getter ve Setter'lar
+}
+```
+
+Bu örnekte, **User.findByName** adında bir Named Query tanımlanmıştır. Bu sorgu, `User` entity’sindeki **name** alanına göre veri çekmektedir.
+
+Bu sorguyu bir repository'de kullanmak için:
+
+```java
+public interface UserRepository extends JpaRepository<User, Long> {
+    @Query(name = "User.findByName")
+    List<User> findByName(@Param("name") String name);
+}
+```
+
+##### Native SQL ile Named Query Tanımlama:
+
+```java
+@Entity
+@NamedNativeQuery(name = "User.findByAgeNative", query = "SELECT * FROM users WHERE age = :age", resultClass = User.class)
+public class User {
+    @Id
+    private Long id;
+    private String name;
+    private int age;
+    // Getter ve Setter'lar
+}
+```
+
+Bu sorgu ise **User.findByAgeNative** adında bir Native SQL sorgusudur ve doğrudan SQL ile yazılmıştır.
+
+#### Named Queries Avantajları
+
+- **Tekrar Kullanılabilirlik**: Birden fazla yerde aynı sorguyu tekrar tanımlamadan kullanabilirsiniz.
+- **Performans Artışı**: Uygulama başlatıldığında derlendiği için sorgu hataları çalışma sırasında değil, başlangıçta fark edilir.
+- **Statik Yapı**: Named Queries uygulama başlatılırken çalıştığından, sorguların geçerliliği önceden kontrol edilir ve çalışma zamanı hatalarının önüne geçilir.
+
+#### Named Queries Dezavantajları
+
+- **Esneklik Eksikliği**: Named Queries, sabit sorgular olarak tanımlanır, bu nedenle dinamik bir sorgu gereksiniminde yeterli esneklik sağlamayabilir.
+- **Kod Karmaşası**: Çok fazla Named Query tanımlandığında entity sınıfları karmaşık hale gelebilir.
+
+---
+
+### JPQL (Java Persistence Query Language)
+
+JPQL, JPA ile birlikte çalışan nesne odaklı bir sorgulama dilidir ve doğrudan SQL kullanmadan, Java sınıflarına göre sorgu yazmayı sağlar. JPQL, entity sınıfları üzerinden çalışır ve bu nedenle nesne tabanlıdır.
+
+#### JPQL’in Özellikleri
+
+- **Nesne Odaklı**: JPQL, doğrudan tablo ve sütun adları yerine Java sınıfları ve alanları üzerinde çalışır.
+- **Veritabanı Bağımsızlığı**: JPQL sorguları, JPA tarafından desteklenen herhangi bir veritabanında çalışacak şekilde soyutlanmıştır. Bu sayede veritabanı bağımsızlığı sağlar.
+- **İlişki Yönetimi**: JPQL, entity sınıfları arasındaki ilişkileri yönetmek için oldukça uygundur, bu da ilişkisel veritabanı işlemlerini daha kolay hale getirir.
+
+#### JPQL Kullanımı
+
+JPQL sorguları **@Query** anotasyonu ile yazılabilir.
+
+```java
+@Query("SELECT u FROM User u WHERE u.name = :name")
+List<User> findByName(@Param("name") String name);
+```
+
+Bu örnekte JPQL, doğrudan User sınıfı üzerinden sorgulama yaparak veritabanında **name** alanına göre veri çeker.
+
+#### JPQL Avantajları
+
+- **Nesne Odaklı ve Veritabanı Bağımsız**: JPQL, nesne yönelimli bir yapı sunar ve veritabanı bağımsızlığı sağlar.
+- **Kolay İlişki Yönetimi**: JPQL, entity ilişkilerini yönetmek için kolay bir yol sunar, bu da daha sade ve okunabilir kod sağlar.
+- **Temiz Kod**: JPQL, entity sınıfı özelliklerini doğrudan kullanır, bu nedenle SQL komutlarına göre daha temiz ve anlaşılır bir yapı sağlar.
+
+#### JPQL Dezavantajları
+
+- **Veritabanı Özgü Optimizasyonlardan Yoksun**: JPQL, veritabanı bağımsız bir yapıya sahip olduğundan, veritabanına özgü optimizasyonları kullanmaz.
+- **Karmaşık Sorgu Desteği Sınırlı**: JPQL, özellikle karmaşık ve veritabanına özgü işlemlerde sınırlıdır.
+
+---
+
+### Native SQL
+
+Native SQL, doğrudan SQL komutları kullanılarak yazılan sorgulardır. Bu tür sorgular, veritabanı bağımsız değildir ve doğrudan veritabanı tabloları ve sütun adları kullanılarak çalıştırılır. Native SQL ile veritabanına özgü özellikleri ve optimizasyonları kullanmak mümkündür.
+
+#### Native SQL’in Özellikleri
+
+- **Veritabanı Bağımlılığı**: Native SQL, belirli bir veritabanına özgü SQL söz dizimini kullanır ve bu nedenle veritabanı bağımlıdır.
+- **Karmaşık ve Özel Sorgular İçin Uygundur**: Native SQL, karmaşık ve veritabanına özgü sorgular için idealdir.
+- **Performans Avantajı**: Native SQL, veritabanına özgü optimizasyonları kullanarak yüksek performans sağlar.
+
+#### Native SQL Kullanımı
+
+Native SQL sorguları, **@Query** anotasyonunun içinde `nativeQuery = true` parametresi ile belirtilir.
+
+```java
+@Query(value = "SELECT * FROM users WHERE age > :age", nativeQuery = true)
+List<User> findUsersOlderThan(@Param("age") int age);
+```
+
+Bu örnekte doğrudan SQL ile yazılmış bir sorgu kullanılmıştır.
+
+#### Native SQL Avantajları
+
+- **Karmaşık Sorgular için Uygun**: Native SQL, özellikle karmaşık ve veritabanına özgü işlemler için idealdir.
+- **Performans Artışı**: Veritabanına özgü optimizasyonları kullanarak daha hızlı sorgular sağlar.
+- **Esneklik**: Veritabanı özelliklerinden tam anlamıyla yararlanır, böylece JPQL’in sınırlamalarını aşabilirsiniz.
+
+#### Native SQL Dezavantajları
+
+- **Veritabanı Bağımlılığı**: Native SQL, belirli bir veritabanına özgü olduğundan, başka bir veritabanına geçişte sorunlar yaratabilir.
+- **Kod Karmaşıklığı**: SQL sorgularını doğrudan kullanmak kodu daha karmaşık hale getirebilir.
+- **Veritabanı Bağımsızlığı Eksikliği**: Native SQL, belirli bir veritabanına bağımlıdır ve başka bir veritabanına geçildiğinde kodda değişiklik yapılması gerekir.
+
+---
+
+### Named Queries, JPQL ve Native SQL Arasındaki Farklar
+
+| Özellik                  | Named Queries                          | JPQL                                  | Native SQL                              |
+|--------------------------|----------------------------------------|---------------------------------------|-----------------------------------------|
+| Sorgu Yapısı             | Statik, entity sınıfı üzerinde tanımlanır | Nesne odaklı, entity sınıfları üzerinden | Doğrudan SQL komutları ile yazılır      |
+| Tekrar Kullanılabilirlik | Yüksek, birden fazla yerde kullanılabilir | Tekrar kullanılabilir ancak entity sınıfına bağlıdır | Düşük, genelde özel durumlar için      |
+| Veritabanı Bağımsızlığı  | Evet (JPQL ile tanımlıysa)             | Evet                                  | Hayır                                   |
+| Performans               | Uygulama başlatıldığında derlenir, hızlıdır | Orta, veritabanı bağımsızlığı sağlar | Yüksek, veritabanına
+
+özgü optimizasyonlar kullanır |
+| Karmaşık Sorgu Desteği   | Orta, genelde basit sorgular için      | Orta                                  | Yüksek, veritabanına özgü sorgular yapılabilir |
+| Kolaylık                 | Kolay, kodda dağılmamış yapı sunar     | Kolay, nesne odaklı yapıya sahip      | SQL bilgisi gerektirir                  |
+
+### Özet ve Hangi Durumda Hangi Yöntem Kullanılmalı?
+
+- **Named Queries**: Tekrar kullanılabilir, statik sorgular gerektiğinde ve aynı sorguyu birden fazla yerde kullanmak gerektiğinde tercih edilmelidir.
+- **JPQL**: Nesne odaklı, veritabanı bağımsız sorgular için idealdir. JPA entity ilişkilerini yönetirken ve temel CRUD işlemlerinde daha çok tercih edilmelidir.
+- **Native SQL**: Veritabanına özgü sorgular gerektiğinde, karmaşık işlemler ve özel performans ihtiyaçlarında kullanılır.
+
+Her üç yöntemin de kendine özgü avantajları ve kullanım alanları vardır. Projenizin ihtiyaçlarına göre en uygun sorgu yöntemi belirlenmelidir.
+
+
+## Spring Boot
+```sh 
+
+```
+---
 ### Sayfalandırma ve Sıralama (Pagination and Sorting)
 
 Spring Data, büyük veri setlerinde çalışırken verilerin sayfalara bölünerek görüntülenmesini ve sıralanmasını sağlar. `Pageable` ve `Sort` nesneleri sayesinde veriler sayfalara bölünerek belirli bir sırada listelenebilir.
@@ -2136,6 +2440,891 @@ Spring Data JPA ile kullanılan bu terimler, bir veritabanı üzerinde otomatik 
 ```
 ---
 
+
+Spring Boot’ta **ilişkiler** (relationships), veri modelleme açısından önemli bir role sahiptir ve `@OneToOne`, `@OneToMany`, `@ManyToOne`, ve `@ManyToMany` gibi anotasyonlarla tanımlanır. Bu ilişkiler, veritabanındaki tablo yapıları arasındaki bağları temsil eder ve bir nesneyle diğer nesneler arasındaki bağı kurmamıza olanak tanır. Her bir ilişkinin kendine özgü bazı önemli **attributeları** vardır. Aşağıda bu ilişki türlerinin ve bu anotasyonlarla birlikte kullanılan en önemli attribute’ların detaylı bir açıklamasını bulabilirsiniz.
+
+### 1. `@OneToOne` İlişkisi
+
+`@OneToOne`, iki varlık arasında birebir ilişki kurmak için kullanılır. Örneğin, bir **kullanıcı** ile onun **profil** bilgisi arasında birebir bir ilişki olabilir.
+
+#### Örnek Kullanım
+```java
+@Entity
+public class User {
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "profile_id", referencedColumnName = "id")
+    private Profile profile;
+}
+```
+
+#### Önemli Attribute’lar
+
+- **`mappedBy`**: Bir ilişkinin ters tarafında (`inverse side`) kullanılır. `mappedBy`, ilişkiyi ters tarafla eşleştirmek için ilişki sahibini (`owning side`) belirtir. Örneğin, `Profile` sınıfında `User`’ın ters tarafı olarak `mappedBy` kullanılabilir.
+
+    ```java
+    @OneToOne(mappedBy = "profile")
+    private User user;
+    ```
+
+- **`cascade`**: İlişkili varlık üzerinde yapılacak işlemleri (örneğin, kayıt, güncelleme veya silme) belirler. Örneğin `CascadeType.ALL`, `User` kaydedildiğinde otomatik olarak `Profile` kaydını da günceller.
+
+- **`fetch`**: Varsayılan olarak `EAGER`’dır. `@OneToOne` ilişkilerde ilişki veri her zaman yüklenir. `LAZY` olarak ayarlandığında, ilişki veri sadece gerektiğinde yüklenir.
+
+- **`optional`**: `true` ise, ilişki nullable olarak tanımlanır. Bu, ilişkili varlığın `null` olabileceği anlamına gelir. `false` yapıldığında, ilişkili varlık `null` olamaz.
+
+- **`@JoinColumn`**: Veritabanında ilişkiyi kuran anahtar sütunu belirtir. `name` attribute’u, ilişki kurulacak sütunun ismini tanımlar.
+
+### 2. `@OneToMany` İlişkisi
+
+`@OneToMany`, bir varlığın diğer bir varlıkla bire-çok ilişkisini temsil eder. Örneğin, bir **yazar** ve onun **kitapları** arasında bire-çok ilişkisi olabilir. Bu tür bir ilişkide, bir yazarın birden fazla kitabı vardır.
+
+#### Örnek Kullanım
+```java
+@Entity
+public class Author {
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    private List<Book> books;
+}
+```
+
+#### Önemli Attribute’lar
+
+- **`mappedBy`**: `@OneToMany` ilişkilerinde sıkça kullanılır. İlişki sahibini belirleyerek, ilişkiyi ters tarafla bağlar. Burada `Book` sınıfında `author` ilişki sahibidir.
+
+- **`cascade`**: Bu attribute, ilişki güncellemelerinde ne yapılması gerektiğini belirtir. Örneğin, `CascadeType.ALL` kullanıldığında, `Author` güncellenirken ilişkili tüm `Book` kayıtları da güncellenir.
+
+- **`fetch`**: `@OneToMany` ilişkilerde varsayılan olarak `LAZY`’dir. Veri gerektiğinde yüklenir. `EAGER` olarak değiştirilirse ilişki veri her zaman yüklenir.
+
+- **`orphanRemoval`**: `true` olarak ayarlanırsa, ilişki koparıldığında `orphan` (yetim) olan `Book` kayıtları otomatik olarak silinir.
+
+- **`@JoinColumn` veya `@JoinTable`**: İlişkiyi bağlayacak anahtar sütunu veya bağlantı tablosunu belirler. `@JoinColumn`, tek bir anahtar sütunuyla ilişki kurarken, `@JoinTable` iki tablo arasındaki bağlantıyı kurar.
+
+### 3. `@ManyToOne` İlişkisi
+
+`@ManyToOne`, birden fazla varlığın tek bir varlığa bağlı olduğu ilişki türüdür. Örneğin, bir **kitap** ve onun **yazarı** arasındaki ilişki gibi. Birçok kitap tek bir yazara ait olabilir.
+
+#### Örnek Kullanım
+```java
+@Entity
+public class Book {
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Author author;
+}
+```
+
+#### Önemli Attribute’lar
+
+- **`fetch`**: `@ManyToOne` ilişkilerde varsayılan olarak `EAGER`’dır. İlişki veri her zaman yüklenir. `LAZY` olarak ayarlanabilir.
+
+- **`optional`**: Eğer `true` olarak ayarlanmışsa, ilişkili varlık `null` olabilir. Örneğin, `optional = false` yapıldığında `Book` kaydının mutlaka bir `Author` ile ilişkili olması gerekir.
+
+- **`cascade`**: Aynı diğer ilişki türlerinde olduğu gibi, `cascade` tipi belirlenebilir. Örneğin, `CascadeType.PERSIST` sadece ana varlık kaydedildiğinde ilişkili varlık da kaydedilir.
+
+- **`@JoinColumn`**: Bu ilişkiyi kuran anahtar sütunu tanımlar. `name` attribute’u, ilişkili sütunun veritabanında hangi isimle yer alacağını belirler.
+
+### 4. `@ManyToMany` İlişkisi
+
+`@ManyToMany`, iki varlık arasında çoktan çoğa ilişkiyi tanımlar. Örneğin, bir **öğrenci** ve onun **dersleri** arasında çoktan çoğa ilişki vardır; bir öğrenci birden fazla ders alabilir ve bir ders birden fazla öğrenciye sahip olabilir.
+
+#### Örnek Kullanım
+```java
+@Entity
+public class Student {
+    @ManyToMany
+    @JoinTable(
+        name = "student_course",
+        joinColumns = @JoinColumn(name = "student_id"),
+        inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+    private List<Course> courses;
+}
+```
+
+#### Önemli Attribute’lar
+
+- **`mappedBy`**: İlişkiyi ters tarafla bağlar. Bir sınıfta `@ManyToMany` ilişki tanımlandıysa, diğer sınıfta `mappedBy` ile ilişki sahibi belirtilmelidir.
+
+- **`cascade`**: İlişki için uygulanacak işlemleri belirtir. Örneğin, `CascadeType.MERGE` ile ana varlık güncellendiğinde ilişkili varlıklar da güncellenir.
+
+- **`fetch`**: `@ManyToMany` ilişkilerde varsayılan olarak `LAZY`’dir. Veri gerektiğinde yüklenir, ancak `EAGER` olarak ayarlanabilir.
+
+- **`@JoinTable`**: Çoktan çoğa ilişkilerde bağlantıyı sağlayan üçüncü bir tabloyu belirtir. `name` attribute’u ile bağlantı tablosunun ismi verilir. `joinColumns` ana varlığın anahtar sütununu, `inverseJoinColumns` ise ilişkili varlığın anahtar sütununu belirtir.
+
+- **`@JoinColumn`**: Birçok `@JoinColumn` ile ilişkili varlıklar arasında köprü kuran bir tablo tanımlanabilir. Bu, ilişki için bağlantı sütunlarını belirler.
+
+### Cascade Tipleri (CascadeType)
+
+Tüm ilişki türlerinde kullanılabilen `cascade` tipi, ilişki işlemlerinin ilişkili varlığa nasıl yansıyacağını belirler:
+
+- **`CascadeType.ALL`**: Tüm işlemler ilişki üzerinde yapılır (persist, merge, remove, refresh, detach).
+- **`CascadeType.PERSIST`**: Ana varlık kaydedildiğinde, ilişkili varlıklar da kaydedilir.
+- **`CascadeType.MERGE`**: Ana varlık güncellendiğinde, ilişkili varlıklar da güncellenir.
+- **`CascadeType.REMOVE`**: Ana varlık silindiğinde, ilişkili varlıklar da silinir.
+- **`CascadeType.REFRESH`**: Ana varlık yenilendiğinde, ilişkili varlıklar da yenilenir.
+- **`CascadeType.DETACH`**: Ana varlık oturumdan ayrıldığında, ilişkili varlıklar da ayrılır.
+
+### Fetch Tipleri (FetchType)
+
+**FetchType** iki seçenek sunar:
+
+- **`FetchType.EAGER`**: İlişki veri her zaman yüklenir. Bu, veri her durumda belleğe alınır.
+- **`FetchType.LAZY`**: İlişki veri yalnızca gerektiğinde yüklenir. Bu, bellek yönetimi açısından daha verimlidir.
+
+### Özet
+
+Spring Boot ilişkileri tanımlamak için kullanılan `@anotasyonlar`, veritabanı modellemelerinde veri ilişkilerini açık bir şekilde ifade etmemizi sağlar. Bu ilişkiler, `@OneToOne`, `@OneToMany`, `@ManyToOne`, ve `@ManyToMany` anotasyonları ile belirtilir. Her bir ilişki türü, veritabanı yapısında anlamlı bağlantılar kurmayı sağlar ve verilerin yönetilmesi, güncellenmesi, veya silinmesi gibi işlemler sırasında entegre bir yapı sunar.
+
+### İlişkilerde Kullanılan Başlıca Attribute ve Anotasyonların Özeti
+
+1. **`@OneToOne`**:
+    - Birebir ilişkilerde kullanılır.
+    - `mappedBy`, ilişkiyi ters tarafla eşleştirir.
+    - `@JoinColumn`, ilişkiyi kuran sütunu belirtir.
+    - `cascade`, işlemleri tüm varlıklar arasında paylaşır.
+    - `fetch`, veri yükleme türünü belirler (`EAGER` varsayılan).
+
+2. **`@OneToMany`**:
+    - Bire-çok ilişkilerde kullanılır.
+    - `mappedBy`, ilişki sahibini belirtir.
+    - `cascade`, işlemleri yönetir (örneğin `CascadeType.ALL` ile tüm işlemler).
+    - `orphanRemoval`, ilişki sona erdiğinde ilişkisiz (orphan) öğeleri siler.
+    - `fetch`, veri yükleme türünü belirler (`LAZY` varsayılan).
+
+3. **`@ManyToOne`**:
+    - Çoktan-bire ilişkiyi ifade eder.
+    - `cascade`, işlemleri ilişkili varlık üzerinde uygular.
+    - `optional`, ilişkili varlığın zorunlu olup olmadığını belirtir.
+    - `fetch`, veri yükleme türünü belirler (`EAGER` varsayılan).
+    - `@JoinColumn`, ilişkiyi sağlayan sütunu belirtir.
+
+4. **`@ManyToMany`**:
+    - Çoktan-çoğa ilişkilerde kullanılır.
+    - `mappedBy`, ilişkiyi ters tarafla bağlar.
+    - `@JoinTable`, üçüncü tablo ile iki varlık arasındaki bağlantıyı sağlar.
+    - `cascade`, işlemleri her iki taraf üzerinde de yürütür.
+    - `fetch`, veri yükleme türünü belirler (`LAZY` varsayılan).
+
+5. **`CascadeType`** Seçenekleri:
+    - `ALL`, `PERSIST`, `MERGE`, `REMOVE`, `REFRESH`, `DETACH` işlemlerini belirtir.
+    - `CascadeType.ALL` tüm işlemleri ilişki varlığına uygular.
+
+6. **`FetchType`** Seçenekleri:
+    - `EAGER`: Veri her zaman yüklenir.
+    - `LAZY`: Veri sadece gerektiğinde yüklenir, performans avantajı sağlar.
+
+### İlişki Yönetiminde Dikkat Edilmesi Gerekenler
+
+- **Bellek Yönetimi**: `LAZY` yükleme, bellek yönetimi açısından avantaj sağlar. Özellikle büyük veri setleriyle çalışıyorsanız `LAZY` olarak ayarlamak belleği daha verimli kullanmanıza yardımcı olur.
+- **Orphan Removal**: `orphanRemoval = true` olarak ayarlanırsa, bir koleksiyondan silinen öğeler otomatik olarak veritabanından da silinir.
+- **Veritabanı İşlemleri**: `cascade` ile, bir varlık üzerinde yapılan işlemlerin bağlı varlıkları nasıl etkilediğini kontrol edebilirsiniz.
+- **Veri Tutarlılığı**: `optional = false` gibi özelliklerle, ilişkilerin bütünlüğünü koruyabilir ve `null` ilişki oluşmasını engelleyebilirsiniz.
+
+Spring Boot’ta veri modelleri arasında anlamlı bağlantılar kurmak ve bu ilişkileri doğru bir şekilde yönetmek, uygulamanın sağlam bir yapıya sahip olmasını sağlar. Bu ilişkileri ve `attribute`ları doğru kullanmak, veritabanı işlemlerinin daha etkili ve sürdürülebilir olmasını sağlar.
+
+
+
+
+
+## Spring Boot
+```sh 
+
+```
+---
+
+
+`@RequestParam` ve `@PathVariable`, Spring Framework'de HTTP isteğinden parametreleri almak için kullanılan iki farklı anotasyondur. Bu iki anotasyonun nasıl çalıştığını, aralarındaki farkları ve hangi durumlarda hangisini kullanmanız gerektiğini ayrıntılı olarak açıklayalım.
+
+### `@RequestParam` Nedir?
+
+`@RequestParam`, genellikle **sorgu parametrelerini** almak için kullanılır. Sorgu parametreleri, URL’nin `?` işaretinden sonra gelen anahtar-değer çiftleridir. `@RequestParam` ile bir URL’nin sorgu kısmından parametreleri alabiliriz.
+
+**Örnek Kullanım**:
+URL: `http://example.com/api/products?category=electronics&price=100`
+
+```java
+@GetMapping("/products")
+public String getProducts(@RequestParam String category, @RequestParam int price) {
+    // category = "electronics"
+    // price = 100
+    return "Category: " + category + ", Price: " + price;
+}
+```
+
+Yukarıdaki örnekte:
+- `@RequestParam` ile `category` ve `price` sorgu parametreleri URL'den alınır.
+- `category` değeri `"electronics"` ve `price` değeri `100` olarak atanır.
+
+**Özellikleri**:
+- **İsteğe Bağlı Yapılandırma**: `@RequestParam` isteğe bağlı olarak yapılandırılabilir. Parametre zorunlu değilse `required = false` olarak ayarlanabilir ve varsayılan bir değer belirtilebilir.
+- **Sorgu Parametreleri İçin Kullanılır**: `@RequestParam`, URL'nin sorgu kısmından parametre almak için idealdir.
+
+### `@PathVariable` Nedir?
+
+`@PathVariable`, **URL yolunun (path) bir parçasını** parametre olarak almak için kullanılır. Bu yöntem, özellikle RESTful API’lerde, belirli bir kaynağı benzersiz bir kimlik veya özellik ile almak için tercih edilir.
+
+**Örnek Kullanım**:
+URL: `http://example.com/api/products/5`
+
+```java
+@GetMapping("/products/{id}")
+public String getProduct(@PathVariable int id) {
+    // id = 5
+    return "Product ID: " + id;
+}
+```
+
+Yukarıdaki örnekte:
+- `@PathVariable` ile `id` parametresi URL'den alınır.
+- `id` değeri `5` olarak atanır.
+
+**Özellikleri**:
+- **Dinamik Yol Parametreleri İçin Kullanılır**: `@PathVariable`, URL’nin bir parçası olan ve kaynakları temsil eden parametreler için kullanılır.
+- **Daha Okunaklı URL Yapısı**: `@PathVariable` ile dinamik yollar oluşturulabilir; bu da RESTful API tasarımında daha okunabilir ve anlamlı URL yapıları sağlar.
+
+### `@RequestParam` ile `@PathVariable` Arasındaki Farklar
+
+| Özellik            | @RequestParam                                  | @PathVariable                               |
+|--------------------|-----------------------------------------------|--------------------------------------------|
+| **Kullanım Yeri**  | Sorgu parametreleri (`?`)                     | URL yolundaki dinamik parametreler (`/{}`) |
+| **Amaç**           | Parametre değerleri sorgu parametrelerinden almak için | URL yolunun bir parçasını almak için       |
+| **Zorunluluk**     | `required` ile isteğe bağlı yapılabilir        | Zorunludur (yolun bir parçası olarak)      |
+| **Örnek URL**      | `/products?category=electronics`              | `/products/electronics`                    |
+
+### Hangi Durumda Hangisini Kullanmalıyım?
+
+1. **Kimlik (ID) veya Kaynak Belirteçleri İçin**: Belirli bir kaynağı benzersiz bir kimlik ile alıyorsanız (örneğin, `productId` veya `userId` gibi), `@PathVariable` kullanmak daha iyi bir yaklaşımdır. Bu, daha temiz ve okunabilir bir URL sağlar. Örneğin:
+   ```java
+   @GetMapping("/users/{id}")
+   public User getUserById(@PathVariable Long id) {
+       return userService.findUserById(id);
+   }
+   ```
+
+2. **Filtreleme veya Arama İçin**: Eğer bir liste üzerinde filtreleme veya arama işlemi yapıyorsanız, `@RequestParam` kullanmanız daha uygundur. Örneğin:
+   ```java
+   @GetMapping("/products")
+   public List<Product> getProducts(@RequestParam(required = false) String category,
+                                    @RequestParam(required = false, defaultValue = "0") int minPrice) {
+       return productService.findProducts(category, minPrice);
+   }
+   ```
+
+3. **URL Yapısı ve Okunabilirlik**: RESTful API tasarımı için `@PathVariable`, kaynak belirleme anlamında daha okunabilir URL yapısı sağlar. Örneğin:
+    - `@GetMapping("/orders/{orderId}")` – Belirli bir siparişin ayrıntılarına ulaşmak için.
+
+4. **Parametrelerin Zorunluluğu**: `@RequestParam`, isteğe bağlı (`required=false`) olarak yapılandırılabilir ve varsayılan değer atanabilir. `@PathVariable` ise URL yolunun bir parçası olduğundan zorunludur.
+
+### Özet
+
+- **Kaynakları belirlemek için** `@PathVariable` kullanılır.
+- **Sorgu veya filtre parametreleri için** `@RequestParam` kullanılır.
+- RESTful API’lerde kimlikleri `@PathVariable` ile, opsiyonel sorgu parametrelerini ise `@RequestParam` ile almak iyi bir pratiktir.
+
+## Spring Boot
+```sh 
+
+```
+---
+
+
+Java 8 ile gelen **Stream API**, veri işlemlerini daha etkili, temiz ve okunabilir bir şekilde yapmayı sağlayan bir araçtır. `Stream`ler, bir veri kaynağı (koleksiyonlar, diziler veya dosyalar gibi) üzerinde işlem yapmamıza olanak tanıyan bir dizi metottan oluşur. Stream API, özellikle koleksiyonlar üzerindeki sıralama, filtreleme, dönüştürme ve toplama işlemlerini çok daha kolay hale getirir. Java 8 ile gelen fonksiyonel programlama özellikleri sayesinde `Stream`ler, geleneksel `for` döngüleri ve `iterator` işlemlerine daha modern bir alternatif sunar.
+
+### Stream API’nin Temel Özellikleri
+
+1. **Fonksiyonel Programlama Mantığı ile Çalışır**: Java 8 ile gelen lambda ifadeleri ile Stream işlemleri kolaylaşır. Lambda ile ifade edilen kısa ve etkili işlemler sayesinde daha az kodla daha çok iş yapılabilir.
+2. **İşlem Zinciri (Pipeline) Mantığı**: Stream’ler, bir veri kaynağından veri alır ve bu veri üzerinde çeşitli işlemler uygular. Bu işlemler birbirine bağlıdır ve bir zincir (pipeline) olarak ifade edilir.
+3. **Tek Kullanımlık Yapı**: Bir `Stream`, yalnızca bir kez tüketilebilir; yeniden kullanılamaz. Bu nedenle bir `Stream` ile bir kez işlem yapıldığında, başka bir işlem için yeni bir `Stream` oluşturmak gerekir.
+4. **Dönüştürülebilirlik**: `Stream`ler, veri kaynağını değiştirmez, verileri işleyerek yeni `Stream` veya sonuçlar üretir. `Stream` nesnesini koleksiyonlara veya diğer veri yapılarına dönüştürebiliriz.
+5. **Paralel İşlem Desteği**: `Stream` API, paralel işlemler için güçlü bir destek sağlar. Bu, büyük veri kümeleri üzerinde işlemleri hızlandırmak için önemlidir.
+
+### Stream Türleri
+
+1. **Sıralı (Sequential) Stream**: Veriler sırayla işlenir. `Collection.stream()` metodu ile elde edilir. Bu türde işlemler, veri sırasına sadık kalarak tek bir iş parçacığı (thread) üzerinde çalışır.
+2. **Paralel (Parallel) Stream**: Veriler paralel olarak işlenir ve performansı artırmak için çok çekirdekli işlemcilerin gücünden yararlanır. `Collection.parallelStream()` metodu ile elde edilir.
+
+### Stream’in Çalışma Mantığı: Ara ve Terminal İşlemler
+
+Stream işlemleri ikiye ayrılır: **ara (intermediate)** ve **terminal işlemler**.
+
+#### 1. Ara İşlemler (Intermediate Operations)
+Ara işlemler, bir `Stream` üzerinde dönüşüm veya filtreleme gibi işlemler yapar ve yeni bir `Stream` döner. Bu işlemler "lazy" (tembel) olarak değerlendirilir; yani, ara işlemler tek başlarına çalıştırıldığında işlem yapılmaz, ancak bir terminal işlem çağrıldığında zincirdeki tüm ara işlemler gerçekleştirilir.
+
+Başlıca ara işlemler:
+- **filter(Predicate)**: Veriyi belirli bir koşula göre filtreler.
+- **map(Function)**: Her öğe üzerinde dönüşüm yapar ve her bir öğeyi bir diğerine dönüştürür.
+- **sorted() veya sorted(Comparator)**: Veriyi doğal sıralama veya özel bir `Comparator` ile sıralar.
+- **distinct()**: Aynı olan öğeleri kaldırır (tekrarlı öğeleri kaldırır).
+- **limit(long)**: İlk belirtilen sayıda elemanı alır.
+- **skip(long)**: İlk belirtilen sayıda elemanı atlar.
+
+Örnek:
+```java
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+List<Integer> evenNumbers = numbers.stream()
+                                   .filter(n -> n % 2 == 0)
+                                   .collect(Collectors.toList());
+System.out.println(evenNumbers); // Çıktı: [2, 4, 6, 8, 10]
+```
+
+Yukarıdaki örnekte, `filter` ara işlemi ile yalnızca çift sayılar seçilmiş ve yeni bir `Stream` olarak işlenmiştir.
+
+#### 2. Terminal İşlemler (Terminal Operations)
+Terminal işlemler, bir `Stream` üzerindeki işlemleri sonlandırır ve `Stream` iş akışının sonuçlarını döner. Terminal işlemler çağrıldığında, `Stream` üzerindeki ara işlemler gerçekleştirilir ve terminal işlemle birlikte sonlandırılır.
+
+Başlıca terminal işlemler:
+- **forEach(Consumer)**: Her bir öğeyi belirtilen işlem ile işler.
+- **collect(Collector)**: `Stream` sonuçlarını bir koleksiyona veya diğer veri yapılarına toplar.
+- **reduce(BinaryOperator)**: `Stream` öğelerini indirger ve tek bir sonuç döner.
+- **count()**: `Stream` üzerindeki öğe sayısını döner.
+- **anyMatch(Predicate), allMatch(Predicate), noneMatch(Predicate)**: Belirli koşullara göre `boolean` sonuç döner.
+
+Örnek:
+```java
+List<String> names = Arrays.asList("Ali", "Ahmet", "Ayşe", "Mehmet");
+String concatenatedNames = names.stream()
+                                .filter(name -> name.startsWith("A"))
+                                .collect(Collectors.joining(", "));
+System.out.println(concatenatedNames); // Çıktı: Ali, Ahmet, Ayşe
+```
+
+### Stream İşlemlerinin Özellikleri ve Kullanım Durumları
+
+1. **Filtreleme**: `filter` ile belirli koşullara göre eleme yapılır.
+2. **Dönüştürme**: `map` ile bir veri kaynağındaki veriler başka bir veri tipine veya şekle dönüştürülür. Örneğin, `String` listesindeki her bir öğeyi büyük harfe çevirmek için `map` kullanılabilir.
+3. **Toplama İşlemleri**: `collect` ile bir `Stream`, liste, küme, harita gibi veri yapılarına dönüştürülebilir.
+4. **Birleştirme ve İndirgeme (Reduction)**: `reduce` ile `Stream` öğeleri tek bir değere indirgenebilir. Örneğin, bir sayı listesindeki sayıların toplamını bulmak.
+5. **Sıralama ve Sınırlama**: `sorted` ile sıralama, `limit` ile eleman sayısını sınırlandırma yapılır.
+
+Örnek:
+```java
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+int sum = numbers.stream()
+                 .reduce(0, Integer::sum);
+System.out.println(sum); // Çıktı: 15
+```
+
+### Parallel Stream ile Paralel İşlemler
+
+`Stream API`, çok çekirdekli sistemlerde işlemleri paralel hale getirmeyi destekler. `parallelStream()` kullanarak işlemleri paralel hale getirip performansı artırabilirsiniz. Ancak, paralel işlemler her durumda verim sağlamayabilir; bu yüzden dikkatli kullanılmalıdır.
+
+Örnek:
+```java
+List<Integer> largeList = Arrays.asList(…); // Büyük bir liste
+long count = largeList.parallelStream()
+                      .filter(n -> n % 2 == 0)
+                      .count();
+System.out.println("Çift sayı adedi: " + count);
+```
+
+### Stream API’nin Sağladığı Avantajlar
+
+- **Kodun Okunabilirliği**: `Stream` ile yazılan kod daha kısa ve daha okunaklıdır.
+- **Performans Artışı**: Paralel `Stream` ile büyük veri setlerinde performans artışı sağlanabilir.
+- **Fonksiyonel Programlama**: Lambda ifadeleri ile veri işleme daha basit hale gelir.
+- **İmmutability**: `Stream` işlemleri veriyi değiştirmez, yalnızca yeni bir `Stream` veya sonuç üretir.
+
+### Stream API İle Koleksiyon İşlemleri
+
+Koleksiyonlar üzerinde `Stream API` kullanımı, verileri işlemek için döngü veya `iterator` kullanmaya göre daha işlevseldir. Geleneksel yöntemde bir liste üzerinde filtreleme yapmak için `for` döngüsü ile `if` kontrolleri yazmanız gerekirdi. `Stream` ile bu işlemler daha sade hale gelir.
+
+Örnek:
+```java
+List<Person> people = Arrays.asList(
+    new Person("John", 25),
+    new Person("Jane", 22),
+    new Person("Jack", 30)
+);
+
+List<Person> filteredPeople = people.stream()
+                                    .filter(person -> person.getAge() > 23)
+                                    .collect(Collectors.toList());
+System.out.println(filteredPeople);
+```
+
+Bu örnekte, `Stream API`, bir `for` döngüsüne kıyasla daha sade ve anlaşılırdır.
+
+### Sonuç
+
+Java 8 `Stream API`, veri işlemeyi daha kolay ve etkili hale getiren güçlü bir araçtır. Fonksiyonel programlama yetenekleri, paralel işlem desteği ve veri kaynağını değiştirmeden işleme olanaklarıyla modern Java geliştirmede vazgeçilmez hale gelmiştir. `Stream`ler, özellikle büyük ve karmaşık veri işleme görevlerinde daha az kod yazarak daha
+
+
+
+## Spring Boot
+```sh 
+
+```
+---
+
+Java 8 Stream API'nin sağladığı metotlar, veri işleme akışını daha okunabilir ve etkili hale getiren birçok farklı işlem sunar. Bu metotlar, genellikle iki ana kategoriye ayrılır: **Ara İşlemler (Intermediate Operations)** ve **Terminal İşlemler (Terminal Operations)**. İşte en yaygın kullanılan Stream API metotları ve açıklamaları:
+
+### Ara İşlemler (Intermediate Operations)
+
+Ara işlemler, bir `Stream` üzerinde dönüşüm veya filtreleme gibi işlemler yapar ve yeni bir `Stream` döner. Bu işlemler, tembel (lazy) olarak değerlendirilir, yani yalnızca bir terminal işlem çağrıldığında etkin hale gelirler.
+
+1. **`filter(Predicate<? super T> predicate)`**: Stream’deki öğeleri belirtilen koşula göre filtreler. Predicate (koşul) sağlanır ve bu koşulu sağlayan öğeler yeni bir `Stream` olarak döner.
+
+   ```java
+   stream.filter(n -> n > 10);
+   ```
+
+2. **`map(Function<? super T, ? extends R> mapper)`**: Her bir öğe üzerinde dönüşüm işlemi yapar ve yeni bir `Stream` döner. Öğeleri bir veri tipinden başka bir veri tipine dönüştürmek için kullanılır.
+
+   ```java
+   stream.map(String::toUpperCase);
+   ```
+
+3. **`flatMap(Function<? super T, ? extends Stream<? extends R>> mapper)`**: Her bir öğeyi bir `Stream`'e dönüştürür ve bu `Stream`leri tek bir `Stream` olarak birleştirir. Bir koleksiyonun içindeki koleksiyonları düzleştirmek için kullanılır.
+
+   ```java
+   stream.flatMap(list -> list.stream());
+   ```
+
+4. **`distinct()`**: Stream'deki tekrarlı (aynı) öğeleri kaldırır ve benzersiz öğelerden oluşan bir `Stream` döner.
+
+   ```java
+   stream.distinct();
+   ```
+
+5. **`sorted()`**: Stream'deki öğeleri doğal sıraya göre sıralar. Eğer öğeler `Comparable` değilse, `Comparator` parametresiyle sıralama yapılabilir.
+
+   ```java
+   stream.sorted();
+   ```
+
+6. **`sorted(Comparator<? super T> comparator)`**: Verilen `Comparator`'a göre öğeleri sıralar. Özel sıralama işlemleri için kullanılır.
+
+   ```java
+   stream.sorted(Comparator.reverseOrder());
+   ```
+
+7. **`limit(long maxSize)`**: Stream’in ilk belirtilen sayıda (`maxSize`) öğesini alır ve yeni bir `Stream` döner.
+
+   ```java
+   stream.limit(5);
+   ```
+
+8. **`skip(long n)`**: Stream’in ilk `n` öğesini atlar ve geriye kalan öğelerle yeni bir `Stream` döner.
+
+   ```java
+   stream.skip(3);
+   ```
+
+9. **`peek(Consumer<? super T> action)`**: Stream üzerinde işlem yaparken, her bir öğeyi gözlemlemek için kullanılır. Veriyi değiştirmez; debug amaçlı veya yan etkiler eklemek için kullanılabilir.
+
+   ```java
+   stream.peek(System.out::println);
+   ```
+
+### Terminal İşlemler (Terminal Operations)
+
+Terminal işlemler, bir `Stream` üzerindeki işlemleri sonlandırır ve bir sonuç döner. Terminal işlem çağrıldığında, ara işlemler de işlenmiş olur.
+
+1. **`forEach(Consumer<? super T> action)`**: Stream’deki her bir öğe üzerinde belirtilen işlemi uygular. Dönen bir sonuç yoktur.
+
+   ```java
+   stream.forEach(System.out::println);
+   ```
+
+2. **`collect(Collector<? super T, A, R> collector)`**: Stream öğelerini toplayarak bir koleksiyona veya başka bir sonuç tipine dönüştürür. Genellikle `Collectors` yardımcı sınıfı ile kullanılır.
+
+   ```java
+   List<Integer> list = stream.collect(Collectors.toList());
+   ```
+
+3. **`reduce(BinaryOperator<T> accumulator)`**: Stream’deki öğeleri indirger ve tek bir sonuç döner. Bu, örneğin tüm sayıların toplamını veya çarpımını bulmak için kullanılabilir.
+
+   ```java
+   int sum = stream.reduce(0, Integer::sum);
+   ```
+
+4. **`reduce(T identity, BinaryOperator<T> accumulator)`**: Belirli bir başlangıç değeri (`identity`) ile indirgeme işlemi yapar. Başlangıç değeri, işlemin ilk girdisi olarak kullanılır.
+
+   ```java
+   int sum = stream.reduce(0, (a, b) -> a + b);
+   ```
+
+5. **`count()`**: Stream’deki öğelerin sayısını döner. Özellikle filtreleme gibi işlemler sonrası kaç öğe olduğunu bulmak için kullanışlıdır.
+
+   ```java
+   long count = stream.count();
+   ```
+
+6. **`anyMatch(Predicate<? super T> predicate)`**: Stream’de en az bir öğenin belirtilen koşulu sağladığını kontrol eder. `boolean` döner.
+
+   ```java
+   boolean hasEven = stream.anyMatch(n -> n % 2 == 0);
+   ```
+
+7. **`allMatch(Predicate<? super T> predicate)`**: Stream’deki tüm öğelerin belirtilen koşulu sağladığını kontrol eder. `boolean` döner.
+
+   ```java
+   boolean allPositive = stream.allMatch(n -> n > 0);
+   ```
+
+8. **`noneMatch(Predicate<? super T> predicate)`**: Stream’deki hiçbir öğenin belirtilen koşulu sağlamadığını kontrol eder. `boolean` döner.
+
+   ```java
+   boolean noneNegative = stream.noneMatch(n -> n < 0);
+   ```
+
+9. **`findFirst()`**: Stream’deki ilk öğeyi döner. Optional olarak sonuç döner; eğer boş bir `Stream` varsa sonuç `Optional.empty()` olur.
+
+   ```java
+   Optional<Integer> first = stream.findFirst();
+   ```
+
+10. **`findAny()`**: Stream’deki herhangi bir öğeyi döner. Paralel `Stream`lerde performans optimizasyonu sağlar. Sonuç `Optional` olarak döner.
+
+    ```java
+    Optional<Integer> any = stream.findAny();
+    ```
+
+### Stream API Kullanımına Dair Özet
+
+Java 8 Stream API’nin sağladığı bu metotlar, veri üzerinde filtreleme, dönüştürme, sıralama, toplama ve daha fazlasını gerçekleştirmek için idealdir. Stream işlemleri, veri üzerinde işlem yapmayı çok daha basit ve etkili hale getirir, bu da kodun okunabilirliğini ve bakımını kolaylaştırır. Bu metotların işlevlerini doğru bir şekilde anlayarak, veri işleme ihtiyaçlarınıza göre uygun `Stream` işlemlerini seçebilirsiniz.
+
+## Spring Boot
+```sh 
+
+```
+---
+
+Spring'de `@PostConstruct` ile constructor (yapıcı metod) arasında temel farklar, uygulama başlatılırken bileşenlerin ne zaman ve nasıl hazırlandığıyla ilgilidir. İşte bu iki yöntem arasındaki farklar:
+
+### 1. @PostConstruct Annotation
+- `@PostConstruct`, bir sınıfta `@Bean` olarak tanımlanan bileşenin tüm bağımlılıkları enjekte edildikten hemen sonra çalıştırılan bir metodu belirtir.
+- Bu metot, Spring Bean Lifecycle (Spring Bean Yaşam Döngüsü) içerisinde yer alır ve Spring Container, bileşen hazır olduktan sonra `@PostConstruct` ile işaretlenmiş metodu çağırır.
+- `@PostConstruct`, genellikle bir bileşenin bağımlılıkları sağlandıktan sonra yapılan başlatma işlemlerini tanımlamak için kullanılır.
+- Örneğin, bir bileşen yüklenirken bazı veritabanı kontrolleri veya ön yüklemeler yapılması gerekiyorsa, bu işlemler `@PostConstruct` ile yapılabilir.
+
+### 2. Constructor
+- Constructor, bir sınıfın örneği oluşturulduğunda ilk çağrılan yapıdır.
+- `new` anahtar kelimesi ile çağrıldığında veya Spring Container tarafından oluşturulduğunda, sınıfın bağımlılıkları enjekte edilmeden önce çağrılır.
+- Constructor içinde bileşenler henüz tamamen hazır olmadığından, bağımlılıklara erişmek mümkün olmayabilir.
+- Constructor, genellikle nesnenin ilk durumunu ayarlamak veya zorunlu bağımlılıkları inject etmeden önce bazı başlatma işlemleri yapmak için kullanılır.
+
+### Farkları Özetlersek:
+| Özellik                 | Constructor                                  | @PostConstruct                               |
+|-------------------------|----------------------------------------------|----------------------------------------------|
+| Çalışma Zamanı          | Nesne oluşturulduğunda                       | Bağımlılıklar enjekte edildikten sonra       |
+| Bağımlılıklara Erişim   | Bağımlılıklar henüz enjekte edilmemiştir     | Tüm bağımlılıklar enjekte edilmiştir         |
+| Kullanım Alanı          | Nesneyi başlatmak ve gerekli bağımlılıkları inject etmek | Hazır hale gelen nesne ile başlatma yapmak |
+| Kullanım Yeri           | Tüm Java sınıfları                           | Spring Bean’leri                            |
+
+### Örnek:
+```java
+@Component
+public class ExampleService {
+
+    private final DependencyService dependencyService;
+
+    // Constructor injection
+    public ExampleService(DependencyService dependencyService) {
+        this.dependencyService = dependencyService;
+        System.out.println("Constructor çağrıldı.");
+    }
+
+    @PostConstruct
+    public void init() {
+        System.out.println("PostConstruct çağrıldı. Bağımlılıklar enjekte edilmiş durumda.");
+        // dependencyService burada kullanılabilir
+    }
+}
+```
+
+Bu örnekte:
+- **Constructor** çağrıldığında bağımlılık enjekte edilmiş olsa da, `@PostConstruct` çağrıldığında tüm bileşenler eksiksiz olarak yüklenmiş durumdadır.
+
+## Spring Boot
+```sh 
+
+```
+---
+
+Spring'de **instance** oluşturmak ve **injection** (bağımlılık enjeksiyonu) farklı iki yöntemdir ve uygulamanın bağımlılıklarını yönetme şekli açısından önemli farklara sahiptir. Bu farkları inceleyelim:
+
+### 1. Instance Oluşturmak
+- Java’da **instance** (örnek) oluşturmak, `new` anahtar kelimesi kullanılarak doğrudan bir nesne yaratmak anlamına gelir. Örneğin, `MyService myService = new MyService();` ifadesi ile `MyService` sınıfının bir örneği oluşturulur.
+- Bu yöntemle oluşturulan nesne **manuel** olarak oluşturulur ve Spring Container tarafından yönetilmez.
+- Eğer bir nesne manuel olarak oluşturulursa, Spring'in bağımlılık yönetimi, yaşam döngüsü kontrolleri veya diğer özelliklerinden yararlanılamaz.
+- Bu yöntem daha basit projelerde kullanılabilir, ancak bağımlılıkların manuel olarak yönetilmesi gerekir ve kod karmaşık hale gelebilir.
+
+### 2. Injection (Bağımlılık Enjeksiyonu)
+- **Injection** (Bağımlılık Enjeksiyonu), Spring’in bağımlılık yönetimini sağlayan bir özelliktir. Spring, nesneleri **otomatik olarak enjekte ederek** bağımlılıkları sağlar.
+- Injection işlemi Spring’in kendi yönetiminde olup, Spring Container tarafından otomatik olarak yapılır.
+- Spring Container, uygulama çalıştırıldığında belirli kurallara göre bağımlılıkları enjekte eder. Bu, sınıf yapıcıları (constructor injection) veya alanlar (field injection) kullanılarak yapılabilir.
+- **Constructor Injection** veya **@Autowired** gibi anotasyonlarla bağımlılıklar enjekte edilir.
+- Injection sayesinde bağımlılıkların yönetimi Spring Container tarafından yapılır, bu da uygulamayı daha modüler ve test edilebilir hale getirir.
+
+### Farkları Özetlersek:
+
+| Özellik                    | Instance Oluşturmak (new)                        | Injection (Bağımlılık Enjeksiyonu)                |
+|----------------------------|-------------------------------------------------|---------------------------------------------------|
+| Nesne Oluşturma Yöntemi    | `new` anahtar kelimesi ile manuel               | Spring tarafından otomatik                        |
+| Spring Container Yönetimi  | Yönetilmez                                      | Spring Container tarafından yönetilir             |
+| Bağımlılık Yönetimi        | Manuel olarak yönetilmesi gerekir               | Otomatik olarak Spring tarafından sağlanır        |
+| Kod Bakımı ve Modülerlik   | Daha zor ve daha fazla kodlama gerektirir       | Daha düzenli, modüler ve test edilebilir          |
+| Yaşam Döngüsü Kontrolleri  | Spring yaşam döngüsünden bağımsızdır            | Spring Bean yaşam döngüsü kurallarına tabidir     |
+| Kullanım Alanı             | Basit bağımlılıklar için veya bağımsız nesneler | Karmaşık bağımlılıkların yönetimi için idealdir   |
+
+### Örnek Kod ile Açıklama:
+
+```java
+// Manuel Instance Oluşturma
+public class Application {
+
+    public static void main(String[] args) {
+        // MyService bağımlılığı manuel olarak oluşturulur
+        MyService myService = new MyService();
+        myService.doSomething();
+    }
+}
+```
+
+Yukarıdaki kodda, `MyService` nesnesi manuel olarak oluşturulmuştur ve bağımlılıklar yönetilmez.
+
+```java
+// Spring Injection ile
+@Component
+public class MyService {
+    
+    public void doSomething() {
+        System.out.println("Hizmet çalışıyor.");
+    }
+}
+
+@Component
+public class Application {
+
+    private final MyService myService;
+
+    // Constructor Injection
+    public Application(MyService myService) {
+        this.myService = myService;
+    }
+
+    public void run() {
+        myService.doSomething();
+    }
+}
+```
+
+Bu örnekte:
+- Spring Container, `Application` sınıfını başlattığında `MyService` bağımlılığını otomatik olarak enjekte eder.
+- `@Component` anotasyonu sayesinde `MyService`, Spring tarafından yönetilen bir bean haline gelir.
+- **Injection**, kodun daha temiz ve modüler olmasını sağlar, çünkü bağımlılıklar `new` ile manuel olarak oluşturulmamış, Spring tarafından sağlanmıştır.
+
+### Sonuç:
+Injection, Spring'in bağımlılık yönetimini sağladığı bir mekanizmadır ve projelerde daha düzenli, modüler ve test edilebilir bir yapı sağlar. Diğer yandan, instance oluşturma yöntemi manuel bir yöntem olup daha basit projelerde kullanılabilir, ancak bağımlılıkların yönetimi kullanıcıya bırakıldığından kod karmaşık hale gelebilir.
+
+## Spring Boot
+```sh 
+
+```
+---
+
+**Bağımlılıkların manuel olarak yönetilmesi**, bir sınıfın bağımlılıklarını elle oluşturarak veya elle enjekte ederek, yani Spring gibi bir bağımlılık enjeksiyonu çerçevesine başvurmadan yönetilmesi anlamına gelir. Bu yöntem, bağımlılık yönetimini tamamen geliştiricinin sorumluluğuna bırakır.
+
+### Manuel Bağımlılık Yönetimi Nedir?
+Bağımlılıkların manuel olarak yönetilmesi, bağımlı sınıfların ihtiyaç duyduğu nesnelerin `new` anahtar kelimesi ile oluşturulması ve bu bağımlılıkların ilgili sınıfa doğrudan verilmesidir. Geliştirici, hangi nesnelerin nerede ve nasıl kullanılacağını kodda açıkça belirler. Bu yaklaşım, bağımlılık enjeksiyonuna alternatif bir yöntemdir ancak bazı dezavantajlara sahiptir.
+
+### Manuel Bağımlılık Yönetiminin Dezavantajları
+1. **Kod Tekrarı ve Dağınıklığı**: Bağımlılıkları manuel olarak yönetmek, kodda `new` anahtar kelimesi ile çok sayıda nesne oluşturulmasına ve aynı nesnenin birçok yerde tekrar tekrar tanımlanmasına neden olabilir. Bu da kodun okunabilirliğini azaltır ve bakımını zorlaştırır.
+
+2. **Gevşek Bağlılık Eksikliği**: Bağımlılık enjeksiyonu ile bağımlılıkları otomatik olarak yöneten çerçeveler, sınıfların birbirine daha az bağımlı (gevşek bağlı) olmasını sağlar. Manuel yöntemle nesneler sıkı sıkıya birbirine bağlı olur, bu da bir sınıfta yapılan bir değişikliğin diğer sınıfları etkilemesine yol açabilir.
+
+3. **Test Edilebilirlik**: Manuel bağımlılık yönetimi, birim testlerini zorlaştırır. Bir sınıfın bağımlılıklarını test sırasında mock (sahte) nesneler ile değiştirmek zor olabilir çünkü bağımlılıklar sınıf içinde doğrudan `new` anahtar kelimesi ile oluşturulmuştur. Bu da test sırasında sınıfları izole etmeyi zorlaştırır.
+
+4. **Yaşam Döngüsü Yönetimi**: Spring gibi bağımlılık enjeksiyonu çerçeveleri, nesnelerin yaşam döngüsünü yönetir ve nesneler yalnızca ihtiyaç duyulduğunda oluşturulur. Manuel bağımlılık yönetiminde, geliştirici bu yaşam döngüsünü yönetmek zorundadır, ki bu da gereksiz bellek kullanımı veya performans sorunlarına yol açabilir.
+
+### Manuel Bağımlılık Yönetimine Örnek
+
+Örneğin, bir `DatabaseService` sınıfının bir `UserService` sınıfında manuel olarak yönetildiğini düşünelim:
+
+```java
+public class DatabaseService {
+    public void connect() {
+        System.out.println("Veritabanına bağlanıldı.");
+    }
+}
+
+public class UserService {
+    private DatabaseService databaseService;
+
+    public UserService() {
+        // DatabaseService bağımlılığı manuel olarak oluşturuluyor
+        this.databaseService = new DatabaseService();
+    }
+
+    public void performDatabaseOperation() {
+        databaseService.connect();
+    }
+}
+```
+
+Yukarıdaki kodda:
+- `UserService` sınıfı, `DatabaseService` bağımlılığını kendisi yönetmektedir. Bu bağımlılık `UserService` sınıfı içinde manuel olarak oluşturulmuş, yani Spring gibi bir enjeksiyon çerçevesi kullanılmamıştır.
+- `UserService` içinde `DatabaseService` nesnesi manuel olarak `new` anahtar kelimesi ile başlatılmıştır. Bu durum sınıflar arasında sıkı bir bağ oluşturur ve bağımlılık enjeksiyonu yapılmadığı için kod daha az esnek hale gelir.
+
+### Manuel Bağımlılık Yönetimine Alternatif: Bağımlılık Enjeksiyonu
+Spring ile aynı örnek bağımlılık enjeksiyonu ile yönetildiğinde kod daha temiz ve modüler hale gelir:
+
+```java
+@Component
+public class DatabaseService {
+    public void connect() {
+        System.out.println("Veritabanına bağlanıldı.");
+    }
+}
+
+@Component
+public class UserService {
+    private final DatabaseService databaseService;
+
+    // Constructor Injection
+    @Autowired
+    public UserService(DatabaseService databaseService) {
+        this.databaseService = databaseService;
+    }
+
+    public void performDatabaseOperation() {
+        databaseService.connect();
+    }
+}
+```
+
+Yukarıdaki örnekte:
+- Spring Container, `DatabaseService` nesnesini `UserService` içine otomatik olarak enjekte eder.
+- `@Autowired` anotasyonu kullanılarak `UserService` sınıfı bağımlılığını doğrudan `new` ile yönetmek yerine Spring Container’a bırakır.
+- Bu yaklaşım, kodun daha modüler, esnek ve test edilebilir olmasını sağlar.
+
+### Sonuç
+Manuel bağımlılık yönetimi, bağımlılıkların doğrudan kod içinde `new` ile oluşturulması ve yönetilmesi anlamına gelir. Ancak bu yöntem, kodun karmaşık hale gelmesine ve bakımının zorlaşmasına neden olabilir. Spring gibi bağımlılık enjeksiyon araçları, bağımlılıkları yöneterek kodu daha esnek, test edilebilir ve modüler hale getirir.
+
+## Spring Boot
+```sh 
+
+```
+---
+
+Spring Boot ile çalışırken bir entity içinde birden fazla ID’ye sahip olmak istediğimizde, genellikle **@EmbeddedId** veya **@IdClass** yaklaşımlarını kullanarak bunu yönetiriz. Bu, özellikle **birleştirilmiş anahtar** (composite key) veya **işlemsel olarak birden fazla kimlik alanı** gerektiğinde kullanılır. Aşağıda bu yöntemlerin her birini detaylı olarak ele alacağım.
+
+### 1. @EmbeddedId Kullanarak Birden Fazla ID Yönetimi
+
+**@EmbeddedId** anotasyonu, bir entity içinde birleştirilmiş bir anahtar oluşturmak için kullanılır. Burada, anahtar olarak kullanılacak tüm alanları kapsayan bir sınıf tanımlarız ve entity sınıfında bu sınıfı **@EmbeddedId** ile işaretleriz.
+
+#### Örnek:
+Varsayalım ki bir **OrderItem** entity sınıfımız var ve bu sınıf **orderId** ve **productId** alanları ile birleştirilmiş bir anahtara sahip olacak.
+
+1. **Anahtar sınıfını tanımla:**
+
+   ```java
+   @Embeddable
+   public class OrderItemKey implements Serializable {
+       private Long orderId;
+       private Long productId;
+
+       // Getter ve Setter'lar, hashCode() ve equals() metotları ekleyin
+   }
+   ```
+
+    - **@Embeddable**: Anahtar sınıfını tanımlamak için bu anotasyonu kullanıyoruz.
+    - **Serializable**: Birleştirilmiş anahtar sınıfı mutlaka `Serializable` olmalıdır.
+    - **equals() ve hashCode()**: Bu metotlar, birleştirilmiş anahtar sınıfının benzersizliğini sağlamak için gereklidir.
+
+2. **Entity içinde @EmbeddedId kullanımı:**
+
+   ```java
+   @Entity
+   public class OrderItem {
+       @EmbeddedId
+       private OrderItemKey id;
+
+       private int quantity;
+       private BigDecimal price;
+
+       // Diğer alanlar ve getter/setter metotları
+   }
+   ```
+
+   Burada **OrderItemKey** sınıfı, **OrderItem** entity sınıfı içinde **@EmbeddedId** ile tanımlanmıştır. Bu sayede birleştirilmiş anahtar, **orderId** ve **productId** alanlarını içerir.
+
+#### Avantajları:
+- Anahtar sınıfını bir **@Embeddable** nesne olarak ayrı bir sınıf halinde tanımladığımız için kod düzeni sağlanır.
+- Birleştirilmiş anahtar kolayca entity’e gömülebilir.
+
+#### Dezavantajları:
+- **@EmbeddedId** yöntemi daha çok birleştirilmiş anahtarların yönetimi için uygundur, ve bu yöntemde ID değerlerinin entity içinde tek bir nesne olarak yönetilmesi gerekmektedir.
+
+### 2. @IdClass Kullanarak Birden Fazla ID Yönetimi
+
+**@IdClass** anotasyonu, entity içinde birden fazla ID alanı tanımlamak için kullanılır. Bu yöntemde birleştirilmiş anahtar alanları entity’nin içinde bağımsız değişkenler olarak tanımlanır. **@IdClass** kullanırken, bir **primary key** sınıfı oluşturur ve bu sınıfı entity’nin üstüne **@IdClass** ile işaretleriz.
+
+#### Örnek:
+Yine bir **OrderItem** entity sınıfı olduğunu varsayalım, fakat burada **@IdClass** kullanacağız.
+
+1. **Primary key sınıfını tanımla:**
+
+   ```java
+   public class OrderItemId implements Serializable {
+       private Long orderId;
+       private Long productId;
+
+       // Getter ve Setter'lar, hashCode() ve equals() metotları ekleyin
+   }
+   ```
+
+2. **Entity içinde @IdClass kullanımı:**
+
+   ```java
+   @Entity
+   @IdClass(OrderItemId.class)
+   public class OrderItem {
+       @Id
+       private Long orderId;
+
+       @Id
+       private Long productId;
+
+       private int quantity;
+       private BigDecimal price;
+
+       // Diğer alanlar ve getter/setter metotları
+   }
+   ```
+
+   Bu örnekte, **OrderItem** entity’si, **orderId** ve **productId** alanlarını **@Id** ile bağımsız olarak tanımlar. **OrderItemId** sınıfı ise **@IdClass** ile belirtilir.
+
+#### Avantajları:
+- Birleştirilmiş anahtarın tüm alanları entity içinde bağımsız olarak tanımlanabilir.
+- Karmaşık birleştirilmiş anahtar yapılarını yönetmek için uygundur.
+
+#### Dezavantajları:
+- **@IdClass** kullanımı daha fazla kod gerektirir ve **@EmbeddedId** kadar pratik değildir.
+- **equals() ve hashCode()** metotlarının düzgün bir şekilde tanımlanması gerekir.
+
+### Hangi Yöntem Ne Zaman Kullanılmalı?
+
+| Durum                             | Tercih Edilecek Anotasyon |
+|-----------------------------------|---------------------------|
+| Basit birleştirilmiş anahtar      | **@EmbeddedId**          |
+| Birden fazla bağımsız ID alanı    | **@IdClass**             |
+| Legacy veritabanı yapısı          | **@IdClass**             |
+
+### Özet
+
+Spring Boot ve JPA içinde bir entity’de birden fazla ID’yi yönetmek için **@EmbeddedId** ve **@IdClass** kullanabiliriz. **@EmbeddedId** daha düzenli ve basit bir yaklaşımdır ve anahtar olarak kullanılan alanları tek bir nesnede toplar. **@IdClass** ise daha karmaşık veya legacy veritabanı yapıları için uygundur, her bir ID alanını bağımsız olarak tanımlama esnekliği sağlar.
+
+Her iki yöntemde de ID yönetiminde doğru bir şekilde `equals()` ve `hashCode()` metotlarını tanımlamayı unutmamak önemlidir, aksi halde JPA entity ilişkilerinde beklenmeyen sorunlarla karşılaşabilirsiniz.
+
+## Spring Boot
+```sh 
+
+```
+---
+
+
 ## Spring Boot
 ```sh 
 
@@ -2148,11 +3337,6 @@ Spring Data JPA ile kullanılan bu terimler, bir veritabanı üzerinde otomatik 
 ```
 ---
 
-## Spring Boot
-```sh 
-
-```
----
 
 ## Spring Boot
 ```sh 
@@ -2160,17 +3344,49 @@ Spring Data JPA ile kullanılan bu terimler, bir veritabanı üzerinde otomatik 
 ```
 ---
 
-## Spring Boot
-```sh 
-
-```
----
 
 ## Spring Boot
 ```sh 
 
 ```
 ---
+
+
+## Spring Boot
+```sh 
+
+```
+---
+
+
+## Spring Boot
+```sh 
+
+```
+---
+
+
+## Spring Boot
+```sh 
+
+```
+---
+
+
+## Spring Boot
+```sh 
+
+```
+---
+
+
+
+## Spring Boot
+```sh 
+
+```
+---
+
 
 ## Spring Boot
 ```sh 
