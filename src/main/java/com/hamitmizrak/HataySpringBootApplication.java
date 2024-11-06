@@ -40,7 +40,7 @@ public class HataySpringBootApplication {
     public static void main(String[] args) {
 
         // devtools active isActive
-        System.setProperty("spring.devtools.restart.enabled", "true");
+        //System.setProperty("spring.devtools.restart.enabled", "true");
 
         // PORT Ayarlamak
         /*

@@ -44,6 +44,7 @@ public class AddressMapper {
         addressEntityEmbeddable.setZipCode(addressDto.getZipCode());
         addressEntityEmbeddable.setAddressQrCode(addressDto.getAddressQrCode());
         addressEntityEmbeddable.setDescription(addressDto.getDescription());
+
         return addressEntity;
     }
 }
