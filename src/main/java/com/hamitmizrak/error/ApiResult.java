@@ -1,5 +1,6 @@
 package com.hamitmizrak.error;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import java.util.Date;
 import java.util.Map;
@@ -9,6 +10,7 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 
+@JsonInclude(JsonInclude.Include.NON_NULL) // Backentten Frontend'e null olan verileri gönderme
 public class ApiResult {
 
     // sem pvc
