@@ -8,8 +8,10 @@ import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,31 +23,43 @@ import java.util.Map;
 // ErrorController
 // ErrorAttributes
 // WebRequest
-// http://localhost:4444/error
 
+// Spring Boot defaulttan gelen error'ı kendimize göre customise yapıyoruz.
 @RestController
-@CrossOrigin(origins = {FrontEnd.REACT_URL, FrontEnd.ANGULAR_URL})
+@CrossOrigin(origins = FrontEnd.REACT_URL) //localhost:3000 portunu backentte kullanabiliriz.
 public class CustomErrorHandleWebRequest implements ErrorController {
 
-    // INJECTION
+    // 1.YOL (Field Injection)
+    // @Autowired
+    // private ErrorAttributes errorAttributes;
+
+    // 2.YOL (Constructor Injection)
+    /*private ErrorAttributes errorAttributes;
+    @Autowired
+    public CustomErrorHandleWebRequest(ErrorAttributes errorAttributes) {
+        this.errorAttributes = errorAttributes;
+    }*/
+
+    // 3.YOL (Lombok Injection)
     private final ErrorAttributes errorAttributes;
 
-    // FIELD
+    // Pırasa Vali MESC
+    // Variable
     private ApiResult apiResult;
     private String path;
     private String message;
     private Integer status;
-    private Map<String, String> validationErrors;
+    private Map<String,String> validationErrors;
 
     // http://localhost:4444/error
-    // Spring Frameworkten gelen hataları kendimize göre hataları alıp ApiResultta ekledik
-    public ApiResult handleErrorMethod(WebRequest webRequest) {
+    // Spring Frameworkten gelen hataları kendimize göre hataları belirledik (ApiResult)
+    @RequestMapping("/error")
+    public ApiResult handleErrorMethod(WebRequest webRequest){
         // Spring >=2.3
-        Map<String, Object> attributes = errorAttributes.getErrorAttributes(
-                webRequest, ErrorAttributeOptions.of(
-                        ErrorAttributeOptions.Include.MESSAGE,
-                        ErrorAttributeOptions.Include.BINDING_ERRORS
-                )
+        Map<String,Object> attributes=errorAttributes.getErrorAttributes(
+                webRequest,
+                ErrorAttributeOptions
+                        .of(ErrorAttributeOptions.Include.MESSAGE,ErrorAttributeOptions.Include.BINDING_ERRORS)
         ); //end attributes
 
         // Spring'ten verileri almak
@@ -64,9 +78,6 @@ public class CustomErrorHandleWebRequest implements ErrorController {
             }
             apiResult.setValidationErrors(validationErrors);
         }
-
         return apiResult;
     } //end handleErrorMethod
 } // end CustomErrorHandleWebRequest
-
-
