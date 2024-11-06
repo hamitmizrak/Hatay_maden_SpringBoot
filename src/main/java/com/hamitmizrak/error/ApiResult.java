@@ -1,6 +1,5 @@
 package com.hamitmizrak.error;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import java.util.Date;
 import java.util.Map;
@@ -10,10 +9,6 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 
-// spring Frameworkta gelen Error'ları kendimize göre yakalamak
-// (Jackson: objeyi json'a çevirir)
-// Eğer sistemde null değer varsa backentte gönderme
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiResult {
 
     // sem pvc
