@@ -22,7 +22,6 @@ public class AddressMapper {
             addressDto.setAddressQrCode(addressEntityEmbeddable.getAddressQrCode());
             addressDto.setStreet(addressEntityEmbeddable.getStreet());
             addressDto.setZipCode(addressEntityEmbeddable.getZipCode());
-            addressDto.setAddressQrCode(addressEntityEmbeddable.getAddressQrCode());
             addressDto.setDescription(addressEntityEmbeddable.getDescription());
         }
         return addressDto;
@@ -39,11 +38,13 @@ public class AddressMapper {
         addressEntity.setSystemCreatedDate(addressDto.getSystemCreatedDate());
         addressEntityEmbeddable.setState(addressDto.getState());
         addressEntityEmbeddable.setCity(addressDto.getCity());
-        addressEntityEmbeddable.setAddressQrCode(addressDto.getAddressQrCode());
         addressEntityEmbeddable.setStreet(addressDto.getStreet());
         addressEntityEmbeddable.setZipCode(addressDto.getZipCode());
         addressEntityEmbeddable.setAddressQrCode(addressDto.getAddressQrCode());
         addressEntityEmbeddable.setDescription(addressDto.getDescription());
+
+        // AdressDetails'i AdressEntity Ekle
+        addressEntity.setAddressEntityEmbeddable(addressEntityEmbeddable);
 
         return addressEntity;
     }
