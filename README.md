@@ -188,6 +188,363 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
 Bu metotlar sayesinde SQL sorgusu yazmaya gerek kalmadan veri işlemleri yapılabilir.
 
+## Spring Boot
+```sh 
+
+```
+---
+
+Bu dosyalardaki yapıyı kullanarak `deliveredQuery`, `named query`, `JPQL`, ve `native SQL` örnekleri oluşturabiliriz. İlgili örnekleri dosyalarınızdaki mevcut sınıflar üzerinden oluşturacağım.
+
+### 1. Delivered Query
+`Spring Data JPA` ile, metod isimlendirme kurallarına uyarak doğrudan yöntemler tanımlanabilir. Örneğin `IAddressRepository` arayüzünde bir adresin şehre göre aranmasını sağlayan bir `delivered query` tanımlayalım.
+
+```java
+public interface IAddressRepository extends JpaRepository<AddressEntity, Long> {
+    
+    // Şehre göre adresleri bulur
+    List<AddressEntity> findByCity(String city);
+}
+```
+
+Bu metod, otomatik olarak `city` alanına göre bir sorgu oluşturur.
+
+### 2. Named Query
+`@NamedQuery` ile tanımlanmış bir JPQL sorgusunu `AddressEntity` sınıfında tanımlayabiliriz. Örneğin, bir `named query` kullanarak `city` ve `postalCode` alanlarına göre arama yapalım.
+
+`AddressEntity.java` dosyasına ekleyeceğimiz `@NamedQuery` örneği:
+
+```java
+@Entity
+@NamedQuery(
+    name = "AddressEntity.findByCityAndPostalCode",
+    query = "SELECT a FROM AddressEntity a WHERE a.city = :city AND a.postalCode = :postalCode"
+)
+public class AddressEntity {
+    // Mevcut alanlar ve diğer kodlar
+}
+```
+
+Bu named query'i kullanmak için `IAddressRepository` arayüzüne bir metod ekleyebiliriz:
+
+```java
+public interface IAddressRepository extends JpaRepository<AddressEntity, Long> {
+
+    @Query(name = "AddressEntity.findByCityAndPostalCode")
+    List<AddressEntity> findByCityAndPostalCode(@Param("city") String city, @Param("postalCode") String postalCode);
+}
+```
+
+### 3. JPQL Query
+`JPQL` (Java Persistence Query Language) ile `@Query` anotasyonu kullanarak belirli kriterlere göre sorgular tanımlayabiliriz. Örneğin, tüm `city` alanı `null` olmayan adresleri getirecek bir JPQL sorgusu:
+
+```java
+public interface IAddressRepository extends JpaRepository<AddressEntity, Long> {
+
+    @Query("SELECT a FROM AddressEntity a WHERE a.city IS NOT NULL")
+    List<AddressEntity> findAllWithNonNullCity();
+}
+```
+
+Bu yöntem, tüm `city` değeri dolu olan adresleri getirir.
+
+### 4. Native SQL Query
+`native SQL` kullanarak doğrudan SQL sorgusu çalıştırmak için `@Query` anotasyonunu `nativeQuery` özelliği ile kullanabiliriz. Örneğin, `city` alanına göre adresleri getiren bir native SQL sorgusu:
+
+```java
+public interface IAddressRepository extends JpaRepository<AddressEntity, Long> {
+
+    @Query(value = "SELECT * FROM address_entity WHERE city = :city", nativeQuery = true)
+    List<AddressEntity> findByCityNative(@Param("city") String city);
+}
+```
+
+Bu sorgu doğrudan SQL kullanır ve `address_entity` tablosunda `city` değerine göre filtreleme yapar.
+
+Bu örneklerde:
+- `deliveredQuery` otomatik olarak `findBy` ile yapılır.
+- `@NamedQuery` kullanarak sorguları doğrudan sınıfın üzerine tanımlayabiliriz.
+- `JPQL` ile `@Query` anotasyonunda HQL benzeri sorgular yazabiliriz.
+- `native SQL` ile direkt SQL komutları çalıştırabiliriz.
+
+Her bir yöntem, sorgu ihtiyaçlarınıza göre kullanabileceğiniz esnek çözümler sağlar.
+
+
+## Spring Boot
+```sh 
+
+```
+---
+
+
+### Delivered Query, Named Queries, JPQL ve Native SQL Nedir?
+
+Bu kavramlar, Spring Data JPA ve JPA (Java Persistence API) çerçevesinde kullanılan çeşitli sorgulama yöntemleridir. Her birinin belirli özellikleri ve kullanım alanları vardır. Aşağıda, her birini ayrıntılı olarak açıklayarak, aralarındaki farkları ortaya koyacağız.
+
+---
+
+### 1. Delivered Query (Türetilmiş Sorgular)
+
+**Delivered Query** veya **Türetilmiş Sorgular**, Spring Data JPA’nın sağladığı bir özelliktir. Spring Data, repository arayüzünde tanımlanan metod isimlerinden otomatik olarak sorgu oluşturur. Bu özellik, SQL veya JPQL sorgusu yazma ihtiyacını ortadan kaldırır ve metod isimlendirme kurallarına göre sorguları otomatik olarak türetir.
+
+#### Delivered Query Nasıl Çalışır?
+
+Spring Data JPA, repository metod adlarını analiz ederek, metod adındaki anahtar kelimeleri kullanarak bir sorgu oluşturur. Örneğin, metod adı `findByCity` ise, Spring Data, `city` alanına göre bir sorgu türetir.
+
+#### Örnekler
+
+```java
+public interface AddressRepository extends JpaRepository<AddressEntity, Long> {
+    List<AddressEntity> findByCity(String city);
+}
+```
+
+Bu metod adı, Spring Data tarafından şu SQL sorgusuna dönüştürülür:
+
+```sql
+SELECT * FROM address_entity WHERE city = ?;
+```
+
+Spring Data ayrıca `And`, `Or`, `GreaterThan`, `LessThan` gibi çeşitli anahtar kelimelerle daha karmaşık sorgular türetebilir:
+
+```java
+List<AddressEntity> findByCityAndZipCode(String city, String zipCode);
+```
+
+Bu metod, `city` ve `zipCode` alanlarına göre bir sorgu oluşturur ve şu sorguya eşdeğerdir:
+
+```sql
+SELECT * FROM address_entity WHERE city = ? AND zip_code = ?;
+```
+
+#### Avantajları
+- **Kolay Kullanım**: Metod isimlendirmesi ile sorgu oluşturmayı sağlar.
+- **Bakımı Kolay**: Kodlar anlaşılır ve bakımı kolaydır.
+- **Otomatik Optimizasyon**: Spring Data, türetilen sorguları optimize eder.
+
+#### Dezavantajları
+- **Karmaşık Sorgular İçin Kısıtlı**: Karmaşık sorgular türetmek zor olabilir.
+- **Performans Kontrolü**: Otomatik olarak türetilen sorguların performansını kontrol etmek zor olabilir.
+
+---
+
+### 2. Named Queries
+
+**Named Query (Adlandırılmış Sorgu)**, JPA'nın sağladığı, bir entity sınıfına bağlı olarak tanımlanan önceden tanımlı SQL veya JPQL sorgularıdır. Named Queries, `@NamedQuery` anotasyonu kullanılarak entity sınıfı üzerinde tanımlanır ve sorgu çalıştırılmak istendiğinde bu adı kullanarak çağrılır.
+
+#### Named Query Tanımlama
+
+`@NamedQuery` anotasyonu, entity sınıfı üzerinde sorguyu tanımlar. Örneğin:
+
+```java
+@Entity
+@NamedQuery(
+    name = "AddressEntity.findByCity",
+    query = "SELECT a FROM AddressEntity a WHERE a.city = :city"
+)
+public class AddressEntity {
+    // Alanlar ve metodlar...
+}
+```
+
+Bu Named Query, `AddressEntity` sınıfına bağlıdır ve `city` parametresine göre sorgu yapar.
+
+#### Named Query Kullanımı
+
+Named Query'yi repository içinde `@Query` anotasyonunu kullanarak çağırabilirsiniz:
+
+```java
+public interface AddressRepository extends JpaRepository<AddressEntity, Long> {
+    
+    @Query(name = "AddressEntity.findByCity")
+    List<AddressEntity> findAddressesByCity(@Param("city") String city);
+}
+```
+
+#### Avantajları
+- **Kod Tekrarını Azaltır**: Aynı sorguyu birden fazla yerde kullanma olanağı sağlar.
+- **Daha Okunabilir Kodlar**: Karmaşık sorgular için daha anlaşılır kod sağlar.
+- **Önceden Tanımlanmış Sorgular**: Sorgular önceden tanımlandığı için yönetimi kolaydır.
+
+#### Dezavantajları
+- **Performans Yönetimi**: Tüm Named Queries’in bellekte saklanması, performans etkisine neden olabilir.
+- **Değiştirilebilirlik**: Sorguyu değiştirmek istediğinizde, entity sınıfında değişiklik yapmanız gerekebilir.
+
+---
+
+### 3. JPQL (Java Persistence Query Language)
+
+**JPQL (Java Persistence Query Language)**, JPA'nın sağladığı, SQL'e benzeyen ama tamamen entity sınıflarına yönelik bir sorgulama dilidir. SQL’den farklı olarak JPQL, doğrudan veri tabanı tablolarına değil, Java sınıflarına ve alanlarına odaklanır.
+
+#### JPQL Kullanımı
+
+JPQL, repository metodları üzerinde `@Query` anotasyonu ile tanımlanabilir. JPQL'de entity sınıfı ve alan adları kullanılır:
+
+```java
+@Query("SELECT a FROM AddressEntity a WHERE a.city = :city")
+List<AddressEntity> findByCity(@Param("city") String city);
+```
+
+Bu JPQL sorgusu, `city` alanına göre `AddressEntity` nesnelerini döndürür.
+
+#### JPQL Operatörleri
+JPQL, SQL gibi `SELECT`, `WHERE`, `JOIN`, `GROUP BY` ve `ORDER BY` gibi komutları destekler. JPQL ile ayrıca `IN`, `LIKE`, `BETWEEN`, `IS NULL` gibi operatörler de kullanılabilir.
+
+#### Avantajları
+- **Entity Odaklı**: JPQL, entity sınıflarına ve alanlara odaklandığından nesneye yönelik bir yaklaşım sunar.
+- **Platform Bağımsız**: Veri tabanı bağımsız çalışır ve her veri tabanına uyum sağlar.
+
+#### Dezavantajları
+- **SQL’den Daha Az Esnek**: JPQL, SQL kadar esnek değildir ve bazı veri tabanı özel fonksiyonlarını desteklemeyebilir.
+- **Performans Sorunları**: Karmaşık JPQL sorguları performans sorunlarına neden olabilir.
+
+---
+
+### 4. Native SQL
+
+**Native SQL**, JPA'da doğrudan SQL sorguları yazma yöntemidir. Native SQL sorguları veri tabanına özgüdür ve SQL'in tüm özelliklerinden faydalanabilir. Native sorgular, `@Query` anotasyonu içinde `nativeQuery = true` parametresi ile kullanılır.
+
+#### Native SQL Kullanımı
+
+Aşağıda, doğrudan SQL sorgusu kullanan bir örnek verilmiştir:
+
+```java
+@Query(value = "SELECT * FROM address_entity WHERE city = ?1", nativeQuery = true)
+List<AddressEntity> findByCityNative(String city);
+```
+
+Bu sorgu, doğrudan `address_entity` tablosundan `city` alanına göre veri çeker.
+
+#### Avantajları
+- **Tam SQL Desteği**: Veri tabanı özel fonksiyonları ve özellikleri kullanılabilir.
+- **Performans**: Özelleştirilmiş ve optimize edilmiş sorgularla yüksek performans sağlar.
+- **SQL’in Gücü**: SQL'in tüm özelliklerinden faydalanarak daha karmaşık işlemler yapılabilir.
+
+#### Dezavantajları
+- **Platform Bağımlılığı**: Native SQL sorguları, veri tabanına bağımlıdır ve taşınabilirlik sorunu oluşturabilir.
+- **Kod Anlaşılır Olmayabilir**: SQL kodu, Java kodu ile iç içe geçtiğinde, kodun okunabilirliği azalabilir.
+
+---
+
+### Delivered Query, Named Query, JPQL ve Native SQL Arasındaki Farklar
+
+| Özellik           | Delivered Query                       | Named Query                          | JPQL                                  | Native SQL                           |
+|-------------------|--------------------------------------|--------------------------------------|---------------------------------------|--------------------------------------|
+| **Tanım**         | Spring Data tarafından metod isimlerine göre türetilen sorgular | Entity sınıfında önceden tanımlanan sorgular | Entity sınıflarına yönelik SQL benzeri sorgu dili | Doğrudan veri tabanı SQL sorgusu |
+| **Kullanım**      | Repository metod adı üzerinden       | `@NamedQuery` ile entity sınıfında   | `@Query` anotasyonu ile repository'de | `@Query` ile `nativeQuery=true`      |
+| **Veri Tabanı Bağımlılığı** | Bağımsız                             | Bağımsız                             | Bağımsız                              | Veri tabanı bağımlı                  |
+| **Esneklik**      | Düşük                                | Orta                                 | Yüksek                                | Çok yüksek                           |
+| **Kod Anlaşılır mı?** | Evet                              | Evet                                 | Orta                                  | Hayır                                |
+| **Performans**    | Orta                                 | Orta                                 | Orta                                  | Yüksek                               |
+| **Uygulama Alanı**| Basit ve hızlı sorgular              | Tekrar eden karmaşık sorgular        | Orta seviye sorgular                  | Karmaşık ve özelleştirilmiş sorgular |
+
+---
+
+### Özet
+
+- **Delivered Query**: Spring Data metod adlarına göre otomatik türetilen sorgular, basit ve hızlı işlemler için idealdir.
+- **Named Query**: Entity sınıflarında önceden tanımlanan, tekrarlanan sorgular için kullanılan yapılar.
+- **JPQL**: Java sınıflarına yönelik SQL benzeri bir sorgu dilidir. SQL'den farkı, tablo isimleri yerine Java entity sınıflarının kullanılmasıdır. Platform bağımsız çalışır ve SQL gibi `SELECT`, `WHERE`, `JOIN` gibi ifadeleri destekler. Daha nesneye yönelik bir sorgulama sağladığından, JPA’nın sunduğu standart özellikler çerçevesinde kompleks işlemler yapılabilir.
+- **Native SQL**: Doğrudan SQL sorgularını kullanmamıza olanak tanır. Bu sayede SQL’in tüm özelliklerinden faydalanabiliriz. Native SQL, veri tabanına özgü sorgular yazmayı mümkün kılar, ancak platform bağımlılığı oluşturabilir. Karmaşık ve optimize edilmesi gereken işlemler için tercih edilir.
+
+---
+
+### Hangi Durumda Hangisini Kullanmalı?
+
+1. **Basit Sorgular İçin**: `Delivered Query` tercih edilmelidir. Metod isimlerine göre türetilen bu sorgular, hızlıca basit işlemler yapmak için idealdir.
+
+2. **Tekrarlayan veya Statik Sorgular İçin**: `Named Query` en uygun seçenektir. Sorguyu bir kere tanımlayıp farklı yerlerde kullanmak için idealdir.
+
+3. **Orta Derecede Karmaşık Sorgular İçin**: `JPQL` daha iyi bir seçimdir. Entity odaklı ve veri tabanı bağımsız çalıştığı için taşınabilirliği yüksektir.
+
+4. **Karmaşık veya Optimize Edilmiş Sorgular İçin**: `Native SQL` en iyi seçenektir. Veri tabanı özelliklerinden tam anlamıyla faydalanmak gerektiğinde ve yüksek performans gereken durumlarda native SQL tercih edilmelidir.
+
+---
+
+### Örnek Senaryo Uygulamaları
+
+Aşağıda, her bir sorgulama yöntemi için örnek bir senaryo yer almaktadır:
+
+#### Delivered Query Örneği
+
+Bir kullanıcı adıyla (username) kullanıcıları listelemek için basit bir sorguya ihtiyaç duyduğunuzu düşünün. Bu durumda, metod ismine göre delivered query kullanabilirsiniz:
+
+```java
+public interface UserRepository extends JpaRepository<User, Long> {
+    List<User> findByUsername(String username);
+}
+```
+
+#### Named Query Örneği
+
+Bir müşteri sınıfında (`CustomerEntity`) çok sık kullanılan bir sorgu olduğunu ve müşteri şehirlerine göre arama yapıldığını varsayalım. Bu sorguyu `CustomerEntity` içinde bir Named Query olarak tanımlayabiliriz:
+
+```java
+@Entity
+@NamedQuery(
+    name = "CustomerEntity.findByCity",
+    query = "SELECT c FROM CustomerEntity c WHERE c.city = :city"
+)
+public class CustomerEntity {
+    // Alanlar...
+}
+```
+
+Daha sonra `CustomerRepository` içinde bu sorguyu şu şekilde kullanabiliriz:
+
+```java
+public interface CustomerRepository extends JpaRepository<CustomerEntity, Long> {
+    @Query(name = "CustomerEntity.findByCity")
+    List<CustomerEntity> findByCity(@Param("city") String city);
+}
+```
+
+#### JPQL Örneği
+
+Bir `Product` entity’sinde fiyat aralığına göre ürünleri listelemek istediğinizi düşünelim. Bu durumda JPQL kullanarak sorguyu repository’de yazabilirsiniz:
+
+```java
+public interface ProductRepository extends JpaRepository<Product, Long> {
+    @Query("SELECT p FROM Product p WHERE p.price BETWEEN :minPrice AND :maxPrice")
+    List<Product> findProductsInPriceRange(@Param("minPrice") double minPrice, @Param("maxPrice") double maxPrice);
+}
+```
+
+Bu sorgu, belirtilen fiyat aralığındaki ürünleri listeleyecektir.
+
+#### Native SQL Örneği
+
+Doğrudan SQL kullanarak optimize edilmiş bir sorgu yazmanız gerektiğinde Native SQL tercih edilir. Örneğin, bir `Employee` tablosunda en yüksek maaşı alan çalışanı listelemek için şu şekilde bir Native SQL sorgusu kullanılabilir:
+
+```java
+public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+    @Query(value = "SELECT * FROM employee WHERE salary = (SELECT MAX(salary) FROM employee)", nativeQuery = true)
+    List<Employee> findTopEarningEmployees();
+}
+```
+
+---
+
+### Sonuç ve Öneriler
+
+Her bir sorgu türü farklı senaryolarda kullanıma uygundur. Uygulamanızın ihtiyaçlarına göre doğru sorgu türünü seçmek performans ve sürdürülebilirlik açısından büyük önem taşır:
+
+- **Basit ve Hızlı Sorgular İçin**: `Delivered Query` tercih edin.
+- **Tekrar Eden Sorgular İçin**: `Named Query` ile önceden tanımlanan sorguları kullanın.
+- **Platform Bağımsız, Nesneye Yönelik Sorgular İçin**: `JPQL` kullanarak veri tabanı bağımsızlığını koruyun.
+- **Optimize Edilmiş ve Karmaşık Sorgular İçin**: `Native SQL` kullanarak veri tabanının gücünden tam olarak faydalanın.
+
+Bu dört sorgu türü sayesinde Spring Data JPA, her türlü veri tabanı sorgulama ihtiyacına esnek ve güçlü çözümler sunar.
+
+
+## Spring Boot
+```sh 
+
+```
+---
+
+
+
 ### Custom Queries (Özelleştirilmiş Sorgular)
 
 Spring Data, bazı karmaşık sorgular için özel sorgular tanımlama imkanı da sunar. Bunun için iki ana yöntem vardır:
@@ -579,6 +936,14 @@ Spring Data, veri tabanıyla çalışan uygulamalar için büyük kolaylıklar s
 
 Daha fazla detay isterseniz veya herhangi bir özel konu hakkında örnekler görmek isterseniz, size yardımcı olmaktan memnuniyet duyarım.
 
+## Spring Boot
+```sh 
+
+```
+---
+
+
+Delivered Query , Named Queries,  JPQL ve Native SQL Arasındaki Farklar
 ## Spring Boot
 ```sh 
 
