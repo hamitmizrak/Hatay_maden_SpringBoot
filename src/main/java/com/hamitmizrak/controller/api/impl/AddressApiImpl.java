@@ -3,6 +3,7 @@ package com.hamitmizrak.controller.api.impl;
 import com.hamitmizrak.business.dto.AddressDto;
 import com.hamitmizrak.business.services.IAddressService;
 import com.hamitmizrak.controller.api.IAddressApi;
+import com.hamitmizrak.error.ApiResult;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,7 @@ public class AddressApiImpl implements IAddressApi<AddressDto> {
     @GetMapping(value="/list")
     @Override
     public ResponseEntity<List<AddressDto>> addressApiList() {
+
         return null;
     }
 
@@ -58,6 +60,12 @@ public class AddressApiImpl implements IAddressApi<AddressDto> {
     @DeleteMapping("/delete")
     @Override
     public ResponseEntity<?> addressApiDeleteById(Long id) {
+        ApiResult apiResult= ApiResult.builder()
+                .status(401)
+                .message("Unauthorized")
+                .error("error")
+                .path("/api/address/delete")
+                .build();
         return null;
     }
 

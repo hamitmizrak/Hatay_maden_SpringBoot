@@ -16,7 +16,7 @@ import java.util.Locale;
 public class ApiResultValidMessages  implements WebMvcConfigurer {
 
     @Bean
-    public MessageSource messageSource() {
+    public MessageSource messageSource(){
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("classpath:ValidationMessages");
         messageSource.setDefaultEncoding("UTF-8");
@@ -41,4 +41,5 @@ public class ApiResultValidMessages  implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor()); // Interceptor'ı kaydediyoruz
     }
+
 }
