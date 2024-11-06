@@ -7,6 +7,8 @@ import com.hamitmizrak.error.ApiResult;
 import com.hamitmizrak.exception._400_BadRequestException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +33,7 @@ public class AddressApiImpl implements IAddressApi<AddressDto> {
 
     // INJECTION
     private final IAddressService addressService;
+    private final MessageSource messageSource;
 
     // Api Result
     private ApiResult apiResult;
@@ -69,16 +72,19 @@ public class AddressApiImpl implements IAddressApi<AddressDto> {
     @GetMapping({"/find/", "/find/{id}"})
     @Override
     public ResponseEntity<?> addressApiFindById(@PathVariable(name = "id", required = false) Long id) {
+       String message="";
         if (id == null) {
             throw new NullPointerException("Null Pointer Exception");
         } else if (id == 0) {
             throw new _400_BadRequestException("Bad Request: Kötü istek");
         } else if (id < 0) {
+            // config > ApiResultValidMessages
+            message=messageSource.getMessage("address.error.unauthorized",null, LocaleContextHolder.getLocale());
             apiResult = new ApiResult();
             apiResult.setError("unAuthorized: Yetkisiz Giriş");
             apiResult.setPath("/api/address/find");
             apiResult.setStatus(HttpStatus.UNAUTHORIZED.value());
-            apiResult.setMessage("Unauthorized");
+            apiResult.setMessage(message);
             return ResponseEntity.ok(apiResult);
         }
 

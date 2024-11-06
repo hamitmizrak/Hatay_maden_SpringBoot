@@ -23,6 +23,7 @@ public class AddressMapper {
             addressDto.setStreet(addressEntityEmbeddable.getStreet());
             addressDto.setZipCode(addressEntityEmbeddable.getZipCode());
             addressDto.setDescription(addressEntityEmbeddable.getDescription());
+            addressDto.setDoorNumber(addressEntityEmbeddable.getDoorNumber());
         }
         return addressDto;
     }
@@ -42,6 +43,7 @@ public class AddressMapper {
         addressEntityEmbeddable.setZipCode(addressDto.getZipCode());
         addressEntityEmbeddable.setAddressQrCode(addressDto.getAddressQrCode());
         addressEntityEmbeddable.setDescription(addressDto.getDescription());
+        addressEntityEmbeddable.setDoorNumber(addressDto.getDoorNumber());
 
         // AdressDetails'i AdressEntity Ekle
         addressEntity.setAddressEntityEmbeddable(addressEntityEmbeddable);
