@@ -1,0 +1,41 @@
+2024-11-06T15:19:12.526+03:00  INFO 21344 --- [Hatay_SpringBoot] [main] c.h.HataySpringBootApplication           : Starting HataySpringBootApplication using Java 17.0.5 with PID 21344 (D:\1_Kodlar\spring boot\Hatay_SpringBoot\target\classes started by Hamit-Mizrak in D:\1_Kodlar\spring boot\Hatay_SpringBoot)
+2024-11-06T15:19:12.527+03:00  INFO 21344 --- [Hatay_SpringBoot] [main] c.h.HataySpringBootApplication           : No active profile set, falling back to 1 default profile: "default"
+2024-11-06T15:19:12.552+03:00  INFO 21344 --- [Hatay_SpringBoot] [main] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-11-06T15:19:12.984+03:00  INFO 21344 --- [Hatay_SpringBoot] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-11-06T15:19:13.033+03:00  INFO 21344 --- [Hatay_SpringBoot] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 33 ms. Found 1 JPA repository interface.
+2024-11-06T15:19:13.421+03:00  INFO 21344 --- [Hatay_SpringBoot] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 4444 (http)
+2024-11-06T15:19:13.426+03:00  INFO 21344 --- [Hatay_SpringBoot] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-11-06T15:19:13.427+03:00  INFO 21344 --- [Hatay_SpringBoot] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
+2024-11-06T15:19:13.467+03:00  INFO 21344 --- [Hatay_SpringBoot] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-11-06T15:19:13.467+03:00  INFO 21344 --- [Hatay_SpringBoot] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 915 ms
+2024-11-06T15:19:13.518+03:00  INFO 21344 --- [Hatay_SpringBoot] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-11-06T15:19:13.645+03:00  INFO 21344 --- [Hatay_SpringBoot] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:file:./database_memory_persist/blog user=SA
+2024-11-06T15:19:13.646+03:00  INFO 21344 --- [Hatay_SpringBoot] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-11-06T15:19:13.651+03:00  INFO 21344 --- [Hatay_SpringBoot] [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./database_memory_persist/blog'
+2024-11-06T15:19:13.693+03:00 DEBUG 21344 --- [Hatay_SpringBoot] [main] o.s.w.f.ServerHttpObservationFilter      : Filter 'webMvcObservationFilter' configured for use
+2024-11-06T15:19:13.693+03:00 DEBUG 21344 --- [Hatay_SpringBoot] [main] o.s.w.s.r.ResourceUrlEncodingFilter      : Filter 'resourceUrlEncodingFilter' configured for use
+2024-11-06T15:19:13.905+03:00  INFO 21344 --- [Hatay_SpringBoot] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-11-06T15:19:14.345+03:00  INFO 21344 --- [Hatay_SpringBoot] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-11-06T15:19:14.562+03:00  WARN 21344 --- [Hatay_SpringBoot] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-11-06T15:19:14.579+03:00  INFO 21344 --- [Hatay_SpringBoot] [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2024-11-06T15:19:14.628+03:00 DEBUG 21344 --- [Hatay_SpringBoot] [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 10 mappings in 'requestMappingHandlerMapping'
+2024-11-06T15:19:14.926+03:00 DEBUG 21344 --- [Hatay_SpringBoot] [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2024-11-06T15:19:14.949+03:00 DEBUG 21344 --- [Hatay_SpringBoot] [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-11-06T15:19:14.974+03:00 DEBUG 21344 --- [Hatay_SpringBoot] [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-11-06T15:19:15.230+03:00  INFO 21344 --- [Hatay_SpringBoot] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 16 endpoints beneath base path '/actuator'
+2024-11-06T15:19:15.283+03:00  INFO 21344 --- [Hatay_SpringBoot] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 4444 (http) with context path '/'
+2024-11-06T15:19:15.294+03:00  INFO 21344 --- [Hatay_SpringBoot] [main] c.h.HataySpringBootApplication           : Started HataySpringBootApplication in 2.984 seconds (process running for 3.269)
+2024-11-06T15:19:15.297+03:00  INFO 21344 --- [Hatay_SpringBoot] [main] c.hamitmizrak.runner._1_ProjectDataSet   : Project Data set -1 
+2024-11-06T15:19:15.373+03:00  INFO 21344 --- [Hatay_SpringBoot] [main] c.hamitmizrak.runner._2_ProjectDataSet   : Project Data set -2 
+2024-11-06T15:19:15.783+03:00  INFO 21344 --- [Hatay_SpringBoot] [RMI TCP Connection(1)-10.31.30.137] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-11-06T15:19:15.783+03:00  INFO 21344 --- [Hatay_SpringBoot] [RMI TCP Connection(1)-10.31.30.137] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-11-06T15:19:15.783+03:00 DEBUG 21344 --- [Hatay_SpringBoot] [RMI TCP Connection(1)-10.31.30.137] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2024-11-06T15:19:15.783+03:00 DEBUG 21344 --- [Hatay_SpringBoot] [RMI TCP Connection(1)-10.31.30.137] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2024-11-06T15:19:15.783+03:00 DEBUG 21344 --- [Hatay_SpringBoot] [RMI TCP Connection(1)-10.31.30.137] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2024-11-06T15:19:15.784+03:00 DEBUG 21344 --- [Hatay_SpringBoot] [RMI TCP Connection(1)-10.31.30.137] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@7f77d839
+2024-11-06T15:19:15.784+03:00 DEBUG 21344 --- [Hatay_SpringBoot] [RMI TCP Connection(1)-10.31.30.137] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@609f136b
+2024-11-06T15:19:15.784+03:00 DEBUG 21344 --- [Hatay_SpringBoot] [RMI TCP Connection(1)-10.31.30.137] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-11-06T15:19:15.784+03:00  INFO 21344 --- [Hatay_SpringBoot] [RMI TCP Connection(1)-10.31.30.137] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-11-06T15:19:33.126+03:00  INFO 21344 --- [Hatay_SpringBoot] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-11-06T15:19:33.218+03:00  INFO 21344 --- [Hatay_SpringBoot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-11-06T15:19:33.425+03:00  INFO 21344 --- [Hatay_SpringBoot] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
