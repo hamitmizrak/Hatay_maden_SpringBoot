@@ -30,7 +30,7 @@ import java.util.List;
 public class AddressApiImpl implements IAddressApi<AddressDto> {
 
     // INJECTION
-    private final IAddressService addressService;
+    private final IAddressService iAddressService;
 
     // Api Result
     private ApiResult apiResult;
@@ -40,7 +40,7 @@ public class AddressApiImpl implements IAddressApi<AddressDto> {
     @PostMapping("/create")
     @Override
     public ResponseEntity<?> addressApiCreate(@Valid @RequestBody AddressDto addressDto) {
-        AddressDto addressDtoCreate = (AddressDto) addressService.addressServiceCreate(addressDto);
+        AddressDto addressDtoCreate = (AddressDto) iAddressService.addressServiceCreate(addressDto);
         // return ResponseEntity.status(200).body(addressDtoCreate);
         // return ResponseEntity.status(HttpStatus.OK).body(addressDtoCreate);
         // return new ResponseEntity<>(addressDtoCreate, HttpStatus.CREATED);
@@ -53,7 +53,7 @@ public class AddressApiImpl implements IAddressApi<AddressDto> {
     @GetMapping(value = "/list")
     @Override
     public ResponseEntity<List<AddressDto>> addressApiList() {
-        List<AddressDto> addressDtoList = addressService.addressServiceList();
+        List<AddressDto> addressDtoList = iAddressService.addressServiceList();
         // Stream
         return ResponseEntity.ok(addressDtoList);
     }
@@ -83,7 +83,7 @@ public class AddressApiImpl implements IAddressApi<AddressDto> {
         }
 
         // Yukarıdakilerden herhangi bir sıkıntı söz konusu değilse
-        AddressDto addressDtoFind = (AddressDto) addressService.addressServiceFindById(id);
+        AddressDto addressDtoFind = (AddressDto) iAddressService.addressServiceFindById(id);
         return ResponseEntity.ok(addressDtoFind);
     }
 
@@ -93,36 +93,36 @@ public class AddressApiImpl implements IAddressApi<AddressDto> {
     public ResponseEntity<?> addressApiUpdate(
             @PathVariable(name = "id", required = false) Long id,
             @Valid @RequestBody AddressDto addressDto) {
-        return  ResponseEntity.ok(addressService.addressServiceUpdate(id, addressDto));
+        return  ResponseEntity.ok(iAddressService.addressServiceUpdate(id, addressDto));
     }
 
     // DELETE BY ID
     @DeleteMapping({"/delete/", "/delete/{id}"})
     @Override
     public ResponseEntity<?> addressApiDeleteById(@PathVariable(name = "id", required = false)  Long id) {
-        return ResponseEntity.ok(addressService.addressServiceDeleteById(id));
+        return ResponseEntity.ok(iAddressService.addressServiceDeleteById(id));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////
     // PAGING AND SORTING
     @Override
     public ResponseEntity<Page<?>> addressServicePagination(int currentPage, int pageSize) {
-        return  ResponseEntity.ok(addressService.addressServicePagination(currentPage, pageSize));
+        return  ResponseEntity.ok(iAddressService.addressServicePagination(currentPage, pageSize));
     }
 
     @Override
     public ResponseEntity<List<?>> addressServiceAllSortedBy(String sortedBy) {
-        return ResponseEntity.ok(addressService.addressServiceAllSortedBy(sortedBy));
+        return ResponseEntity.ok(iAddressService.addressServiceAllSortedBy(sortedBy));
     }
 
     @Override
     public ResponseEntity<List<?>> addressServiceAllSortedByCityAsc() {
-        return ResponseEntity.ok(addressService.addressServiceAllSortedByCityAsc());
+        return ResponseEntity.ok(iAddressService.addressServiceAllSortedByCityAsc());
     }
 
     @Override
     public ResponseEntity<List<?>> addressServiceAllSortedByCityDesc() {
-        return ResponseEntity.ok(addressService.addressServiceAllSortedByCityDesc());
+        return ResponseEntity.ok(iAddressService.addressServiceAllSortedByCityDesc());
     }
 
 } //end AddressApiImpl
