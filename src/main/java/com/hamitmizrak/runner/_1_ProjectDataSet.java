@@ -81,16 +81,6 @@ public class _1_ProjectDataSet implements CommandLineRunner {
         return customerDto;
     }
 
-    // Order Data Set
-    private OrderDto[] orderDataSet(){
-        return null;
-    }
-
-    // Order Save
-    private CustomerDto saveOrder(){
-        return null;
-    }
-
 
     @Override
     public void run(String... args) throws Exception {
@@ -98,6 +88,5 @@ public class _1_ProjectDataSet implements CommandLineRunner {
         log.info("Project Data set -1 ");
         //addressSave();
         //saveCustomer();
-        saveOrder();
     }
 }
