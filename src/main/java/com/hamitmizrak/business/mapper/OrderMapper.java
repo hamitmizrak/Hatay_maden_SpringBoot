@@ -16,21 +16,28 @@ public class OrderMapper {
         orderDto.setPrice(orderEntity.getPrice());
 
         // DİKKAT: Composition (Order(N) Customer(1))
-
+        if(orderEntity.getCustomerOrderEntity()!=null){
+            orderDto.setCustomerDto(CustomerMapper.CustomerEntityToDto(orderEntity.getCustomerOrderEntity()));
+        }
         return orderDto;
     }
 
     // Customer Dto To Entity
-    public static OrderEntity OrderDtoToEntity(OrderDto productDto) {
+    public static OrderEntity OrderDtoToEntity(OrderDto orderDto) {
         // Instance (CustomerDto)
         OrderEntity orderEntity = new OrderEntity();
 
         // ID
-        orderEntity.setId(productDto.getId());
-        orderEntity.setName(productDto.getName());
-        orderEntity.setPrice(productDto.getPrice());
+        orderEntity.setId(orderDto.getId());
+        orderEntity.setName(orderDto.getName());
+        orderEntity.setPrice(orderDto.getPrice());
 
-        // DİKKAT: Composition (Order(N) Customer(1))
+        // DİKKAT: Composition (Order(N) - Customer(1))
+        if(orderDto.getCustomerDto()!=null){
+            orderEntity.setCustomerOrderEntity(CustomerMapper.CustomerDtoToEntity(orderDto.getCustomerDto()));
+        }
+
+        // DİKKAT: Composition (Order(N) - Product(M))
         return orderEntity;
     }
 }

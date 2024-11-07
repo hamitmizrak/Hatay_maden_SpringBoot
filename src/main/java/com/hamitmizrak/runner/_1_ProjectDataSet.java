@@ -2,6 +2,7 @@ package com.hamitmizrak.runner;
 
 import com.hamitmizrak.business.dto.AddressDto;
 import com.hamitmizrak.business.dto.CustomerDto;
+import com.hamitmizrak.business.dto.OrderDto;
 import com.hamitmizrak.business.services.IAddressService;
 import com.hamitmizrak.business.services.ICustomerService;
 import lombok.RequiredArgsConstructor;
@@ -60,8 +61,8 @@ public class _1_ProjectDataSet implements CommandLineRunner {
         return addressDto;
     }
 
+    // Customer Save
     private CustomerDto saveCustomer(){
-
         // Address Dto Save
         AddressDto addressDto = saveAddress();
 
@@ -80,11 +81,18 @@ public class _1_ProjectDataSet implements CommandLineRunner {
         return customerDto;
     }
 
+    // Order Save
+    private OrderDto saveOrder(){
+        return null;
+    }
+
+
     @Override
     public void run(String... args) throws Exception {
         System.out.println("Project Data set -1 ");
         log.info("Project Data set -1 ");
         //addressSave();
-        saveCustomer();
+        //saveCustomer();
+        saveOrder();
     }
 }
