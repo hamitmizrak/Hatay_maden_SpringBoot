@@ -44,7 +44,7 @@ public class OrderEntity extends AuditingAwareBaseEntity {
     // RELATION
     // Order(N) - Customer(1)
     @ManyToOne
-    private CustomerDto customerDto;
+    private CustomerEntity customerOrderEntity;
 
 } //end  CustomerEntity
 
