@@ -4,7 +4,9 @@ import com.hamitmizrak.audit.AuditingAwareBaseDto;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
+
 import java.io.Serializable;
+import java.util.List;
 
 // LOMBOK
 @Getter
@@ -32,8 +34,14 @@ public class CustomerDto extends AuditingAwareBaseDto implements Serializable {
     @NotEmpty(message = "{customer.notes.validation.constraints.NotNull.message}")
     private String notes;
 
+    //////////////////////////////////////////////////////////////////////////////////////
+    // COMPOSITION
     // RELATION
     // Customer(1) - Addres(1)
     private AddressDto addressDto;
+
+    // RELATION
+    // Customer(1) - Order(N)
+    private List<OrderDto> orderDtoList;
 
 } //end class CustomerDto

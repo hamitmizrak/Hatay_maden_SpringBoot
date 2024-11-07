@@ -1,12 +1,14 @@
 package com.hamitmizrak.data.entity;
 
 import com.hamitmizrak.audit.AuditingAwareBaseEntity;
+import com.hamitmizrak.business.dto.OrderDto;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
+import java.util.List;
 
 // LOMBOK
 @Getter
@@ -48,10 +50,15 @@ public class CustomerEntity extends AuditingAwareBaseEntity {
     private Date systemCreatedDate;
 
     // RELATION
-    //  Customer(1) - Adress(1)
+    // Customer(1) - Adress(1)
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="address_id", referencedColumnName = "id",unique=true)
     private AddressEntity addressCustomerEntity;
+
+    // RELATION
+    // Customer(1) - Order(N)
+    @OneToMany
+    private List<OrderDto> orderDtoList;
 
 } //end  CustomerEntity
 
