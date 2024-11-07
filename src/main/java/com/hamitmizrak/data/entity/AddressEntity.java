@@ -40,4 +40,8 @@ public class AddressEntity extends AuditingAwareBaseEntity {
     private Date systemCreatedDate;
 
     // RELATION
+    @OneToOne(mappedBy = "addressCustomerEntity",fetch =FetchType.LAZY )
+    private CustomerEntity customerEntity;
+
+
 } //end  AddressEntity

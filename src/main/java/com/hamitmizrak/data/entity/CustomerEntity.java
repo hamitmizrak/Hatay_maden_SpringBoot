@@ -48,5 +48,8 @@ public class CustomerEntity extends AuditingAwareBaseEntity {
     private Date systemCreatedDate;
 
     // RELATION
+    @OneToOne
+    private AddressEntity addressCustomerEntity;
+
 } //end  CustomerEntity
 

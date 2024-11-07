@@ -33,5 +33,7 @@ public class CustomerDto extends AuditingAwareBaseDto implements Serializable {
     private String notes;
 
     // RELATION
+    // Customer(1) - Addres(1)
+    private AddressDto addressDto;
 
 } //end class CustomerDto
