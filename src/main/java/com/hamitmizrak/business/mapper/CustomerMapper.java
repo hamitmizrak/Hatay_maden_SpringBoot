@@ -17,13 +17,13 @@ public class CustomerMapper {
         customerDto.setNotes(customerEntity.getNotes());
 
         // DİKKAT: Composition (Customer(1) Adres(1))
-        /*
+
         if (customerEntity.getAddressCustomerEntity() != null) {
             customerDto.setAddressDto(AddressMapper.AddressEntityToDto(customerEntity.getAddressCustomerEntity()));
         } else {
             System.out.println("Customer(1) Adres(1) Customer Composition Adress null");
         }
-        */
+
         return customerDto;
     }
 
@@ -39,11 +39,9 @@ public class CustomerMapper {
         customerEntity.setNotes(customerDto.getNotes());
 
         // DİKKAT: Composition (Customer(1) Adres(1))
-        /*
         if(customerDto.getAddressDto() != null) {
             customerEntity.setAddressCustomerEntity(AddressMapper.AddressDtoToEntity(customerDto.getAddressDto()));
         }
-        */
         return customerEntity;
     }
 }

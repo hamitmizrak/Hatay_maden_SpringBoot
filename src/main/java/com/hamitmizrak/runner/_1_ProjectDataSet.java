@@ -85,5 +85,6 @@ public class _1_ProjectDataSet implements CommandLineRunner {
         System.out.println("Project Data set -1 ");
         log.info("Project Data set -1 ");
         //addressSave();
+        saveCustomer();
     }
 }
