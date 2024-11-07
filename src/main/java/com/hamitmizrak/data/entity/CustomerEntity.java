@@ -57,7 +57,7 @@ public class CustomerEntity extends AuditingAwareBaseEntity {
 
     // RELATION
     // Customer(1) - Order(N)
-    @OneToMany
+    @OneToMany(mappedBy = "customerOrderEntity", fetch = FetchType.LAZY)
     private List<OrderEntity> orderCustomerEntityList;
 
 } //end  CustomerEntity

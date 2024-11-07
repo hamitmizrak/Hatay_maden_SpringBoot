@@ -1,7 +1,6 @@
 package com.hamitmizrak.data.entity;
 
 import com.hamitmizrak.audit.AuditingAwareBaseEntity;
-import com.hamitmizrak.business.dto.CustomerDto;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
@@ -43,7 +42,8 @@ public class OrderEntity extends AuditingAwareBaseEntity {
 
     // RELATION
     // Order(N) - Customer(1)
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="customer_id", referencedColumnName = "id",unique=true)
     private CustomerEntity customerOrderEntity;
 
 } //end  CustomerEntity
