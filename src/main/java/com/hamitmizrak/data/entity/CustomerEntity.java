@@ -48,7 +48,9 @@ public class CustomerEntity extends AuditingAwareBaseEntity {
     private Date systemCreatedDate;
 
     // RELATION
-    @OneToOne
+    //  Customer(1) - Adress(1)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="address_id", referencedColumnName = "id",unique=true)
     private AddressEntity addressCustomerEntity;
 
 } //end  CustomerEntity
