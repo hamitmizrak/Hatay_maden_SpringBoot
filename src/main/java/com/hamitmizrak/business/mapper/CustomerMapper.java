@@ -29,7 +29,7 @@ public class CustomerMapper {
         } else {
             System.out.println("Customer(1) Adres(1) Customer Composition Adress null");
             log.error("Customer(1) Adres(1) Customer Composition Adress null");
-            JOptionPane.showMessageDialog(null, "Customer(1) Adres(1) Customer Composition Adress null");
+            //JOptionPane.showMessageDialog(null, "Customer(1) Adres(1) Customer Composition Adress null");
         }
 
         // DİKKAT: Composition (Customer(1) Order(N))
@@ -44,7 +44,7 @@ public class CustomerMapper {
         }else{
             System.out.println("(Customer(1) Order(N) Customer Composition Order null");
             log.error("(Customer(1) Order(N) Customer Composition Order null");
-            JOptionPane.showMessageDialog(null, "(Customer(1) Order(N) Customer Composition Order null");
+            //JOptionPane.showMessageDialog(null, "(Customer(1) Order(N) Customer Composition Order null");
 
         }
         return customerDto;
