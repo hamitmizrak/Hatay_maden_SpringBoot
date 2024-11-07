@@ -1,6 +1,7 @@
 package com.hamitmizrak.runner;
 
 import com.hamitmizrak.business.dto.AddressDto;
+import com.hamitmizrak.business.dto.CustomerDto;
 import com.hamitmizrak.business.services.IAddressService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -44,11 +45,18 @@ public class _1_ProjectDataSet implements CommandLineRunner {
         return addressDtoList;
     }
 
+    private AddressDto saveAddress(AddressDto addressDto){
+        return null;
+    }
+
+    private CustomerDto saveCustomer(CustomerDto customerDto){
+        return null;
+    }
 
     @Override
     public void run(String... args) throws Exception {
         System.out.println("Project Data set -1 ");
         log.info("Project Data set -1 ");
-        addressSave();
+        //addressSave();
     }
 }
