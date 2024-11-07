@@ -829,7 +829,7 @@ Bu örnekte doğrudan SQL ile yazılmış bir sorgu kullanılmıştır.
 
 #### Native SQL Dezavantajları
 
-- **Veritabanı Bağımlılığı**: Native SQL, belirli bir veritabanına özgü olduğundan, başka bir veritabanına geçişte sorunlar yaratabilir.
+- **Veritabanı Bağımlılığı**: Native SQL, belirli bir veritabanına özgü olduğundan, başka bir veritabanına geçişte sorunlar oluşturabilir.
 - **Kod Karmaşıklığı**: SQL sorgularını doğrudan kullanmak kodu daha karmaşık hale getirebilir.
 - **Veritabanı Bağımsızlığı Eksikliği**: Native SQL, belirli bir veritabanına bağımlıdır ve başka bir veritabanına geçildiğinde kodda değişiklik yapılması gerekir.
 
@@ -2742,7 +2742,7 @@ Spring Data JPA ile kullanılan bu terimler, bir veritabanı üzerinde otomatik 
 
 ### 1. `none`
 - **Açıklama:**
-  `none` ayarı, JPA'nın uygulama başlatılırken veritabanı üzerinde herhangi bir şema yönetimi işlemi yapmamasını sağlar. Yani JPA, tabloları yaratmaz, güncellemez veya doğrulamaz.
+  `none` ayarı, JPA'nın uygulama başlatılırken veritabanı üzerinde herhangi bir şema yönetimi işlemi yapmamasını sağlar. Yani JPA, tabloları oluşturmaz, güncellemez veya doğrulamaz.
 
 - **Kullanım Durumu:**
   Eğer veritabanı şema yönetimini tamamen dış bir araçla veya manuel olarak yapmak istiyorsanız ve JPA'nın şema üzerinde hiçbir etkisi olmaması gerekiyorsa `none` kullanılır.
@@ -2763,7 +2763,7 @@ Spring Data JPA ile kullanılan bu terimler, bir veritabanı üzerinde otomatik 
 
 ### 3. `create`
 - **Açıklama:**
-  `create` ayarı, uygulama başlatıldığında veritabanındaki tüm mevcut tabloları silip yeniden oluşturur. Bu, veritabanında yeni tablolar oluştururken sıfırdan başlamak anlamına gelir. Var olan tablolar ve veriler tamamen silinir ve ardından şemaya uygun yeni tablolar yaratılır.
+  `create` ayarı, uygulama başlatıldığında veritabanındaki tüm mevcut tabloları silip yeniden oluşturur. Bu, veritabanında yeni tablolar oluştururken sıfırdan başlamak anlamına gelir. Var olan tablolar ve veriler tamamen silinir ve ardından şemaya uygun yeni tablolar oluşturılır.
 
 - **Kullanım Durumu:**
   Genellikle test veya geliştirme ortamlarında, veritabanı şemasının sürekli olarak sıfırdan oluşturulması gerektiğinde kullanılır. Canlı ortamda kullanılması önerilmez çünkü mevcut tüm veriler kaybolur.
@@ -3410,7 +3410,7 @@ Bu örnekte:
 Spring'de **instance** oluşturmak ve **injection** (bağımlılık enjeksiyonu) farklı iki yöntemdir ve uygulamanın bağımlılıklarını yönetme şekli açısından önemli farklara sahiptir. Bu farkları inceleyelim:
 
 ### 1. Instance Oluşturmak
-- Java’da **instance** (örnek) oluşturmak, `new` anahtar kelimesi kullanılarak doğrudan bir nesne yaratmak anlamına gelir. Örneğin, `MyService myService = new MyService();` ifadesi ile `MyService` sınıfının bir örneği oluşturulur.
+- Java’da **instance** (örnek) oluşturmak, `new` anahtar kelimesi kullanılarak doğrudan bir nesne oluşturmak anlamına gelir. Örneğin, `MyService myService = new MyService();` ifadesi ile `MyService` sınıfının bir örneği oluşturulur.
 - Bu yöntemle oluşturulan nesne **manuel** olarak oluşturulur ve Spring Container tarafından yönetilmez.
 - Eğer bir nesne manuel olarak oluşturulursa, Spring'in bağımlılık yönetimi, yaşam döngüsü kontrolleri veya diğer özelliklerinden yararlanılamaz.
 - Bu yöntem daha basit projelerde kullanılabilir, ancak bağımlılıkların manuel olarak yönetilmesi gerekir ve kod karmaşık hale gelebilir.
@@ -3683,11 +3683,164 @@ Spring Boot ve JPA içinde bir entity’de birden fazla ID’yi yönetmek için 
 
 Her iki yöntemde de ID yönetiminde doğru bir şekilde `equals()` ve `hashCode()` metotlarını tanımlamayı unutmamak önemlidir, aksi halde JPA entity ilişkilerinde beklenmeyen sorunlarla karşılaşabilirsiniz.
 
+
+
 ## Spring Boot
 ```sh 
 
 ```
 ---
+oluşturım (Creational) tasarım desenleri, nesne oluşturma süreçlerini yönetmek ve optimize etmek amacıyla kullanılır. Bu desenler, nesne oluşturmanın doğrudan yapılmasından ziyade bir yapı üzerinden yapılmasını sağlar ve böylece sistemin esnekliğini artırır.
+
+İşte başlıca oluşturım desenleri:
+
+1. **Singleton**
+   - Sınıfın yalnızca bir örneğinin olmasını sağlar ve global bir erişim noktası sunar.
+
+2. **Factory Method (Fabrika Metodu)**
+   - Alt sınıfların hangi sınıfın örneğinin oluşturulacağına karar vermesini sağlayan bir arayüz tanımlar.
+
+3. **Abstract Factory (Soyut Fabrika)**
+   - Birbiriyle ilişkili veya bağımlı nesne ailesi oluşturan arayüz sağlar ve hangi sınıfın örneğinin oluşturulacağına alt sınıflar karar verir.
+
+4. **Builder (Kurucu)**
+   - Kompleks nesneleri adım adım oluşturmak için kullanılır ve nesnelerin farklı gösterimlerinden bağımsız olarak oluşturulmasını sağlar.
+
+5. **Prototype (Prototip)**
+   - Bir nesnenin örneğini klonlayarak kopyalar. Yeni nesneler oluşturmak yerine var olan nesnelerden kopyalama yapılır.
+
+Bu desenler, nesne oluşturma süreçlerini daha esnek hale getirir ve kodun bakımını kolaylaştırır.
+
+
+## Spring Boot
+```sh 
+
+```
+---
+
+Java'da Singleton tasarım deseni, bir sınıfın yalnızca bir örneğinin oluşturulmasını sağlar ve bu örneğe küresel bir erişim noktası sunar. Bu desen, sistem genelinde belirli işlemleri koordine etmek için yalnızca bir nesneye ihtiyaç duyulduğunda faydalıdır.
+
+### Singleton Tasarım Deseninin Özellikleri
+1. **Tek Örnek**: Bir sınıfın yalnızca bir "tek" örneğinin oluşturulmasını kısıtlar.
+2. **Küresel Erişim Noktası**: Örneğe küresel bir erişim noktası sağlar.
+3. **Thread-Safe (İş Parçacığı Güvenliği)**: Bu desen gerektiğinde iş parçacığı güvenli olacak şekilde tasarlanabilir.
+4. **Lazy Initialization (Tembel Başlatma)**: Örnek yalnızca gerektiğinde oluşturulabilir.
+
+### Java'da Singleton Deseninin Uygulama Yöntemleri
+
+#### 1. Eager Initialization (Hızlı Başlatma)
+Bu yöntemde, örnek sınıf yüklendiğinde oluşturulur.
+
+```java
+public class Singleton {
+    private static final Singleton instance = new Singleton();
+
+    // Özel bir yapıcı (constructor) ile dışardan nesne oluşturulması engellenir
+    private Singleton() {}
+
+    public static Singleton getInstance() {
+        return instance;
+    }
+}
+```
+
+- **Avantajlar**: Basit ve thread-safe.
+- **Dezavantajlar**: Sınıf yüklendiğinde hemen örnek oluşturulur. Bu, örneğe her zaman ihtiyaç duyulmayacaksa kaynak israfına neden olabilir.
+
+#### 2. Lazy Initialization (Tembel Başlatma)
+Bu yöntemde, örnek yalnızca `getInstance()` çağrıldığında oluşturulur.
+
+```java
+public class Singleton {
+    private static Singleton instance;
+
+    private Singleton() {}
+
+    public static Singleton getInstance() {
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+}
+```
+
+- **Avantajlar**: Örnek yalnızca gerektiğinde oluşturulur, bu da kaynak kullanımını optimize eder.
+- **Dezavantajlar**: Bu yöntem thread-safe değildir; çoklu iş parçacığında sorun çıkarabilir.
+
+#### 3. Thread-Safe Singleton
+Thread-safe hale getirmek için `synchronized` anahtar kelimesi kullanılabilir.
+
+```java
+public class Singleton {
+    private static Singleton instance;
+
+    private Singleton() {}
+
+    public static synchronized Singleton getInstance() {
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+}
+```
+
+- **Avantajlar**: Thread-safe olduğu için çoklu iş parçacığı ortamında güvenlidir.
+- **Dezavantajlar**: `synchronized` anahtar kelimesi performansı etkileyebilir.
+
+#### 4. Double-Checked Locking (Çift Kontrol Kilitleme)
+Hem tembel başlatmayı hem de thread-safe yapıyı birleştirmek için çift kontrol kilitleme uygulanabilir.
+
+```java
+public class Singleton {
+    private static volatile Singleton instance;
+
+    private Singleton() {}
+
+    public static Singleton getInstance() {
+        if (instance == null) {
+            synchronized (Singleton.class) {
+                if (instance == null) {
+                    instance = new Singleton();
+                }
+            }
+        }
+        return instance;
+    }
+}
+```
+
+- **Avantajlar**: Hem thread-safe hem de tembel başlatma özelliklerini sağlar.
+- **Dezavantajlar**: Kod biraz karmaşıktır.
+
+#### 5. Bill Pugh Singleton Yöntemi
+Bu yöntemde, iç sınıf kullanarak tembel başlatma ve thread-safe özelliklerini basit bir şekilde sağlar.
+
+```java
+public class Singleton {
+    private Singleton() {}
+
+    private static class SingletonHelper {
+        private static final Singleton INSTANCE = new Singleton();
+    }
+
+    public static Singleton getInstance() {
+        return SingletonHelper.INSTANCE;
+    }
+}
+```
+
+- **Avantajlar**: Hem thread-safe hem de tembel başlatma özelliklerine sahip, ayrıca diğer yöntemlere göre daha verimli.
+- **Dezavantajlar**: Kodun anlaşılması biraz daha zor olabilir.
+
+### Singleton Deseninin Kullanım Alanları
+- **Bağlantı Havuzu (Connection Pool)**
+- **Yapılandırma Yöneticileri (Configuration Managers)**
+- **Cache (Önbellek)**
+- **Loglama (Logging)**
+
+Her bir yöntem, farklı kullanım senaryoları için uygundur ve uygulamanın ihtiyaçlarına göre seçilmelidir.
 
 
 ## Spring Boot

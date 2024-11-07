@@ -69,7 +69,7 @@ public class AddressApiImpl implements IAddressApi<AddressDto> {
     // @PathVariable Long id
     // @PathVariable(name="id") Long id, @PathVariable(name="id") Long id
     // FIND
-    @GetMapping({"/find/", "/find/{id}"})
+    @GetMapping(value ={"/find/", "/find/{id}"})
     @Override
     public ResponseEntity<?> addressApiFindById(@PathVariable(name = "id", required = false) Long id) {
        String message="";
@@ -93,8 +93,9 @@ public class AddressApiImpl implements IAddressApi<AddressDto> {
         return ResponseEntity.ok(addressDtoFind);
     }
 
+    // http://localhost:4444/api/address/update/id
     // UPDATE
-    @PutMapping({"/update/", "/update/{id}"})
+    @PutMapping(value ={"/update/", "/update/{id}"})
     @Override
     public ResponseEntity<?> addressApiUpdate(
             @PathVariable(name = "id", required = false) Long id,
@@ -102,8 +103,10 @@ public class AddressApiImpl implements IAddressApi<AddressDto> {
         return  ResponseEntity.ok(addressService.addressServiceUpdate(id, addressDto));
     }
 
+
+    // http://localhost:4444/api/address/delete/id
     // DELETE BY ID
-    @DeleteMapping({"/delete/", "/delete/{id}"})
+    @DeleteMapping(value ={"/delete/", "/delete/{id}"})
     @Override
     public ResponseEntity<?> addressApiDeleteById(@PathVariable(name = "id", required = false)  Long id) {
         return ResponseEntity.ok(addressService.addressServiceDeleteById(id));
@@ -111,21 +114,52 @@ public class AddressApiImpl implements IAddressApi<AddressDto> {
 
     ////////////////////////////////////////////////////////////////////////////////////////
     // PAGING AND SORTING
+
+    // PAGINATION
+    // http://localhost:4444/api/address/pagination?currentPage=0&pageSize=3  => 1.sayfada bana 3 tane veri göster
+    // currentPage=0 demek ilk sayfa demektir
     @Override
-    public ResponseEntity<Page<?>> addressServicePagination(int currentPage, int pageSize) {
+    @GetMapping(value ="/pagination")
+    public ResponseEntity<Page<?>> addressServicePagination(
+           @RequestParam(name = "currentPage", required = false, defaultValue = "0") int currentPage,
+           @RequestParam(name = "pageSize", required = false, defaultValue = "5") int pageSize) {
         return  ResponseEntity.ok(addressService.addressServicePagination(currentPage, pageSize));
     }
 
+
+    // SORTING BELLI SUTUNA GÖRE
+    // http://localhost:4444/api/address/sorting?sortBy=addressEntityEmbeddable.street
+    // http://localhost:4444/api/address/sorting?sortBy=addressEntityEmbeddable.state
+    // http://localhost:4444/api/address/sorting?sortBy=addressEntityEmbeddable.city
+    // Adres Entityden belirli sutununa göre Sıramalama
+    // NOT: Embeddable Entity verileri aldığımdan dolayı aşağıdaki gibi çağırmak zorundayım
+    /*
+    addressDetails.doorNumber, addressDetails.street, paddressDetails.avenue, addressDetails.city, addressDetails.zipCode
+    addressDetails.addressQrCode, addressDetails.state, addressDetails.description
+     */
+    @GetMapping(value ="/sorting")
     @Override
-    public ResponseEntity<List<?>> addressServiceAllSortedBy(String sortedBy) {
+    public ResponseEntity<List<?>> addressServiceAllSortedBy(
+            @RequestParam(name = "sortBy", required = false, defaultValue = "addressEntityEmbeddable.city")  String sortedBy
+    ) {
         return ResponseEntity.ok(addressService.addressServiceAllSortedBy(sortedBy));
     }
 
+
+    // SORTING ASC
+    // http://localhost:4444/api/address/sorting/city/asc
+    // Default Olarak Addres Entityden Şehire göre Küçükten Büyüğe Doğru Sıralama
+    @GetMapping(value ="/sorting/city/asc")
     @Override
     public ResponseEntity<List<?>> addressServiceAllSortedByCityAsc() {
         return ResponseEntity.ok(addressService.addressServiceAllSortedByCityAsc());
     }
 
+
+    // SORTING DESC
+    // http://localhost:4444/api/address/sorting/city/desc
+    // Default Olarak Addres Entityden Şehire göre Büyükten Küçüğe Doğru Sıralama
+    @GetMapping(value ="/sorting/city/desc")
     @Override
     public ResponseEntity<List<?>> addressServiceAllSortedByCityDesc() {
         return ResponseEntity.ok(addressService.addressServiceAllSortedByCityDesc());
