@@ -4,12 +4,12 @@ import com.hamitmizrak.business.dto.AddressDto;
 import com.hamitmizrak.business.dto.CustomerDto;
 import com.hamitmizrak.business.services.IAddressService;
 import com.hamitmizrak.business.services.ICustomerService;
-import com.hamitmizrak.data.repository.ICustomerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
