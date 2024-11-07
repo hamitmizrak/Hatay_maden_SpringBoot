@@ -1,6 +1,7 @@
 # Special
 /database_memory_persist
 /log/
+/dockerize/*.jar
 
 
 
