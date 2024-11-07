@@ -79,7 +79,7 @@ public class AddressApiImpl implements IAddressApi<AddressDto> {
             throw new _400_BadRequestException("Bad Request: Kötü istek");
         } else if (id < 0) {
             // config > ApiResultValidMessages
-            message=messageSource.getMessage("address.error.unauthorized",null, LocaleContextHolder.getLocale());
+            message=messageSource.getMessage("error.unauthorized",null, LocaleContextHolder.getLocale());
             apiResult = new ApiResult();
             apiResult.setError("unAuthorized: Yetkisiz Giriş");
             apiResult.setPath("/api/address/find");
