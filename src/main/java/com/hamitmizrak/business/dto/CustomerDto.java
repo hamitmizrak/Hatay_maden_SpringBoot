@@ -17,6 +17,7 @@ import java.util.List;
 @Log4j2
 
 // Customer(1) - Address(1)
+// Customer(1) - Order(N)
 public class CustomerDto extends AuditingAwareBaseDto implements Serializable {
 
     // SERILEŞTIRME

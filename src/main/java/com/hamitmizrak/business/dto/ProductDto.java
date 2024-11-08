@@ -15,9 +15,8 @@ import java.io.Serializable;
 @Builder
 @Log4j2
 
-// Order(N) - Customer(1)
-// Order(N) - Product(M)
-public class OrderDto extends AuditingAwareBaseDto implements Serializable {
+// Product(N) - Order(M)
+public class ProductDto extends AuditingAwareBaseDto implements Serializable {
 
     // SERILEŞTIRME
     public static final Long serialVersionUID = 1L;
@@ -25,17 +24,15 @@ public class OrderDto extends AuditingAwareBaseDto implements Serializable {
     // FIELD
     private Long id;
 
-    @NotEmpty(message = "{order.name.validation.constraints.NotNull.message}")
+    @NotEmpty(message = "{product.name.validation.constraints.NotNull.message}")
     private String name;
 
-    @NotEmpty(message = "{order.code.validation.constraints.NotNull.message}")
-    private String price;
+    @NotEmpty(message = "{product.code.validation.constraints.NotNull.message}")
+    private String code;
 
     //////////////////////////////////////////////////////////////////////////////////////
     // COMPOSITION
 
     // RELATION
-    // Order(N) - Customer(1)
-    private CustomerDto customerDto;
 
 } //end class CustomerDto
