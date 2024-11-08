@@ -3952,6 +3952,479 @@ Bu kısayollar, IntelliJ IDEA'da hızlı bir şekilde çalışmanızı sağlar v
 ---
 
 
+JBoss'ın yeni ismi WildFly olarak değiştirildi. Red Hat tarafından geliştirilen JBoss Application Server, 2013 yılında yapılan bir değişiklikle WildFly olarak yeniden adlandırıldı. Bu değişiklikle, JBoss topluluğunun ücretsiz ve açık kaynaklı uygulama sunucusu sürümünü ifade etmek için "WildFly" ismi kullanılırken, ticari sürüm için Red Hat JBoss Enterprise Application Platform (EAP) ismi kullanılmaktadır.
+
+WildFly, Java EE ve Jakarta EE uyumlu, yüksek performanslı bir uygulama sunucusu olarak geliştirilmiş olup, bulut tabanlı mikroservis mimarileriyle uyumludur.
+
+İhtiyacınıza göre en uygun WildFly dağıtımını seçerken dikkate almanız gereken bazı ayrıntılar şunlardır:
+
+1. **WildFly Dağıtımı**:
+   - **Kullanım Amacı**: Bu, üretim ve geliştirme ortamlarında kullanılabilen standart WildFly uygulama sunucusudur. Eğer doğrudan WildFly'ın kararlı sürümünü kullanarak bir uygulama dağıtmak ya da geliştirme yapmak istiyorsanız, bu seçenek idealdir.
+   - **İndirme Formatları**:
+      - **zip**: Windows gibi dosya sıkıştırma araçlarının yaygın olarak desteklediği bir formattır. Özellikle Windows işletim sisteminde WildFly kurulumunu kolaylaştırır.
+      - **tgz**: Linux/Unix tabanlı sistemlerde tercih edilen bir sıkıştırma formatıdır. Eğer Linux tabanlı bir sunucuda çalışıyorsanız `tgz` formatını tercih edebilirsiniz.
+   - **SHA-1 Karma Değeri**: Dosyanın bütünlüğünü doğrulamak için kullanılabilir. İndirilen dosyanın bozulmamış olduğundan emin olmak için SHA-1 değerini kontrol edebilirsiniz.
+
+2. **WildFly Önizleme Dağıtımı**:
+   - **Kullanım Amacı**: Bu, henüz tam kararlı hale getirilmemiş özellikleri içerir. Yeni özellikleri test etmek ya da geliştirme sırasında en son yenilikleri denemek istiyorsanız bu seçeneği indirebilirsiniz. Ancak üretim ortamlarında kullanılması önerilmez, çünkü tam olarak kararlı değildir.
+   - **İndirme Formatları**: Yine `zip` ve `tgz` formatlarında sunulmaktadır. Çalıştığınız işletim sistemine göre uygun formatı seçebilirsiniz.
+   - **SHA-1 Karma Değeri**: Dosya doğrulaması için sağlanmıştır.
+
+3. **Uygulama Sunucusu Kaynak Kodu**:
+   - **Kullanım Amacı**: Eğer WildFly'ın kaynak kodunu incelemek, modifiye etmek ya da WildFly üzerinde özelleştirilmiş geliştirmeler yapmak istiyorsanız bu seçeneği tercih edebilirsiniz. Kaynak kodu, projeye daha derinlemesine bir inceleme yapma imkanı sunar.
+   - **İndirme Formatları**: `zip` ve `tgz` olarak sunulur, yukarıda bahsedildiği gibi işletim sistemine göre seçebilirsiniz.
+   - **SHA-1 Karma Değeri**: İndirilen dosyanın orijinal olduğundan emin olmak için SHA-1 doğrulaması yapabilirsiniz.
+
+4. **Hızlı Başlangıç Kaynak Kodu**:
+   - **Kullanım Amacı**: WildFly üzerinde örnek projeler ya da eğitim materyalleri ile hızlı bir başlangıç yapmak istiyorsanız bu kaynak kodunu indirmeniz faydalı olabilir. Örnek uygulamalar ve kullanım senaryolarını içerir.
+   - **Git Tag**: Git üzerinden doğrudan erişim imkanı sunar. Git kullanarak kaynak kodunu daha kolay yönetebilir ve sürüm kontrolü yapabilirsiniz.
+   - **zip ve SHA-1**: Zip formatında indirmek ve doğrulamak için seçenekler mevcut.
+
+5. **Sürüm Notları**:
+   - **Kullanım Amacı**: WildFly'ın bu sürümünde yapılan değişiklikler, yeni özellikler, düzeltmeler ve bilinen sorunlar hakkında bilgi almak için sürüm notlarını inceleyebilirsiniz. Bu notlar, hangi özelliklerin eklendiği veya değiştiği hakkında detaylı bilgi sağlar.
+
+**Özetle**:
+- **Geliştirme veya Üretim İçin**: Standart **WildFly Dağıtımı** önerilir.
+- **Yeni Özellikleri Test Etmek İçin**: **WildFly Önizleme Dağıtımı** uygun olabilir.
+- **Kaynak Kod İncelemesi veya Özelleştirme İçin**: **Uygulama Sunucusu Kaynak Kodu** tercih edilebilir.
+- **Örnek Uygulama ve Hızlı Başlangıç İçin**: **Hızlı Başlangıç Kaynak Kodu** yararlı olabilir.
+
+Sizin gereksinimlerinize göre en uygun seçeneği yukarıdaki açıklamalara göre seçebilirsiniz.
+
+
+## Spring Boot
+```sh 
+
+```
+---
+
+`JdbcTemplate`, Spring Framework'ün bir parçası olarak veri tabanıyla etkileşimde bulunmak için geliştirilmiş bir sınıftır ve özellikle Spring Boot uygulamalarında yaygın olarak kullanılır. `JdbcTemplate`, SQL sorgularını çalıştırmak, veri tabanından veri çekmek, güncelleme işlemleri yapmak ve veritabanı bağlantılarını yönetmek için güçlü ve basit bir yol sağlar. Spring Boot, `JdbcTemplate` sınıfının kullanılmasını daha da kolaylaştırarak, veri tabanı işlemleri için hem esneklik hem de güvenilirlik sunar.
+
+### JdbcTemplate'in Amacı
+`JdbcTemplate`, JDBC (Java Database Connectivity) API'sini basitleştirmeyi amaçlar. Geleneksel JDBC kodu yazarken, kaynakları açma ve kapatma, hata işleme, veritabanı bağlantılarının yönetimi gibi çeşitli işlemler manuel olarak yapılır ve bu da hata riskini artırır. `JdbcTemplate`, bu tür görevleri otomatikleştirerek, JDBC işlemlerini basitleştirir. Bu sayede, geliştiriciler odaklarını SQL sorgularına ve iş mantığına verebilirler.
+
+### JdbcTemplate'in Sağladığı Faydalar
+- **Kaynak Yönetimi**: `JdbcTemplate`, veritabanı bağlantılarını otomatik olarak yönetir ve kapatır, böylece bağlantı sızıntılarını önler.
+- **Hata İşleme**: `SQLException` gibi veritabanı hatalarını otomatik olarak işler ve bunları daha anlamlı `DataAccessException` sınıflarına dönüştürür.
+- **Basit Kullanım**: CRUD (Create, Read, Update, Delete) işlemlerini gerçekleştirmek için kullanımı kolay metodlar sunar.
+- **Güvenli Parametre Kullanımı**: SQL enjeksiyonu gibi güvenlik açıklarını önlemek için parametreli sorguları destekler.
+- **Esneklik**: Veritabanına özel SQL sorguları yazma esnekliği sağlar ve ORM kullanımı zorunluluğu yoktur.
+
+### JdbcTemplate Kullanım Adımları
+Spring Boot uygulamasında `JdbcTemplate` kullanmak için temel adımlar şunlardır:
+
+#### 1. Bağımlılıkları Ekleme
+Spring Boot projesinde `JdbcTemplate` kullanmak için `spring-boot-starter-jdbc` bağımlılığına ihtiyacınız vardır. `pom.xml` dosyasına aşağıdaki bağımlılığı ekleyin:
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-jdbc</artifactId>
+</dependency>
+```
+
+#### 2. Veri Tabanı Yapılandırması
+Uygulamanızın `application.properties` veya `application.yml` dosyasına veri tabanı yapılandırmalarını ekleyin:
+
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/yourdatabase
+spring.datasource.username=root
+spring.datasource.password=password
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+```
+
+#### 3. JdbcTemplate Bean Tanımlama
+Spring Boot, otomatik yapılandırma sayesinde `JdbcTemplate` bean'ini otomatik olarak yaratır. Bu yüzden `JdbcTemplate` nesnesini doğrudan kullanabiliriz:
+
+```java
+@Autowired
+private JdbcTemplate jdbcTemplate;
+```
+
+### JdbcTemplate ile CRUD İşlemleri
+
+#### Veri Ekleme (Insert)
+`JdbcTemplate` ile veri eklemek için `update` metodu kullanılır:
+
+```java
+String sql = "INSERT INTO customers (name, age, city) VALUES (?, ?, ?)";
+jdbcTemplate.update(sql, "Ali", 30, "Ankara");
+```
+
+#### Veri Okuma (Select)
+Veri tabanından veri çekmek için `queryForObject` veya `query` metotları kullanılır.
+
+- **Tek Bir Değer Döndürme**:
+
+```java
+String sql = "SELECT COUNT(*) FROM customers";
+Integer count = jdbcTemplate.queryForObject(sql, Integer.class);
+```
+
+- **Liste Döndürme**:
+
+```java
+String sql = "SELECT * FROM customers";
+List<Customer> customers = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Customer.class));
+```
+
+#### Veri Güncelleme (Update)
+Var olan veriyi güncellemek için `update` metodu kullanılır:
+
+```java
+String sql = "UPDATE customers SET city = ? WHERE name = ?";
+jdbcTemplate.update(sql, "Istanbul", "Ali");
+```
+
+#### Veri Silme (Delete)
+Veriyi silmek için yine `update` metodunu kullanabiliriz:
+
+```java
+String sql = "DELETE FROM customers WHERE name = ?";
+jdbcTemplate.update(sql, "Ali");
+```
+
+### JdbcTemplate RowMapper Kullanımı
+`RowMapper`, veritabanı kayıtlarını Java nesnelerine dönüştürmek için kullanılan bir arayüzdür. `BeanPropertyRowMapper` sınıfı, SQL sorgusundan dönen verileri otomatik olarak belirttiğimiz nesneye dönüştürür:
+
+```java
+String sql = "SELECT * FROM customers WHERE id = ?";
+Customer customer = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Customer.class), 1);
+```
+
+#### Özel RowMapper Kullanımı
+Kendi `RowMapper` sınıfınızı oluşturmak isterseniz, `RowMapper` arayüzünü uygulayabilirsiniz:
+
+```java
+public class CustomerRowMapper implements RowMapper<Customer> {
+    @Override
+    public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {
+        Customer customer = new Customer();
+        customer.setId(rs.getInt("id"));
+        customer.setName(rs.getString("name"));
+        customer.setCity(rs.getString("city"));
+        return customer;
+    }
+}
+
+// Kullanım
+String sql = "SELECT * FROM customers WHERE id = ?";
+Customer customer = jdbcTemplate.queryForObject(sql, new CustomerRowMapper(), 1);
+```
+
+### JdbcTemplate BatchUpdate
+`BatchUpdate` metodu, çok sayıda veri işlemi yapmanız gerektiğinde birden fazla SQL sorgusunu tek seferde çalıştırarak performansı artırır:
+
+```java
+String sql = "INSERT INTO customers (name, age, city) VALUES (?, ?, ?)";
+List<Object[]> batchArgs = Arrays.asList(
+    new Object[]{"Ali", 30, "Ankara"},
+    new Object[]{"Ayşe", 25, "İstanbul"},
+    new Object[]{"Mehmet", 35, "İzmir"}
+);
+
+jdbcTemplate.batchUpdate(sql, batchArgs);
+```
+
+### JdbcTemplate ile Transaction Yönetimi
+`JdbcTemplate`, `@Transactional` anotasyonu ile işlemleri bir bütün olarak ele alır. Eğer bir işlem sırasında hata oluşursa, yapılan değişiklikler geri alınır:
+
+```java
+@Service
+public class CustomerService {
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    @Transactional
+    public void transferFunds(int senderId, int receiverId, double amount) {
+        jdbcTemplate.update("UPDATE accounts SET balance = balance - ? WHERE id = ?", amount, senderId);
+        jdbcTemplate.update("UPDATE accounts SET balance = balance + ? WHERE id = ?", amount, receiverId);
+    }
+}
+```
+
+### JdbcTemplate ve Spring Boot'ta Exception Management
+`JdbcTemplate`, `SQLException` gibi veritabanı hatalarını `DataAccessException` isimli bir üst sınıf ile kapsar. Bu sayede istisnaları kolayca yönetebilirsiniz:
+
+```java
+try {
+    jdbcTemplate.update("UPDATE customers SET city = ? WHERE id = ?", "Izmir", 1);
+} catch (DataAccessException e) {
+    // Hata yönetimi
+    System.out.println("Veri tabanı hatası: " + e.getMessage());
+}
+```
+
+### JdbcTemplate'in Alternatifleri
+Spring Boot ve Spring Framework, veritabanı işlemleri için `JdbcTemplate` dışında başka araçlar da sunar:
+- **Spring Data JPA**: ORM (Object Relational Mapping) kullanmak isteyenler için idealdir.
+- **NamedParameterJdbcTemplate**: Parametreli SQL sorguları için daha esnek bir yapı sunar.
+- **Spring Data JDBC**: `JdbcTemplate`'in daha modern bir alternatifi olarak basit veri tabanı işlemleri için kullanılır.
+
+### Sonuç
+`JdbcTemplate`, SQL sorgularını manuel yazmak isteyen veya ORM kullanmadan doğrudan veritabanıyla etkileşim kurmak isteyen Spring Boot geliştiricileri için güçlü ve kullanışlı bir araçtır. JDBC işlemlerini kolaylaştırarak, kaynak yönetimi, hata işleme ve parametre güvenliği gibi konularda standart çözümler sunar.
+
+
+## Spring Boot
+```sh 
+
+```
+---
+
+Spring Framework’ün bir bileşeni olan `JdbcTemplate`, veri tabanıyla etkileşimi kolaylaştırmak için geliştirilmiş bir araçtır. JDBC (Java Database Connectivity) API'sini basitleştirir ve veri tabanı bağlantıları, hata yönetimi, veri çekme ve güncelleme işlemleri gibi temel işlevleri daha rahat ve güvenli hale getirir. `JdbcTemplate` kullanmanın avantajları kadar bazı dezavantajları da bulunmaktadır. İşte detaylı bir şekilde avantaj ve dezavantajları:
+
+---
+
+### JdbcTemplate’in Avantajları
+
+1. **Kaynak Yönetiminin Kolaylığı**:
+   - JDBC ile çalışırken bağlantı, `Statement` ve `ResultSet` gibi kaynakları manuel olarak açmak ve kapatmak gerekir. `JdbcTemplate`, bu kaynakları otomatik olarak yönetir ve bağlantı sızıntılarını önler.
+   - Özellikle uzun süreli uygulamalarda kaynak yönetiminin doğru yapılması performansı artırır.
+
+2. **Daha Basit Hata Yönetimi**:
+   - `JdbcTemplate`, JDBC'nin `SQLException` sınıfı yerine `DataAccessException` adlı daha genel ve Spring’e özgü bir istisna yönetimi sağlar.
+   - Bu sayede, SQL hatalarını uygulama düzeyinde daha iyi yakalamak ve yönetmek mümkündür.
+
+3. **Güvenli Parametreli Sorgu Desteği**:
+   - `JdbcTemplate`, SQL enjeksiyonuna karşı koruma sağlayan parametreli sorguları destekler. Parametreli sorgular ile değişkenler güvenli bir şekilde SQL cümlelerine yerleştirilir.
+   - SQL enjeksiyonu gibi güvenlik açıklarına karşı önlem alınması güvenilir bir veri tabanı erişimi sağlar.
+
+4. **CRUD İşlemlerini Kolaylaştırma**:
+   - Veri ekleme, güncelleme, silme ve okuma gibi işlemler `JdbcTemplate` ile çok daha basit hale gelir. `update()`, `query()`, `queryForObject()` gibi metodlar sayesinde temel SQL işlemleri hızlıca yapılabilir.
+   - Bu da veri tabanı ile sık etkileşimde bulunan uygulamalarda geliştirme sürecini hızlandırır.
+
+5. **Esnek SQL Yazma İmkanı**:
+   - ORM (Object-Relational Mapping) araçlarına kıyasla `JdbcTemplate` ile tamamen SQL tabanlı çalışılabilir. Karmaşık SQL sorgularını `JdbcTemplate` üzerinden doğrudan yazabilirsiniz.
+   - Bu esneklik, özellikle karmaşık sorgu ihtiyaçları olan projelerde önemli bir avantajdır.
+
+6. **Transaction Yönetimi**:
+   - Spring Framework ile uyumlu olan `JdbcTemplate`, `@Transactional` anotasyonu ile işlemleri yönetir. Bu sayede veri tabanındaki işlemler bir bütün olarak ele alınır ve bir hata durumunda tüm değişiklikler geri alınır.
+   - Transaction yönetiminin sağladığı bu bütünlük, veri güvenliğini artırır.
+
+7. **Performans**:
+   - ORM araçlarına kıyasla daha hızlı bir veri tabanı etkileşimi sağlar çünkü `JdbcTemplate`, doğrudan SQL sorguları ile çalışır ve veri tabanı işlemlerinde bir katman daha azdır.
+
+---
+
+### JdbcTemplate’in Dezavantajları
+
+1. **SQL Bağımlılığı**:
+   - `JdbcTemplate`, SQL sorgularının elle yazılmasını gerektirir. Bu, uygulamanın veritabanı bağımlılığını artırır. Örneğin, veritabanı türü değiştiğinde (MySQL'den PostgreSQL'e geçiş gibi) SQL ifadelerinde değişiklik yapmak gerekebilir.
+   - ORM çözümlerinde olduğu gibi soyutlama seviyesi düşük olduğu için veritabanı değiştirme süreçlerinde fazladan iş yükü getirir.
+
+2. **Kod Tekrarı**:
+   - SQL sorgularını elle yazmak, kod tekrarına yol açabilir. Özellikle büyük projelerde benzer SQL ifadelerinin tekrar tekrar yazılması gerekebilir.
+   - ORM çözümleri ile genellikle bu tekrarlar model katmanında tek bir tanımla yönetilebilirken, `JdbcTemplate` ile her SQL ifadesi için ayrı bir sorgu yazmak gerekebilir.
+
+3. **Nesne-İlişkisel Eşleme (ORM) Eksikliği**:
+   - `JdbcTemplate`, veri tabanı kayıtlarını doğrudan Java nesnelerine otomatik olarak eşleştirmez. Elde edilen sonuçları nesnelere manuel olarak dönüştürmek için `RowMapper` kullanmak gerekebilir.
+   - ORM araçları (Hibernate, JPA gibi) otomatik nesne eşleme desteği sunarken, `JdbcTemplate` ile bu işlemi kendiniz yapmanız gerekir.
+
+4. **Bakım Zorluğu**:
+   - Çok sayıda SQL sorgusu içeren projelerde bakım zorluğu artabilir. SQL sorgularındaki değişiklikler doğrudan kod içerisine yazıldığı için bu sorgular üzerinde yapılacak değişiklikler uygulamanın her yerinde güncellenmelidir.
+   - Özellikle büyük projelerde bu durum, bakım sürecinde fazladan iş yükü oluşturur.
+
+5. **Sınırlı Çoklu Veri Kaynağı Desteği**:
+   - `JdbcTemplate` varsayılan olarak tek bir veri kaynağı ile çalışır. Birden fazla veri kaynağı ile çalışmak istediğinizde ekstra yapılandırmalar gerekebilir.
+   - ORM araçları çoklu veri kaynaklarını daha kolay yönetme imkanına sahipken, `JdbcTemplate`'de bu işlemler daha karmaşık hale gelebilir.
+
+6. **Yüksek Seviye Veri Yönetimi Özelliklerinin Eksikliği**:
+   - ORM araçları, nesneler arası ilişkiler (birlikte yükleme, geç yükleme) gibi gelişmiş özellikleri desteklerken `JdbcTemplate` bu özelliklere sahip değildir.
+   - Örneğin, ilişkili nesnelerin otomatik olarak yüklenmesi gibi özellikler `JdbcTemplate`'de bulunmaz, dolayısıyla bu ilişkileri yönetmek için daha fazla manuel kod yazmak gerekebilir.
+
+---
+
+### JdbcTemplate’in Avantaj ve Dezavantajlarının Özet Tablosu
+
+| Avantajlar                               | Dezavantajlar                                    |
+|------------------------------------------|--------------------------------------------------|
+| Kaynak Yönetimi Kolaylığı                | SQL Bağımlılığı                                  |
+| Hata Yönetimi                            | Kod Tekrarı                                      |
+| Güvenli Parametreli Sorgu                | ORM Eşleme Eksikliği                             |
+| CRUD İşlemlerinde Kolaylık               | Bakım Zorluğu                                    |
+| Esnek SQL Yazma İmkanı                   | Çoklu Veri Kaynağı Desteği Zorluğu               |
+| Transaction Yönetimi                      | Yüksek Seviye Veri Yönetim Özelliklerinin Eksikliği|
+| Performans                               | -                                                |
+
+---
+
+### Sonuç
+Spring `JdbcTemplate`, veri tabanı işlemlerini daha hızlı ve basit hale getirirken, SQL bağımlılığı ve bakım zorluğu gibi dezavantajlara da sahiptir. Küçük ve orta ölçekli projeler için hızlı bir çözüm sunar ancak büyük projelerde veya karmaşık nesne ilişkilerinin bulunduğu durumlarda ORM çözümleri (Spring Data JPA, Hibernate vb.) ile birlikte kullanılması daha mantıklı olabilir. `JdbcTemplate`, SQL tabanlı veri erişimi gerektiren ve ORM’nin fazla soyutlama sağladığı projelerde ideal bir seçimdir.
+
+
+## Spring Boot Delivered Query, Named Query, JPQL, Native Query Örnekleri
+```sh 
+
+```
+---
+
+Spring Data JPA, Java uygulamalarında veri tabanı işlemlerini kolaylaştırmak için çeşitli sorgulama yöntemleri sunar. Bu yöntemler arasında Delivered Query, Named Query, JPQL ve Native Query bulunur. Her birinin kendi kullanım amacı ve avantajları vardır. Aşağıda her birinin detaylı açıklamaları yer almaktadır:
+
+---
+
+### 1. Delivered Query (Derived Query)
+Delivered Query, metod isimlerinden otomatik olarak SQL sorguları üreten bir özelliktir. Bu özellik sayesinde, belirli kurallara uygun metod isimleri yazarak Spring Data JPA’nın bu metodlar için otomatik olarak SQL sorgusu oluşturmasını sağlarız. Delivered Query kullanımı özellikle basit CRUD işlemlerinde yaygın olarak tercih edilir.
+
+#### Özellikler
+- **Kolay Kullanım**: Metod ismine göre Spring Data JPA, SQL sorgusunu otomatik olarak oluşturur.
+- **Yaygın Kapsam**: Tek bir kolon üzerinde eşleştirme, aralıklar, sıralama ve benzeri birçok koşul desteklenir.
+- **Parametre Uyarlama**: Delivered Query metotları, metod isminde belirtilen parametreleri alır ve uygun SQL sorgusunu oluşturur.
+
+#### Kullanım Örnekleri
+Örneğin, bir `CustomerEntity` sınıfı üzerinde `firstName` ve `age` gibi alanlara göre sorgu yapıyorsak, aşağıdaki gibi `ICustomerRepository` üzerinde Delivered Query tanımlayabiliriz:
+
+```java
+public interface ICustomerRepository extends JpaRepository<CustomerEntity, Long> {
+
+    // Belirli bir isme sahip müşterileri bulma
+    List<CustomerEntity> findByFirstName(String firstName);
+
+    // Yaşı belirli bir değerden büyük olan müşterileri bulma
+    List<CustomerEntity> findByAgeGreaterThan(int age);
+
+    // İsim sıralamasına göre müşterileri bulma
+    List<CustomerEntity> findAllByOrderByFirstNameAsc();
+}
+```
+
+Bu örneklerde Spring Data JPA, `findByFirstName`, `findByAgeGreaterThan` ve `findAllByOrderByFirstNameAsc` metodları için SQL sorgularını otomatik olarak oluşturur.
+
+#### Avantajları
+- Hızlı ve pratik bir şekilde basit sorguları yazma imkanı sunar.
+- Kolay anlaşılır, bakımı kolaydır ve çoğu CRUD işlemi için yeterlidir.
+
+#### Dezavantajları
+- Karmaşık sorgular veya birden fazla tabloya erişim gerektiren durumlarda sınırlıdır.
+- Metod isimleri büyüdükçe okunabilirlik azalabilir.
+
+---
+
+### 2. Named Query
+Named Query, `@NamedQuery` anotasyonu ile `Entity` sınıfı üzerinde tanımlanır ve bu sorgular uygulama çalıştığında önceden derlenir. Named Query kullanarak sık kullanılan veya karmaşık sorguları bir defa tanımlar ve bunları repository içerisinde tekrar tekrar çağırabiliriz.
+
+#### Özellikler
+- **Önceden Tanımlı ve Derlenmiş**: Uygulama başlatıldığında, tanımlanan sorgular derlenir ve kullanılmaya hazır hale gelir.
+- **Tekrarlı Kullanım**: Aynı sorguyu tekrar kullanmanız gereken durumlarda uygun bir yöntemdir.
+- **Kolay Bakım**: Tüm Named Query'ler `Entity` sınıfında toplandığından, sorgularda yapılacak değişiklikler merkezi olarak yönetilebilir.
+
+#### Kullanım Örnekleri
+Örneğin, `CustomerEntity` üzerinde bir `Named Query` tanımlayalım:
+
+```java
+@Entity
+@NamedQueries({
+    @NamedQuery(name = "Customer.findByLastName", query = "SELECT c FROM CustomerEntity c WHERE c.lastName = :lastName"),
+    @NamedQuery(name = "Customer.findByCity", query = "SELECT c FROM CustomerEntity c WHERE c.city = :city"),
+    @NamedQuery(name = "Customer.findByAgeGreaterThan", query = "SELECT c FROM CustomerEntity c WHERE c.age > :age")
+})
+public class CustomerEntity {
+    // Sınıf tanımı burada
+}
+
+// ICustomerRepository sınıfında kullanımı
+public interface ICustomerRepository extends JpaRepository<CustomerEntity, Long> {
+    
+    @Query(name = "Customer.findByLastName")
+    List<CustomerEntity> findByLastName(@Param("lastName") String lastName);
+}
+```
+
+#### Avantajları
+- Sık kullanılan sorguları merkezi bir yerde tanımlamak mümkündür.
+- Derlenmiş sorgular performansı artırır ve bakım açısından kolaylık sağlar.
+- Karmaşık sorgularda hata ayıklama ve düzenleme kolaylığı sunar.
+
+#### Dezavantajları
+- Sorgular `Entity` sınıfında toplandığından, `Entity` sınıfı karmaşık hale gelebilir.
+- Genellikle statik sorgular içindir, dinamik sorgular için sınırlıdır.
+
+---
+
+### 3. JPQL (Java Persistence Query Language)
+JPQL, Java EE uygulamalarında veri tabanı sorguları yazmak için kullanılan bir dildir ve SQL'e benzer bir yapıya sahiptir. Ancak, SQL'in aksine JPQL, doğrudan veri tabanı tablolarını değil, Java sınıflarını ve alanlarını kullanır. JPQL sorguları, veri tabanı bağımsızlığı sağlar ve ORM tabanlı uygulamalarda tercih edilir.
+
+#### Özellikler
+- **Nesne Tabanlı**: SQL’den farklı olarak, doğrudan tablolar yerine Java nesneleri (Entity) üzerinden çalışır.
+- **Veri Tabanı Bağımsızlığı**: JPQL sorguları genellikle veri tabanı bağımsızdır ve farklı veri tabanları üzerinde sorunsuz çalışır.
+- **Esnek**: Karmaşık ve dinamik sorgular yazmak için uygundur.
+
+#### Kullanım Örnekleri
+JPQL kullanarak örnek bir sorgu yazalım:
+
+```java
+// ICustomerRepository sınıfında JPQL sorgu örnekleri
+public interface ICustomerRepository extends JpaRepository<CustomerEntity, Long> {
+
+    // Ad ve Soyada göre müşteri bulma
+    @Query("SELECT c FROM CustomerEntity c WHERE c.firstName = :firstName AND c.lastName = :lastName")
+    List<CustomerEntity> findByFullName(@Param("firstName") String firstName, @Param("lastName") String lastName);
+
+    // Yaş kriterine göre müşteri listeleme
+    @Query("SELECT c FROM CustomerEntity c WHERE c.age > :age")
+    List<CustomerEntity> findCustomersOlderThan(@Param("age") int age);
+}
+```
+
+#### Avantajları
+- ORM yapısına uyumludur ve veri tabanı bağımsız çalışır.
+- Karmaşık sorgular yazmayı kolaylaştırır.
+- Java nesneleri ile doğrudan çalıştığı için daha anlaşılırdır.
+
+#### Dezavantajları
+- Bazı özel veri tabanı işlevlerini desteklemez.
+- Karmaşık ve çok performans gerektiren sorgularda daha düşük performans gösterebilir.
+
+---
+
+### 4. Native Query
+Native Query, doğrudan SQL sorguları kullanarak veri tabanıyla etkileşime girmenizi sağlar. JPQL ve diğer ORM tabanlı sorguların aksine, Native Query veri tabanı bağımlı SQL sorgularını destekler. Bu nedenle, belirli bir veri tabanına özel SQL komutları kullanılabilir.
+
+#### Özellikler
+- **Doğrudan SQL Kullanımı**: SQL dilinin tüm özelliklerini kullanabilirsiniz (JOIN'ler, `GROUP BY` işlemleri, alt sorgular vb.)
+- **Veri Tabanına Özel İşlemler**: Veri tabanı bağımlı sorgular yazmak mümkündür.
+- **Performans**: Karmaşık sorgular için daha performanslıdır çünkü SQL'in tüm gücünden yararlanılır.
+
+#### Kullanım Örnekleri
+Örneğin, `ICustomerRepository` içinde Native Query ile yazılmış SQL sorgularını görelim:
+
+```java
+// ICustomerRepository sınıfında Native Query örnekleri
+public interface ICustomerRepository extends JpaRepository<CustomerEntity, Long> {
+
+    // Şehir ve yaş kriterine göre müşteri bulma
+    @Query(value = "SELECT * FROM customers WHERE city = :city AND age > :age", nativeQuery = true)
+    List<CustomerEntity> findCustomersInCityOlderThan(@Param("city") String city, @Param("age") int age);
+
+    // Belirli bir soyada sahip müşterileri listeleme
+    @Query(value = "SELECT * FROM customers WHERE last_name = :lastName", nativeQuery = true)
+    List<CustomerEntity> findByLastNameNative(@Param("lastName") String lastName);
+}
+```
+
+#### Avantajları
+- SQL’in sunduğu tüm özellikleri kullanarak veri tabanına doğrudan erişim sağlar.
+- Karmaşık ve optimize edilmesi gereken sorgular için yüksek performans sunar.
+- Belirli veri tabanı işlevlerini kullanarak daha detaylı işlemler yapma imkanı sağlar.
+
+#### Dezavantajları
+- Veri tabanı bağımlıdır, bu da taşınabilirliği zorlaştırır.
+- SQL enjeksiyonuna karşı dikkatli olunması gerekir.
+- ORM soyutlama katmanından yararlanmaz, dolayısıyla nesneler arası ilişkilerde manuel işlemler gerekebilir.
+
+---
+
+### Sonuç
+Delivered Query, Named Query, JPQL ve Native Query her biri farklı ihtiyaçlara cevap veren güçlü sorgulama yöntemleridir.
+- **Delivered Query** basit işlemler için hızlı
+
+çözümler sunarken,
+- **Named Query** tekrarlı ve önceden tanımlanmış sorgular için idealdir.
+- **JPQL**, veri tabanı bağımsızlığı gerektiren, nesne odaklı sorgular için tercih edilirken,
+- **Native Query**, doğrudan SQL sorgularıyla en yüksek performansı gerektiren işlemler için uygundur.
+
+Her yöntemi, uygulamanın ihtiyaçlarına ve veri tabanı erişim gereksinimlerine göre seçerek etkili bir veri erişim stratejisi oluşturabilirsiniz.
+
 ## Spring Boot
 ```sh 
 
@@ -3959,25 +4432,113 @@ Bu kısayollar, IntelliJ IDEA'da hızlı bir şekilde çalışmanızı sağlar v
 ---
 
 
-## Spring Boot
+
+## Spring Boot Delivered Query, Named Query, JPQL, Native Query Örnekleri
 ```sh 
 
 ```
 ---
 
+Dosyalarınıza ve istediğiniz konu başlıklarına uygun olarak, `Delivered Query`, `Named Query`, `JPQL`, ve `Native Query` için üçer örnek hazırlıyorum. Bu örnekleri, veritabanı işlemleri üzerinde nasıl çalışacaklarına dair açıklamalarla birlikte paylaşacağım.
 
-## Spring Boot
-```sh 
+### 1. Delivered Query
+Delivered Query, Spring Data JPA'nın metod adlarına göre otomatik olarak SQL sorgularını oluşturmasına dayalıdır.
 
+```java
+// CustomerEntity.java dosyasında tanımlı CustomerEntity ile ICustomerRepository kullanılarak Delivered Query örnekleri
+public interface ICustomerRepository extends JpaRepository<CustomerEntity, Long> {
+
+    // 1. Ad ile müşteri bulma
+    List<CustomerEntity> findByFirstName(String firstName);
+
+    // 2. Şehir ile müşteri listeleme
+    List<CustomerEntity> findByCity(String city);
+
+    // 3. Yaş aralığındaki müşterileri bulma
+    List<CustomerEntity> findByAgeBetween(int minAge, int maxAge);
+}
 ```
----
 
+### 2. Named Query
+Named Query, genellikle `@NamedQuery` anotasyonu ile belirtilir ve sorgular `Entity` sınıfında tanımlanır. Daha sonra bu sorgular repository içinde çağrılır.
 
-## Spring Boot
-```sh 
+```java
+// CustomerEntity.java dosyasında Named Query tanımları
+@Entity
+@NamedQueries({
+    @NamedQuery(name = "Customer.findByLastName", query = "SELECT c FROM CustomerEntity c WHERE c.lastName = :lastName"),
+    @NamedQuery(name = "Customer.findByCity", query = "SELECT c FROM CustomerEntity c WHERE c.city = :city"),
+    @NamedQuery(name = "Customer.findByAgeGreaterThan", query = "SELECT c FROM CustomerEntity c WHERE c.age > :age")
+})
+public class CustomerEntity {
+    // CustomerEntity sınıfının diğer alanları ve metodları
+}
 
+// ICustomerRepository.java dosyasında Named Query çağrıları
+public interface ICustomerRepository extends JpaRepository<CustomerEntity, Long> {
+
+    // 1. Soyad ile müşteri bulma
+    @Query(name = "Customer.findByLastName")
+    List<CustomerEntity> findByLastName(@Param("lastName") String lastName);
+
+    // 2. Şehir ile müşteri bulma
+    @Query(name = "Customer.findByCity")
+    List<CustomerEntity> findByCity(@Param("city") String city);
+
+    // 3. Belirli bir yaşın üstündeki müşterileri bulma
+    @Query(name = "Customer.findByAgeGreaterThan")
+    List<CustomerEntity> findByAgeGreaterThan(@Param("age") int age);
+}
 ```
----
+
+### 3. JPQL (Java Persistence Query Language)
+JPQL, Java varlıklarına dayalı olarak SQL benzeri sorgular yazmamızı sağlar. JPQL, `@Query` anotasyonu ile kullanılır.
+
+```java
+// ICustomerRepository.java dosyasında JPQL örnekleri
+public interface ICustomerRepository extends JpaRepository<CustomerEntity, Long> {
+
+    // 1. Ad ve Soyada göre müşteri bulma
+    @Query("SELECT c FROM CustomerEntity c WHERE c.firstName = :firstName AND c.lastName = :lastName")
+    List<CustomerEntity> findByFullName(@Param("firstName") String firstName, @Param("lastName") String lastName);
+
+    // 2. Yaş kriterine göre müşteri listeleme
+    @Query("SELECT c FROM CustomerEntity c WHERE c.age > :age")
+    List<CustomerEntity> findCustomersOlderThan(@Param("age") int age);
+
+    // 3. Şehirde bulunan müşterileri listeleme
+    @Query("SELECT c FROM CustomerEntity c WHERE c.city = :city")
+    List<CustomerEntity> findByCity(@Param("city") String city);
+}
+```
+
+### 4. Native Query
+Native Query, doğrudan SQL komutlarını kullanmamıza olanak tanır ve `@Query` anotasyonu ile belirtilir. JPQL’in aksine, SQL sorguları veri tabanı bağımlı hale gelir.
+
+```java
+// ICustomerRepository.java dosyasında Native Query örnekleri
+public interface ICustomerRepository extends JpaRepository<CustomerEntity, Long> {
+
+    // 1. Şehir ve yaş kriterine göre müşteri bulma
+    @Query(value = "SELECT * FROM customers WHERE city = :city AND age > :age", nativeQuery = true)
+    List<CustomerEntity> findCustomersInCityOlderThan(@Param("city") String city, @Param("age") int age);
+
+    // 2. Belirli bir soyada sahip müşterileri listeleme
+    @Query(value = "SELECT * FROM customers WHERE last_name = :lastName", nativeQuery = true)
+    List<CustomerEntity> findByLastNameNative(@Param("lastName") String lastName);
+
+    // 3. Tüm müşterileri alfabetik sırayla listeleme
+    @Query(value = "SELECT * FROM customers ORDER BY first_name ASC", nativeQuery = true)
+    List<CustomerEntity> findAllOrderedByFirstName();
+}
+```
+
+Bu örnekler, veri tabanı sorgularını çeşitli şekillerde kullanmanıza olanak sağlar:
+- Delivered Query, otomatik sorgu oluşturma ile daha kısa kodlama sağlarken
+- Named Query, Entity sınıfında önceden tanımlanmış sorguları kullanır,
+- JPQL, Java varlıklarına dayalı SQL benzeri sorgular oluşturur,
+- Native Query ise doğrudan SQL kullanılarak daha karmaşık veya veri tabanına özel sorguların gerçekleştirilmesine olanak tanır.
+
 
 
 ## Spring Boot

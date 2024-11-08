@@ -37,8 +37,8 @@
     jar: Spring Boot için kullanalım
     -->
     <!--apache tomcat manuel için war ekliyorum-->
-    <packaging>jar</packaging>
-    <!--<packaging>war</packaging>-->
+    <!--<packaging>jar</packaging>-->
+    <packaging>war</packaging>
 
     <!--properties-->
     <properties>
