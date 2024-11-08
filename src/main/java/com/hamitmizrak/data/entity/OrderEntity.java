@@ -7,6 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
+import java.util.List;
 
 // LOMBOK
 @Getter
@@ -45,6 +46,9 @@ public class OrderEntity extends AuditingAwareBaseEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="customer_id", referencedColumnName = "id",unique=true)
     private CustomerEntity customerOrderEntity;
+
+    @ManyToMany
+    private List<ProductEntity> orderProductEntityList;
 
 } //end  CustomerEntity
 

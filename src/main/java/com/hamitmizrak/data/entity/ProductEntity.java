@@ -7,6 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
+import java.util.List;
 
 // LOMBOK
 @Getter
@@ -40,7 +41,10 @@ public class ProductEntity extends AuditingAwareBaseEntity {
     @Column(name = "system_created_date")
     private Date systemCreatedDate;
 
+    ///////////////////////////////////////////////////////////////////////////
     // RELATION
+    @ManyToMany
+    List<OrderEntity> productOrderEntityList;
 
 } //end  ProductEntity
 

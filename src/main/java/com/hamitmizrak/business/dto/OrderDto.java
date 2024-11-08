@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.Serializable;
+import java.util.List;
 
 // LOMBOK
 @Getter
@@ -37,5 +38,9 @@ public class OrderDto extends AuditingAwareBaseDto implements Serializable {
     // RELATION
     // Order(N) - Customer(1)
     private CustomerDto customerDto;
+
+    // RELATION
+    // Order(N) - Product(M)
+    private List<ProductDto> orderProductDtoList;
 
 } //end class CustomerDto
