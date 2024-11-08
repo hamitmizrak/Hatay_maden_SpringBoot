@@ -43,7 +43,6 @@ public class ProductEntity extends AuditingAwareBaseEntity {
 
     ///////////////////////////////////////////////////////////////////////////
     // RELATION
-    //
     @ManyToMany(mappedBy = "orderProductEntityList",fetch = FetchType.LAZY)
     List<OrderEntity> productOrderEntityList;
 
