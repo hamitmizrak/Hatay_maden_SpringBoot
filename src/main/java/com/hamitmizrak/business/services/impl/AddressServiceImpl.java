@@ -16,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -90,6 +91,7 @@ public class AddressServiceImpl implements IAddressService<AddressDto, AddressEn
         return iAddressRepository.findAll()
                 .stream()
                 //.map(AddressMapper::AddressEntityToDto)// 1.YOL Method Referance
+                //.sorted(Comparator.comparing((temp)->temp.getAddressEntityEmbeddable().getCity()))
                 .map((temp) -> AddressMapper.AddressEntityToDto(temp))// 2.YOL Lambda Expression
                 .collect(Collectors.toList());
     }
