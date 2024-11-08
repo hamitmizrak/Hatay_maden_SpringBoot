@@ -3,6 +3,9 @@ package com.hamitmizrak.business.mapper;
 import com.hamitmizrak.business.dto.ProductDto;
 import com.hamitmizrak.data.entity.ProductEntity;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class ProductMapper {
 
     // Customer Entity To Dto
@@ -29,5 +32,11 @@ public class ProductMapper {
 
         // DİKKAT: Composition (Order(N) - Product(M))
         return productEntity;
+    }
+
+    // ProductDto'yu Listesi Product Entity Dönüştürmek
+    public static List<ProductEntity> ProductDtoListToEntityList(List<ProductDto> productDtoList) {
+        // Her bir ProductDto Product Entity Dönüştür
+        return productDtoList.stream().map(ProductMapper::ProductDtoToEntity).collect(Collectors.toList());
     }
 }
