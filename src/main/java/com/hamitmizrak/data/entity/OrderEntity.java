@@ -22,6 +22,7 @@ import java.util.List;
 @Table(name = "orders") // Database tablo adı
 
 // Customer(1) - Address(1)
+// Order(N) - Product(M)
 public class OrderEntity extends AuditingAwareBaseEntity {
 
     // FIELD
@@ -47,7 +48,12 @@ public class OrderEntity extends AuditingAwareBaseEntity {
     @JoinColumn(name="customer_id", referencedColumnName = "id",unique=true)
     private CustomerEntity customerOrderEntity;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "order_product",
+            joinColumns = @JoinColumn(name="order_id"),
+            inverseJoinColumns = @JoinColumn(name="product_id")
+    )
     private List<ProductEntity> orderProductEntityList;
 
 } //end  CustomerEntity
